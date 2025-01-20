@@ -4,4 +4,8 @@ public class Main {
         System.out.println("Coworking Office Management System");
         // Aquí puedes inicializar y gestionar tu aplicación
     }
+
+    /**
+     * Esta prueba es un comentario
+     * **/
 }
