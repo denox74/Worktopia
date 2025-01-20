@@ -7,6 +7,7 @@ public class Reservas {
     private String hora_reserva;
     private Integer id_cliente;
     private Integer id_asiento;
+    private Integer id_espacio;
     private Integer id_factura;
     private String estado_reserva;
 
