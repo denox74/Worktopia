@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Menus.MenuPrincipal"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.MenuPrincipalControlador">
+   <children>
+      <Pane layoutY="500.0" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #0F4D48;" />
+      <Label layoutX="316.0" style="-fx-font-size: 36px; -fx-text-fill: #1C7F77;" text="Worktopia" />
+      <VBox alignment="CENTER" layoutY="104.0" prefHeight="423.0" prefWidth="800.0" spacing="10">
+         <children>
+            <Label style="-fx-font-size: 24px; -fx-text-fill: #1C7F77;" text="Menú Principal" />
+            <Button style="-fx-background-color: #1C7F77; -fx-text-fill: #EADDC8;" text="Nepe" />
+            <Button style="-fx-background-color: #1C7F77; -fx-text-fill: #EADDC8;" text="Opción 2" />
+            <Button style="-fx-background-color: #1C7F77; -fx-text-fill: #EADDC8;" text="Opción 3" />
+            <Button style="-fx-background-color: #1C7F77; -fx-text-fill: #EADDC8;" text="Opción 4" />
+         </children>
+      </VBox>
+      <Pane layoutY="4.0" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #0F4D48;">
+         <children>
+            <Label layoutX="374.0" layoutY="30.0" style="-fx-font-size: 36px; -fx-text-fill: #cc9966;" text="Worktopia" />
+         </children></Pane>
+   </children>
 </AnchorPane>
