@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -8,12 +7,9 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-
-<?import javafx.scene.layout.*?>
-
 <AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.RegistroUsuariosControlador">
     <children>
-        <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="395.0" layoutY="533.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black; -fx-background-radius: 100px;" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
+        <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="479.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black; -fx-background-radius: 100px;" text="Confirmar" textAlignment="CENTER" textOverrun="CLIP">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
@@ -21,35 +17,38 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-        <PasswordField alignment="TOP_CENTER" layoutX="327.0" layoutY="463.0" prefHeight="32.0" prefWidth="245.0" promptText="CONTRASEÑA" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;">
-            <cursor>
-                <Cursor fx:constant="DEFAULT" />
-            </cursor>
-            <opaqueInsets>
-                <Insets />
-            </opaqueInsets>
-        </PasswordField>
-        <TextField alignment="TOP_CENTER" layoutX="327.0" layoutY="387.0" prefHeight="32.0" prefWidth="245.0" promptText="USUARIO" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
-        <Label layoutX="360.0" layoutY="630.0" text="Proyecto Worktopia Version 1.0">
+        <Label layoutX="327.0" layoutY="115.0" text="Registrar Nuevo Cliente">
             <font>
-                <Font name="System Bold" size="12.0" />
+                <Font name="System Bold" size="22.0" />
             </font></Label>
-        <Label layoutX="286.0" layoutY="655.0" text="Realizado por Eliú Manuel Viera Lorenzo y David Liaño Macias">
-            <font>
-                <Font name="Arial Bold" size="12.0" />
-            </font></Label>
-        <Line endX="305.0" layoutX="445.0" layoutY="435.0" startX="-296.0" />
-        <Line endX="294.0" layoutX="457.0" layoutY="510.0" startX="-309.0" />
-        <Line endX="-104.0" layoutX="457.0" layoutY="638.0" startX="-309.0" />
-        <Line endX="-99.0" layoutX="849.0" layoutY="638.0" startX="-302.0" />
-        <Label layoutX="340.0" layoutY="582.0" style="-fx-text-fill: Orange;" text="¿Se te ha olvidado la contraseña?">
-            <font>
-                <Font name="Arial Bold" size="16.0" />
-            </font>
-        </Label>
+        <Line endX="382.0" layoutX="457.0" layoutY="587.0" startX="-383.0" />
+        <Line endX="-112.0" layoutX="414.0" layoutY="130.0" startX="-340.0" />
+        <Line endX="-99.0" layoutX="928.0" layoutY="131.0" startX="-330.0" />
+        <TextField fx:id="TextFielDNI" alignment="TOP_LEFT" layoutX="253.0" layoutY="181.0" prefHeight="32.0" prefWidth="394.0" promptText="DNI / NIF" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
+      <TextField fx:id="TextFielDNI1" alignment="TOP_LEFT" layoutX="253.0" layoutY="230.0" prefHeight="32.0" prefWidth="394.0" promptText="Nombre" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
+      <TextField fx:id="TextFielDNI11" alignment="TOP_LEFT" layoutX="253.0" layoutY="272.0" prefHeight="32.0" prefWidth="394.0" promptText="Primer Apellido" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
+      <TextField fx:id="TextFielDNI111" alignment="TOP_LEFT" layoutX="253.0" layoutY="318.0" prefHeight="32.0" prefWidth="394.0" promptText="Segundo Apellido" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
+      <TextField fx:id="TextFielDNI1111" alignment="TOP_LEFT" layoutX="253.0" layoutY="368.0" prefHeight="32.0" prefWidth="394.0" promptText="Email" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
+      <TextField fx:id="TextFielDNI11111" alignment="TOP_LEFT" layoutX="253.0" layoutY="421.0" prefHeight="32.0" prefWidth="394.0" promptText="Telefono de contacto" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
+      <Button fx:id="BotonEntrar1" alignment="CENTER" layoutX="303.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black; -fx-background-radius: 100px;" text="Cancelar" textAlignment="CENTER" textOverrun="CLIP">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
+      <Button fx:id="registroCliente" contentDisplay="GRAPHIC_ONLY" layoutX="203.0" layoutY="601.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="101.0" />
+      <ImageView fitHeight="117.0" fitWidth="119.0" layoutX="386.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../java/Imagenes/bannerTopiaC.png" />
+         </image></ImageView>
+      <ImageView fitHeight="80.0" fitWidth="101.0" layoutX="203.0" layoutY="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../java/Imagenes/AgregarCLientes.png" />
+         </image>
+      </ImageView>
     </children>
 
 
 </AnchorPane>
-
-
