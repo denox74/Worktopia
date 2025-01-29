@@ -43,7 +43,7 @@
       <Line endX="294.0" layoutX="457.0" layoutY="510.0" startX="-309.0" />
       <Line endX="-104.0" layoutX="457.0" layoutY="638.0" startX="-309.0" />
       <Line endX="-99.0" layoutX="849.0" layoutY="638.0" startX="-302.0" />
-      <Label layoutX="320.0" layoutY="584.0" style="-fx-text-fill: Orange;" text="¿Se te ha olvidado la contraseña?">
+      <Label layoutX="340.0" layoutY="582.0" style="-fx-text-fill: Orange;" text="¿Se te ha olvidado la contraseña?">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>
