@@ -1,4 +1,7 @@
 package Controladores;
 
-public class MenuPrincipalControlador {
+import javafx.application.Application;
+
+public class MenuPrincipalControlador{
+
 }

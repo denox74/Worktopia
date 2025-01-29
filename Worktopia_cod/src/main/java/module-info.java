@@ -10,6 +10,7 @@ module org.example.worktopia_cod {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.desktop;
 
     opens org.example.worktopia_cod to javafx.fxml;
     exports org.example.worktopia_cod;
