@@ -14,7 +14,7 @@
          <image>
             <Image url="@../../java/Imagenes/ImagenPrincipalLogin2%20-%20copia.png" />
          </image></ImageView>
-          <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="395.0" layoutY="533.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black;" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
+          <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="395.0" layoutY="533.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: white; -fx-border-color: orange;" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

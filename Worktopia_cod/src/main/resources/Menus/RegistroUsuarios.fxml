@@ -29,7 +29,7 @@
       <TextField fx:id="TextFielDNI111" alignment="TOP_LEFT" layoutX="311.0" layoutY="318.0" prefHeight="32.0" prefWidth="394.0" promptText="Segundo Apellido" style="-fx-border-color: black; -fx-border-width: 3;" />
       <TextField fx:id="TextFielDNI1111" alignment="TOP_LEFT" layoutX="311.0" layoutY="368.0" prefHeight="32.0" prefWidth="394.0" promptText="Email" style="-fx-border-color: black; -fx-border-width: 3;" />
       <TextField fx:id="TextFielDNI11111" alignment="TOP_LEFT" layoutX="311.0" layoutY="421.0" prefHeight="32.0" prefWidth="394.0" promptText="Telefono de contacto" style="-fx-border-color: black; -fx-border-width: 3;" />
-        <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="537.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black;" text="Confirmar" textAlignment="CENTER" textOverrun="CLIP">
+        <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="537.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-border-color: orange;" text="Confirmar" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
@@ -37,7 +37,7 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-      <Button fx:id="BotonEntrar1" alignment="CENTER" layoutX="361.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black;" text="Cancelar" textAlignment="CENTER" textOverrun="CLIP">
+      <Button fx:id="BotonEntrar1" alignment="CENTER" layoutX="361.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-border-color: orange;" text="Cancelar" textAlignment="CENTER" textFill="#fcfcfc" textOverrun="CLIP">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -90,7 +90,30 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label layoutX="239.0" layoutY="707.0" text="Label" />
+      <Label layoutX="225.0" layoutY="702.0" text="Clientes">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+      <Label layoutX="348.0" layoutY="703.0" text="Lista Clientes">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="491.0" layoutY="702.0" text="Reservas">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="601.0" layoutY="702.0" text="Lista Reservas">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="732.0" layoutY="702.0" text="Facturación">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
     </children>
 
 
