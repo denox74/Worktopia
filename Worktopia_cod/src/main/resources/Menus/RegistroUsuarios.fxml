@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="763.0" prefWidth="1000.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.RegistroUsuariosControlador">
+<AnchorPane prefHeight="763.0" prefWidth="1126.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.RegistroUsuariosControlador">
     <children>
       <ImageView fitHeight="117.0" fitWidth="119.0" layoutX="444.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -20,7 +20,7 @@
         <Line endX="461.0" layoutX="515.0" layoutY="587.0" startX="-452.0" />
         <Line endX="-40.0" layoutX="403.0" layoutY="130.0" startX="-340.0" />
         <Line endX="-13.0" layoutX="988.0" layoutY="130.0" startX="-330.0" />
-        <TextField fx:id="TextFielDNI" alignment="TOP_LEFT" layoutX="311.0" layoutY="181.0" prefHeight="32.0" prefWidth="394.0" promptText="DNI / NIF" style="-fx-border-color: black; -fx-border-width: 3;">
+        <TextField fx:id="TextFielDNI" alignment="TOP_LEFT" layoutX="314.0" layoutY="186.0" prefHeight="32.0" prefWidth="394.0" promptText="DNI / NIF" style="-fx-border-color: black; -fx-border-width: 3;">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor></TextField>
