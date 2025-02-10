@@ -14,7 +14,7 @@
          <image>
             <Image url="@../../java/Imagenes/ImagenPrincipalLogin2%20-%20copia.png" />
          </image></ImageView>
-          <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="395.0" layoutY="533.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black; -fx-background-radius: 100px;" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
+          <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="395.0" layoutY="533.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black;" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -22,7 +22,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <PasswordField alignment="TOP_CENTER" layoutX="327.0" layoutY="463.0" prefHeight="32.0" prefWidth="245.0" promptText="CONTRASEÑA" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;">
+      <PasswordField alignment="TOP_CENTER" layoutX="327.0" layoutY="463.0" prefHeight="32.0" prefWidth="245.0" promptText="CONTRASEÑA" style="-fx-border-color: black; -fx-border-width: 3;">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -30,12 +30,12 @@
             <Insets />
          </opaqueInsets>
       </PasswordField>
-      <TextField alignment="TOP_CENTER" layoutX="327.0" layoutY="387.0" prefHeight="32.0" prefWidth="245.0" promptText="USUARIO" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
+      <TextField alignment="TOP_CENTER" layoutX="327.0" layoutY="387.0" prefHeight="32.0" prefWidth="245.0" promptText="USUARIO" style="-fx-border-color: black; -fx-border-width: 3;" />
       <Label layoutX="360.0" layoutY="630.0" text="Proyecto Worktopia Version 1.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label layoutX="286.0" layoutY="655.0" text="Realizado por Eliú Manuel Viera Lorenzo y David Liaño Macias">
+      <Label layoutX="272.0" layoutY="655.0" text="Realizado por Eliú Manuel Viera Lorenzo y David Liaño Macias">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font></Label>
@@ -43,7 +43,7 @@
       <Line endX="294.0" layoutX="457.0" layoutY="510.0" startX="-309.0" />
       <Line endX="-104.0" layoutX="457.0" layoutY="638.0" startX="-309.0" />
       <Line endX="-99.0" layoutX="849.0" layoutY="638.0" startX="-302.0" />
-      <Label layoutX="340.0" layoutY="582.0" style="-fx-text-fill: Orange;" text="¿Se te ha olvidado la contraseña?">
+      <Label layoutX="320.0" layoutY="582.0" style="-fx-text-fill: Orange;" text="¿Se te ha olvidado la contraseña?">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>

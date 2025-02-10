@@ -20,16 +20,16 @@
         <Line endX="461.0" layoutX="515.0" layoutY="587.0" startX="-452.0" />
         <Line endX="-40.0" layoutX="403.0" layoutY="130.0" startX="-340.0" />
         <Line endX="-13.0" layoutX="988.0" layoutY="130.0" startX="-330.0" />
-        <TextField fx:id="TextFielDNI" alignment="TOP_LEFT" layoutX="311.0" layoutY="181.0" prefHeight="32.0" prefWidth="394.0" promptText="DNI / NIF" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;">
+        <TextField fx:id="TextFielDNI" alignment="TOP_LEFT" layoutX="311.0" layoutY="181.0" prefHeight="32.0" prefWidth="394.0" promptText="DNI / NIF" style="-fx-border-color: black; -fx-border-width: 3;">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor></TextField>
-      <TextField fx:id="TextFielDNI1" alignment="TOP_LEFT" layoutX="311.0" layoutY="230.0" prefHeight="32.0" prefWidth="394.0" promptText="Nombre" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
-      <TextField fx:id="TextFielDNI11" alignment="TOP_LEFT" layoutX="311.0" layoutY="272.0" prefHeight="32.0" prefWidth="394.0" promptText="Primer Apellido" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
-      <TextField fx:id="TextFielDNI111" alignment="TOP_LEFT" layoutX="311.0" layoutY="318.0" prefHeight="32.0" prefWidth="394.0" promptText="Segundo Apellido" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
-      <TextField fx:id="TextFielDNI1111" alignment="TOP_LEFT" layoutX="311.0" layoutY="368.0" prefHeight="32.0" prefWidth="394.0" promptText="Email" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
-      <TextField fx:id="TextFielDNI11111" alignment="TOP_LEFT" layoutX="311.0" layoutY="421.0" prefHeight="32.0" prefWidth="394.0" promptText="Telefono de contacto" style="-fx-border-color: black; -fx-border-radius: 110; -fx-border-width: 3;" />
-        <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="537.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black; -fx-background-radius: 100px;" text="Confirmar" textAlignment="CENTER" textOverrun="CLIP">
+      <TextField fx:id="TextFielDNI1" alignment="TOP_LEFT" layoutX="311.0" layoutY="230.0" prefHeight="32.0" prefWidth="394.0" promptText="Nombre" style="-fx-border-color: black; -fx-border-width: 3;" />
+      <TextField fx:id="TextFielDNI11" alignment="TOP_LEFT" layoutX="311.0" layoutY="272.0" prefHeight="32.0" prefWidth="394.0" promptText="Primer Apellido" style="-fx-border-color: black; -fx-border-width: 3;" />
+      <TextField fx:id="TextFielDNI111" alignment="TOP_LEFT" layoutX="311.0" layoutY="318.0" prefHeight="32.0" prefWidth="394.0" promptText="Segundo Apellido" style="-fx-border-color: black; -fx-border-width: 3;" />
+      <TextField fx:id="TextFielDNI1111" alignment="TOP_LEFT" layoutX="311.0" layoutY="368.0" prefHeight="32.0" prefWidth="394.0" promptText="Email" style="-fx-border-color: black; -fx-border-width: 3;" />
+      <TextField fx:id="TextFielDNI11111" alignment="TOP_LEFT" layoutX="311.0" layoutY="421.0" prefHeight="32.0" prefWidth="394.0" promptText="Telefono de contacto" style="-fx-border-color: black; -fx-border-width: 3;" />
+        <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="537.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black;" text="Confirmar" textAlignment="CENTER" textOverrun="CLIP">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
@@ -37,7 +37,7 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-      <Button fx:id="BotonEntrar1" alignment="CENTER" layoutX="361.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black; -fx-background-radius: 100px;" text="Cancelar" textAlignment="CENTER" textOverrun="CLIP">
+      <Button fx:id="BotonEntrar1" alignment="CENTER" layoutX="361.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: black;" text="Cancelar" textAlignment="CENTER" textOverrun="CLIP">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -90,6 +90,7 @@
             </ImageView>
          </graphic>
       </Button>
+      <Label layoutX="239.0" layoutY="707.0" text="Label" />
     </children>
 
 
