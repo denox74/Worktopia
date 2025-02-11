@@ -7,11 +7,11 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="763.0" prefWidth="1000.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ListaUsuarios">
+<AnchorPane prefHeight="763.0" prefWidth="1000.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ListaReservas">
     <children>
-        <ImageView fitHeight="117.0" fitWidth="119.0" layoutX="441.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView id="portada" fx:id="portadaListaReservas" fitHeight="117.0" fitWidth="119.0" layoutX="441.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../java/Imagenes/bannerTopiaC.png" />
+                <Image url="@../Imagenes/bannerTopiaC.png" />
             </image></ImageView>
         <Label layoutX="412.0" layoutY="115.0" text="Lista De Reservas">
             <font>
@@ -20,7 +20,7 @@
         <Line endX="461.0" layoutX="515.0" layoutY="587.0" startX="-452.0" strokeWidth="3.0" />
         <Line endX="-21.79998779296875" layoutX="403.0" layoutY="130.0" startX="-340.0" strokeWidth="3.0" />
         <Line endX="-13.0" layoutX="988.0" layoutY="130.0" startX="-373.79998779296875" strokeWidth="3.0" />
-        <TextField fx:id="TextFielDNI" alignment="TOP_CENTER" layoutX="63.0" layoutY="147.0" prefHeight="32.0" prefWidth="249.0" promptText="DNI Usuario" style="-fx-border-color: black; -fx-border-width: 3;">
+        <TextField id="dnibuscar" fx:id="DNIBuscar" alignment="TOP_CENTER" layoutX="63.0" layoutY="147.0" prefHeight="32.0" prefWidth="249.0" promptText="DNI Usuario" style="-fx-border-color: black; -fx-border-width: 3;">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>
@@ -28,7 +28,7 @@
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/Reservas.png" />
+                        <Image url="@../Imagenes/Reservas.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -40,7 +40,7 @@
             <graphic>
                 <ImageView fitHeight="78.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/Facturacion.png" />
+                        <Image url="@../Imagenes/Facturacion.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -52,7 +52,7 @@
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/ListaReservas.png" />
+                        <Image url="@../Imagenes/ListaReservas.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -64,7 +64,7 @@
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/AgregarCLientes.png" />
+                        <Image url="@../Imagenes/AgregarCLientes.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -76,7 +76,7 @@
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/ListaClientes.png" />
+                        <Image url="@../Imagenes/ListaClientes.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -84,25 +84,49 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <ListView layoutX="57.0" layoutY="199.0" prefHeight="358.0" prefWidth="916.0" style="-fx-background-color: #DDDEDE;" />
-        <Button layoutX="348.0" layoutY="146.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" style="-fx-border-color: orange; -fx-font-weight: bold;" text="Modificar">
+        <ListView fx:id="listaSQL" layoutX="57.0" layoutY="199.0" prefHeight="358.0" prefWidth="916.0" style="-fx-background-color: #DDDEDE;" />
+        <Button fx:id="btnModificar" layoutX="348.0" layoutY="146.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" style="-fx-border-color: orange; -fx-font-weight: bold;" text="Modificar">
             <graphic>
                 <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/editar-perfil.png" />
+                        <Image url="@../Imagenes/editar-perfil.png" />
                     </image>
                 </ImageView>
             </graphic></Button>
-        <Button layoutX="474.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" style="-fx-border-color: orange; -fx-font-weight: bold;" text="Eliminar">
+        <Button fx:id="btnEliminar" layoutX="474.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" style="-fx-border-color: orange; -fx-font-weight: bold;" text="Eliminar">
             <graphic>
                 <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/papelera-de-reciclaje(1).png" />
+                        <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
                     </image></ImageView>
             </graphic>
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
+        </Button>
+        <Label layoutX="801.0" layoutY="60.0" style="-fx-font-weight: bold;" text="Usuario:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="781.0" layoutY="23.0" style="-fx-font-weight: bold;" text="Nº Usuario:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField id="numeroUsuario" fx:id="numeroUsuario" layoutX="854.0" layoutY="20.0" style="-fx-background-color: transparent;" />
+        <TextField id="nombreUsuario" fx:id="nombreUsuario" layoutX="854.0" layoutY="57.0" style="-fx-background-color: transparent;" />
+        <Button fx:id="btnSalirLogin" layoutX="1004.0" layoutY="34.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Salir">
+            <graphic>
+                <ImageView fitHeight="42.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Imagenes/salirDeslog.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <font>
+                <Font size="16.0" />
+            </font>
         </Button>
     </children>
 

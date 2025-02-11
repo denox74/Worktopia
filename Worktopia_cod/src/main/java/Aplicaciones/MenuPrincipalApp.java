@@ -10,7 +10,7 @@ public class MenuPrincipalApp extends Application {
 
     @Override
     public void start(Stage menu) throws IOException {
-        FXMLLoader menuPrincipal = new FXMLLoader(MenuPrincipalApp.class.getResource("/Menus/MenuPrincipal.fxml"));
+        FXMLLoader menuPrincipal = new FXMLLoader(MenuPrincipalApp.class.getResource("/Menus/RegistroUsuarios.fxml"));
         menu.setTitle("Menu Principal");
         menu.setScene(new Scene(menuPrincipal.load()));
         menu.show();

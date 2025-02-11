@@ -6,11 +6,11 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="763.0" prefWidth="1000.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ListaUsuarios">
+<AnchorPane prefHeight="763.0" prefWidth="1000.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.Reservas">
     <children>
-        <ImageView fitHeight="117.0" fitWidth="119.0" layoutX="441.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="portada" fitHeight="117.0" fitWidth="119.0" layoutX="441.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../java/Imagenes/bannerTopiaC.png" />
+                <Image url="@../Imagenes/bannerTopiaC.png" />
             </image></ImageView>
         <Label layoutX="455.0" layoutY="115.0" text="Reservas">
             <font>
@@ -23,7 +23,7 @@
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/Reservas.png" />
+                        <Image url="@../Imagenes/Reservas.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -35,7 +35,7 @@
             <graphic>
                 <ImageView fitHeight="78.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/Facturacion.png" />
+                        <Image url="@../Imagenes/Facturacion.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -47,7 +47,7 @@
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/ListaReservas.png" />
+                        <Image url="@../Imagenes/ListaReservas.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -59,7 +59,7 @@
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/AgregarCLientes.png" />
+                        <Image url="@../Imagenes/AgregarCLientes.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -71,7 +71,7 @@
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../java/Imagenes/ListaClientes.png" />
+                        <Image url="@../Imagenes/ListaClientes.png" />
                     </image>
                 </ImageView>
             </graphic>
@@ -93,7 +93,7 @@
       <Line endX="-33.0" layoutX="1005.0" layoutY="255.0" startX="-324.0" strokeWidth="3.0" />
       <ImageView fitHeight="438.0" fitWidth="643.0" layoutX="63.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../java/Imagenes/salasCoworkingFondo1.png" />
+            <Image url="@../Imagenes/salasCoworkingFondo1.png" />
          </image>
       </ImageView>
       <Label layoutX="681.0" layoutY="280.0" style="-fx-font-weight: bold;" text="Espacio Reservado:">
@@ -111,15 +111,39 @@
             <Font size="14.0" />
          </font>
       </Label>
-        <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="781.0" layoutY="545.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: white; -fx-border-color: orange;" text="Confirmar" textAlignment="CENTER" textOverrun="CLIP">
+        <Button fx:id="btnConfirmar" alignment="CENTER" layoutX="781.0" layoutY="545.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-text-fill: white; -fx-border-color: orange;" text="Confirmar" textAlignment="CENTER" textOverrun="CLIP">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-      <TextField layoutX="816.0" layoutY="278.0" />
-      <TextField layoutX="816.0" layoutY="311.0" />
-      <TextField layoutX="816.0" layoutY="346.0" />
+      <TextField id="espacio" fx:id="espacio" layoutX="816.0" layoutY="278.0" />
+      <TextField id="horario" fx:id="horario" layoutX="816.0" layoutY="311.0" />
+      <TextField id="precio" fx:id="precio" layoutX="816.0" layoutY="346.0" />
       <DatePicker layoutX="740.0" layoutY="187.0" promptText="Fechas" />
+        <Label layoutX="801.0" layoutY="60.0" style="-fx-font-weight: bold;" text="Usuario:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="781.0" layoutY="23.0" style="-fx-font-weight: bold;" text="Nº Usuario:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <TextField id="numeroUsuario" fx:id="numeroUsuario" layoutX="854.0" layoutY="20.0" style="-fx-background-color: transparent;" />
+        <TextField id="nombreUsuario" fx:id="nombreUsuario" layoutX="854.0" layoutY="57.0" style="-fx-background-color: transparent;" />
+        <Button fx:id="btnSalirLogin" layoutX="1004.0" layoutY="34.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Salir">
+            <graphic>
+                <ImageView fitHeight="42.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Imagenes/salirDeslog.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Button>
     </children>
 
 
