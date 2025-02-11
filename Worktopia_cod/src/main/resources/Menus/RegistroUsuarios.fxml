@@ -17,19 +17,19 @@
             <font>
                 <Font name="System Bold" size="22.0" />
             </font></Label>
-        <Line endX="461.0" layoutX="515.0" layoutY="587.0" startX="-452.0" />
-        <Line endX="-40.0" layoutX="403.0" layoutY="130.0" startX="-340.0" />
-        <Line endX="-13.0" layoutX="988.0" layoutY="130.0" startX="-330.0" />
-        <TextField fx:id="TextFielDNI" alignment="TOP_LEFT" layoutX="314.0" layoutY="186.0" prefHeight="32.0" prefWidth="394.0" promptText="DNI / NIF" style="-fx-border-color: black; -fx-border-width: 3;">
+        <Line endX="461.0" layoutX="515.0" layoutY="587.0" startX="-452.0" strokeWidth="3.0" />
+        <Line endX="-40.0" layoutX="403.0" layoutY="130.0" startX="-340.0" strokeWidth="3.0" />
+        <Line endX="-13.0" layoutX="988.0" layoutY="130.0" startX="-330.0" strokeWidth="3.0" />
+        <TextField id="dni" fx:id="dni" alignment="TOP_LEFT" layoutX="314.0" layoutY="186.0" prefHeight="32.0" prefWidth="394.0" promptText="DNI / NIF" style="-fx-border-color: black; -fx-border-width: 3;">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor></TextField>
-      <TextField fx:id="TextFielDNI1" alignment="TOP_LEFT" layoutX="311.0" layoutY="230.0" prefHeight="32.0" prefWidth="394.0" promptText="Nombre" style="-fx-border-color: black; -fx-border-width: 3;" />
-      <TextField fx:id="TextFielDNI11" alignment="TOP_LEFT" layoutX="311.0" layoutY="272.0" prefHeight="32.0" prefWidth="394.0" promptText="Primer Apellido" style="-fx-border-color: black; -fx-border-width: 3;" />
-      <TextField fx:id="TextFielDNI111" alignment="TOP_LEFT" layoutX="311.0" layoutY="318.0" prefHeight="32.0" prefWidth="394.0" promptText="Segundo Apellido" style="-fx-border-color: black; -fx-border-width: 3;" />
-      <TextField fx:id="TextFielDNI1111" alignment="TOP_LEFT" layoutX="311.0" layoutY="368.0" prefHeight="32.0" prefWidth="394.0" promptText="Email" style="-fx-border-color: black; -fx-border-width: 3;" />
-      <TextField fx:id="TextFielDNI11111" alignment="TOP_LEFT" layoutX="311.0" layoutY="421.0" prefHeight="32.0" prefWidth="394.0" promptText="Telefono de contacto" style="-fx-border-color: black; -fx-border-width: 3;" />
-        <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="537.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-border-color: orange;" text="Confirmar" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+      <TextField id="nombre" fx:id="nombre" alignment="TOP_LEFT" layoutX="311.0" layoutY="230.0" prefHeight="32.0" prefWidth="394.0" promptText="Nombre" style="-fx-border-color: black; -fx-border-width: 3;" />
+      <TextField id="primerApellido" fx:id="primerApellido" alignment="TOP_LEFT" layoutX="311.0" layoutY="272.0" prefHeight="32.0" prefWidth="394.0" promptText="Primer Apellido" style="-fx-border-color: black; -fx-border-width: 3;" />
+      <TextField id="segundoApellido" fx:id="segundoApellido" alignment="TOP_LEFT" layoutX="311.0" layoutY="318.0" prefHeight="32.0" prefWidth="394.0" promptText="Segundo Apellido" style="-fx-border-color: black; -fx-border-width: 3;" />
+      <TextField id="eMail" fx:id="eMail" alignment="TOP_LEFT" layoutX="311.0" layoutY="368.0" prefHeight="32.0" prefWidth="394.0" promptText="Email" style="-fx-border-color: black; -fx-border-width: 3;" />
+      <TextField id="telefono" fx:id="telefono" alignment="TOP_LEFT" layoutX="311.0" layoutY="421.0" prefHeight="32.0" prefWidth="394.0" promptText="Telefono de contacto" style="-fx-border-color: black; -fx-border-width: 3;" />
+        <Button id="btnConfirmar" fx:id="btnConfirmar" alignment="CENTER" layoutX="537.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-border-color: orange;" text="Confirmar" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
@@ -37,7 +37,7 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-      <Button fx:id="BotonEntrar1" alignment="CENTER" layoutX="361.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-border-color: orange;" text="Cancelar" textAlignment="CENTER" textFill="#fcfcfc" textOverrun="CLIP">
+      <Button id="btnCancelar" fx:id="btnCancelar" alignment="CENTER" layoutX="361.0" layoutY="479.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73; -fx-border-color: orange;" text="Cancelar" textAlignment="CENTER" textFill="#fcfcfc" textOverrun="CLIP">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -45,7 +45,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-        <Button fx:id="Reservas" contentDisplay="TOP" defaultButton="true" layoutX="469.0" layoutY="616.0" mnemonicParsing="false" prefHeight="111.0" prefWidth="105.0" style="-fx-background-color: transparent;" text="Reservas">
+        <Button fx:id="Reservas" contentDisplay="TOP" defaultButton="true" layoutX="469.0" layoutY="616.0" mnemonicParsing="false" prefHeight="111.0" prefWidth="105.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Reservas">
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -57,7 +57,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-        <Button fx:id="Facturacion" contentDisplay="TOP" defaultButton="true" layoutX="723.0" layoutY="613.0" mnemonicParsing="false" prefHeight="115.0" prefWidth="93.0" style="-fx-background-color: transparent;" text="Facturas">
+        <Button fx:id="Facturacion" contentDisplay="TOP" defaultButton="true" layoutX="723.0" layoutY="613.0" mnemonicParsing="false" prefHeight="115.0" prefWidth="93.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Facturas">
             <graphic>
                 <ImageView fitHeight="78.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -69,7 +69,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-        <Button fx:id="ListaReservas" contentDisplay="TOP" defaultButton="true" layoutX="589.0" layoutY="616.0" mnemonicParsing="false" prefHeight="111.0" prefWidth="119.0" style="-fx-background-color: transparent;" text="Lista Reservas">
+        <Button fx:id="ListaReservas" contentDisplay="TOP" defaultButton="true" layoutX="589.0" layoutY="616.0" mnemonicParsing="false" prefHeight="111.0" prefWidth="119.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Lista Reservas">
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -105,6 +105,7 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
+      <Label layoutX="756.0" layoutY="28.0" text="Usuario:" />
     </children>
 
 

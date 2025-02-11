@@ -1,21 +1,21 @@
 package Aplicaciones;
 
 import javafx.application.Application;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 public class MenuPrincipalApp extends Application {
 
-    public static void main(String[] args) {
-
-        Application.launch(args);
-    }
-
     @Override
-    public void start(Stage stage) {
-
-
-
+    public void start(Stage menu) throws IOException {
+        FXMLLoader menuPrincipal = new FXMLLoader(MenuPrincipalApp.class.getResource("/Menus/MenuPrincipal.fxml"));
+        menu.setTitle("Menu Principal");
+        menu.setScene(new Scene(menuPrincipal.load()));
+        menu.show();
+    }
+    public static void main(String[] args) {
+        launch();
     }
 }

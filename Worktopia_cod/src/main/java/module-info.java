@@ -2,6 +2,7 @@ module org.example.worktopia_cod {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires javafx.graphics;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -11,7 +12,12 @@ module org.example.worktopia_cod {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.desktop;
+    requires java.sql;
 
-    opens org.example.worktopia_cod to javafx.fxml;
-    exports org.example.worktopia_cod;
+
+    opens Controladores to javafx.fxml;
+    opens Aplicaciones to javafx.graphics;
+    exports Aplicaciones;
+    exports Controladores;
+
 }
