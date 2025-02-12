@@ -21,9 +21,7 @@ public class Reservas {
     @FXML private TextField espacio;
     @FXML private TextField horario;
     @FXML private TextField precio;
-    @FXML private Button btnSalirLogin;
-    @FXML private TextField numeroUsuario;
-    @FXML private TextField nombreUsuario;
+
 
     public Reservas(){
 

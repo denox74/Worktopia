@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,14 +22,11 @@ public class RegistroUsuarios {
     @FXML private TextField telefono;
     @FXML private Button btnConfirmar;
     @FXML private Button btnCancelar;
-    @FXML private ImageView portada;
     @FXML private Button Reservas;
     @FXML private Button ListaReservas;
     @FXML private Button ListaClientes;
     @FXML private Button Facturacion;
-    @FXML private Button btnSalirLogin;
-    @FXML private TextField numeroUsuario;
-    @FXML private TextField nombreUsuario;
+
 
 
     public RegistroUsuarios(){

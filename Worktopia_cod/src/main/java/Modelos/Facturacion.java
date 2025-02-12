@@ -22,9 +22,6 @@ public class Facturacion {
     @FXML private Button btnEliminar;
     @FXML private TextField DNIbuscar;
     @FXML private ListView listaSQL;
-    @FXML private Button btnSalirLogin;
-    @FXML private TextField numeroUsuario;
-    @FXML private TextField nombreUsuario;
 
     public Facturacion(){
     }

@@ -29,12 +29,7 @@ public class ListaUsuarios {
     private ListView listaSQL;
     @FXML
     private TextField DNIbuscar;
-    @FXML
-    private Button btnSalirLogin;
-    @FXML
-    private TextField numeroUsuario;
-    @FXML
-    private TextField nombreUsuario;
+
 
     public ListaUsuarios() {
 

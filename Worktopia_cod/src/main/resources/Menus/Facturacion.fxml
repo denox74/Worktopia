@@ -48,7 +48,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-        <Button fx:id="ListaReservas" onAction="#ventanaListaReservas" contentDisplay="TOP" defaultButton="true" layoutX="589.0" layoutY="616.0" mnemonicParsing="false" prefHeight="111.0" prefWidth="119.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Lista Reservas">
+        <Button fx:id="ListaReservas" contentDisplay="TOP" defaultButton="true" layoutX="589.0" layoutY="616.0" mnemonicParsing="false" onAction="#ventanaListaReservas" prefHeight="111.0" prefWidth="119.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Lista Reservas">
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -84,7 +84,6 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <ListView fx:id="listaSQL" layoutX="57.0" layoutY="199.0" prefHeight="358.0" prefWidth="916.0" style="-fx-background-color: #DDDEDE;" />
         <Button fx:id="btnModificar" layoutX="348.0" layoutY="146.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" style="-fx-border-color: orange; -fx-font-weight: bold;" text="Modificar">
             <graphic>
                 <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
@@ -104,30 +103,12 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-        <Label layoutX="801.0" layoutY="60.0" style="-fx-font-weight: bold;" text="Usuario:">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <Label layoutX="781.0" layoutY="23.0" style="-fx-font-weight: bold;" text="Nº Usuario:">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <TextField id="numeroUsuario" fx:id="numeroUsuario" layoutX="854.0" layoutY="20.0" style="-fx-background-color: transparent;" />
-        <TextField id="nombreUsuario" fx:id="nombreUsuario" layoutX="854.0" layoutY="57.0" style="-fx-background-color: transparent;" />
-        <Button fx:id="btnSalirLogin" layoutX="1004.0" layoutY="34.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Salir">
-            <graphic>
-                <ImageView fitHeight="42.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Imagenes/salirDeslog.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Button>
+      <TableView layoutX="62.0" layoutY="197.0" prefHeight="368.0" prefWidth="916.0">
+        <columns>
+          <TableColumn prefWidth="107.0" text="C1" />
+          <TableColumn prefWidth="111.0" text="C2" />
+        </columns>
+      </TableView>
     </children>
 
 
