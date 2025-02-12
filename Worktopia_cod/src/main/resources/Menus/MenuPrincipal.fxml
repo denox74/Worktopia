@@ -8,15 +8,15 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.MenuPrincipalControlador">
+<AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.MenuPrincipal">
     <children>
       <ImageView fx:id="imagenPrincipal" fitHeight="345.0" fitWidth="602.0" layoutX="149.0" layoutY="14.0" pickOnBounds="true" smooth="false">
          <image>
             <Image url="@../Imagenes/ImagenPrincipalLogin.png" />
          </image>
       </ImageView>
-          <Button fx:id="BotonEntrar" alignment="CENTER" layoutX="395.0" layoutY="533.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73;                   -fx-text-fill: white;                   -fx-border-color: orange;" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
-         <font>
+          <Button fx:id="BotonEntrar" onAction="#logeado" alignment="CENTER" layoutX="395.0" layoutY="533.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73;                   -fx-text-fill: white;                   -fx-border-color: orange;" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
+              <font>
             <Font name="System Bold" size="15.0" />
          </font>
          <cursor>

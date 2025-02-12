@@ -17,9 +17,8 @@ public class ConectionDB {
 
     //Abrir la conexión de la BBDD
     public static void openConn() {
-
-        // Primero se comprueba que carga el controlador (Si está la librería necesaria)
         try {
+        // Primero se comprueba que carga el controlador (Si está la librería necesaria)
             Class.forName("com.mysql.jdbc.Driver").newInstance();
         } catch (Exception ex) {
 

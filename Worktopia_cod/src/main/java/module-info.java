@@ -15,9 +15,9 @@ module org.example.worktopia_cod {
     requires java.sql;
 
 
-    opens Controladores to javafx.fxml;
+    opens Modelos to javafx.fxml;
     opens Aplicaciones to javafx.graphics;
     exports Aplicaciones;
-    exports Controladores;
+    exports Modelos;
 
 }
