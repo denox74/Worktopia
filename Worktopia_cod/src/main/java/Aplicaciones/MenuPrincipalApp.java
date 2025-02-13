@@ -13,6 +13,8 @@ public class MenuPrincipalApp extends Application {
         FXMLLoader menuPrincipal = new FXMLLoader(MenuPrincipalApp.class.getResource("/Menus/MenuPrincipal.fxml"));
         menu.setTitle("Menu Principal");
         menu.setScene(new Scene(menuPrincipal.load()));
+        menu.getMaxHeight();
+        menu.setMaxWidth(1300);
         menu.show();
     }
     public static void main(String[] args) {

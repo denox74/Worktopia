@@ -12,11 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-
 public class MenuPrincipal {
 
     @FXML
-    private Button BotonEntrar;
+    private Button BtnEntrar;
     @FXML
     private TextField usuario;
     @FXML
@@ -33,9 +32,10 @@ public class MenuPrincipal {
         if (user.equals("admin") && pass.equals("admin")) {
             alerta("Login correcto");
             nuevaVentana();
-            ((Stage) BotonEntrar.getScene().getWindow()).close();
+            ((Stage) BtnEntrar.getScene().getWindow()).close();
         }else if (!user.equals("admin") && !pass.equals("admin")){
             alerta("Login incorrecto");
+
         }else{
             alerta("Tienes que rellenar los campos");
         }

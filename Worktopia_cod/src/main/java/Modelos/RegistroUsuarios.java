@@ -1,19 +1,22 @@
 package Modelos;
 
+import ConexionDB.ConectionDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 
 
 public class RegistroUsuarios {
-
+    private final ConectionDB conectionDB = new ConectionDB();
     @FXML private TextField dni;
     @FXML private TextField nombre;
     @FXML private TextField primerApellido;
@@ -49,50 +52,86 @@ public class RegistroUsuarios {
         Facturaciones();
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
+    public void guardarUsuario(ActionEvent event){
+        agregarUsuario();
+    }
 
-    public void ListaUsuarios(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaUsuarios.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public void agregarUsuario() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Usuario agregado correctamente");
+        String dni = this.dni.getText();
+        String nombre = this.nombre.getText();
+        String primerApellido = this.primerApellido.getText();
+        String segundoApellido = this.segundoApellido.getText();
+        String eMail = this.eMail.getText();
+        String telefono = this.telefono.getText();
+        if (dni.isEmpty() || nombre.isEmpty() || primerApellido.isEmpty() || segundoApellido.isEmpty() || eMail.isEmpty() || telefono.isEmpty()) {
+            ;alert.setContentText("Debe completar todos los campos");
+        }else{
+            String query = "INSERT INTO usuarios (dni, nombre, primerApellido, segundoApellido, eMail, telefono) " +
+                           "VALUES (?, ?, ?, ?, ?, ?)";
+            try {
+                PreparedStatement stmt = conectionDB.getConn().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+                stmt.setString(1, dni);
+                stmt.setString(2, nombre);
+                stmt.setString(3, primerApellido);
+                stmt.setString(4, segundoApellido);
+                stmt.setString(5, eMail);
+                stmt.setString(6, telefono);
+                stmt.executeUpdate();
+            } catch (Exception e) {
+                alert.setContentText("Error al agregar usuario");
+                alert.show();
+            }
         }
+
+
     }
-    public void Reservas() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Reservas.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        public void ListaUsuarios () {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaUsuarios.fxml"));
+                Parent cargaVentana = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(cargaVentana));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
-    public void ListaReservas() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaReservas.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        public void Reservas() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Reservas.fxml"));
+                Parent cargaVentana = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(cargaVentana));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
-    public void Facturaciones() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Facturacion.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        public void ListaReservas() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaReservas.fxml"));
+                Parent cargaVentana = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(cargaVentana));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
+        public void Facturaciones() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Facturacion.fxml"));
+                Parent cargaVentana = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(cargaVentana));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
 
 }

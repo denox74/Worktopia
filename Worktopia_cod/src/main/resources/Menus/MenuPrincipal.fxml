@@ -8,14 +8,14 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.MenuPrincipal">
+<AnchorPane id="panel" prefHeight="830.0" prefWidth="1300.0" styleClass="AnchorPane" stylesheets="@../Estilos/EstilosMenuPrincipal.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.MenuPrincipal">
     <children>
-      <ImageView fx:id="imagenPrincipal" fitHeight="345.0" fitWidth="602.0" layoutX="149.0" layoutY="14.0" pickOnBounds="true" smooth="false">
+      <ImageView fx:id="imagenPrincipal" fitHeight="449.0" fitWidth="797.0" layoutX="252.0" layoutY="14.0" pickOnBounds="true" smooth="false">
          <image>
             <Image url="@../Imagenes/ImagenPrincipalLogin.png" />
          </image>
       </ImageView>
-          <Button fx:id="BotonEntrar" onAction="#logeado" alignment="CENTER" layoutX="395.0" layoutY="533.0" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #4DFD73;                   -fx-text-fill: white;                   -fx-border-color: orange;" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
+          <Button id="BtnEntrar" fx:id="BtnEntrar" alignment="CENTER" layoutX="595.0" layoutY="618.0" onAction="#logeado" prefHeight="39.0" prefWidth="110.0" styleClass="BtnEntrar" stylesheets="@../Estilos/EstilosMenuPrincipal.css" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
               <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -23,7 +23,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-        <PasswordField fx:id="password" alignment="TOP_CENTER" layoutX="327.0" layoutY="463.0" prefHeight="32.0" prefWidth="245.0" promptText="CONTRASEÑA" style="-fx-border-color: black; -fx-border-width: 3;">
+        <PasswordField id="textfieldPassword" fx:id="password" alignment="TOP_CENTER" layoutX="527.0" layoutY="548.0" prefHeight="32.0" prefWidth="245.0" promptText="CONTRASEÑA" styleClass="textfielPassword" stylesheets="@../Estilos/EstilosMenuPrincipal.css">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
@@ -31,21 +31,21 @@
                 <Insets />
             </opaqueInsets>
         </PasswordField>
-      <TextField fx:id="usuario" alignment="TOP_CENTER" layoutX="327.0" layoutY="387.0" prefHeight="32.0" prefWidth="245.0" promptText="USUARIO" style="-fx-border-color: black; -fx-border-width: 3;" />
+      <TextField id="textFieldUsuario" fx:id="usuario" alignment="TOP_CENTER" layoutX="527.0" layoutY="472.0" prefHeight="32.0" prefWidth="245.0" promptText="USUARIO" styleClass="textfieldUsuario" stylesheets="@../Estilos/EstilosMenuPrincipal.css" />
 
-      <Label layoutX="360.0" layoutY="630.0" text="Proyecto Worktopia Version 1.0">
+      <Label layoutX="560.0" layoutY="715.0" text="Proyecto Worktopia Version 1.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label layoutX="272.0" layoutY="655.0" text="Realizado por Eliú Manuel Viera Lorenzo y David Liaño Macias">
+      <Label layoutX="472.0" layoutY="740.0" text="Realizado por Eliú Manuel Viera Lorenzo y David Liaño Macias">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font></Label>
-      <Line endX="305.0" layoutX="445.0" layoutY="435.0" startX="-296.0" />
-      <Line endX="294.0" layoutX="457.0" layoutY="510.0" startX="-309.0" />
-      <Line endX="-104.0" layoutX="457.0" layoutY="638.0" startX="-309.0" />
-      <Line endX="-99.0" layoutX="849.0" layoutY="638.0" startX="-302.0" />
-      <Label id="olvidarPass" layoutX="320.0" layoutY="582.0" style="-fx-text-fill: Orange;" text="¿Se te ha olvidado la contraseña?">
+      <Line endX="305.0" layoutX="645.0" layoutY="520.0" startX="-296.0" />
+      <Line endX="294.0" layoutX="657.0" layoutY="595.0" startX="-309.0" />
+      <Line endX="-104.0" layoutX="657.0" layoutY="723.0" startX="-309.0" />
+      <Line endX="-99.0" layoutX="1049.0" layoutY="723.0" startX="-302.0" />
+      <Label id="olvidarPass" layoutX="520.0" layoutY="667.0" style="-fx-text-fill: Orange;" text="¿Se te ha olvidado la contraseña?">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>

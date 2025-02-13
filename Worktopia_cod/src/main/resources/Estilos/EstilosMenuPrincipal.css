@@ -1,0 +1,24 @@
+.AnchorPane{
+    -fx-background-color: #DDDEDE;
+}
+.BtnEntrar{
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: rgb(245, 242, 242);
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-border-color: orange;
+}
+
+.BtnEntrar:hover{
+    -fx-background-color:#046107;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2 ;
+}
+.textfieldUsuario{
+    -fx-border-color: #000000;
+    -fx-border-width: 3px;
+}
+.textfielPassword{
+    -fx-border-color: #000000;
+    -fx-border-width: 3px;
+}

@@ -7,24 +7,24 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
     <children>
-        <ImageView id="portada" fx:id="portadaListaReservas" fitHeight="117.0" fitWidth="119.0" layoutX="441.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView id="portada" fx:id="portadaListaReservas" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../Imagenes/bannerTopiaC.png" />
             </image></ImageView>
-        <Label layoutX="430.0" layoutY="113.0" text="Facturaciones">
+        <Label layoutX="578.0" layoutY="113.0" text="Facturaciones">
             <font>
                 <Font name="System Bold" size="22.0" />
             </font></Label>
-        <Line endX="461.0" layoutX="515.0" layoutY="587.0" startX="-452.0" strokeWidth="3.0" />
-        <Line endX="-21.79998779296875" layoutX="403.0" layoutY="130.0" startX="-340.0" strokeWidth="3.0" />
-        <Line endX="-13.0" layoutX="988.0" layoutY="130.0" startX="-373.79998779296875" strokeWidth="3.0" />
+        <Line endX="690.0" layoutX="520.0" layoutY="650.0" startX="-452.0" strokeWidth="3.0" />
+        <Line endX="155.0" layoutX="403.0" layoutY="130.0" startX="-340.0" strokeWidth="3.0" />
+        <Line endX="-5.0" layoutX="1209.0" layoutY="131.0" startX="-470.0" strokeWidth="3.0" />
         <TextField id="dnibuscar" fx:id="DNIBuscar" alignment="TOP_CENTER" layoutX="63.0" layoutY="147.0" prefHeight="32.0" prefWidth="249.0" promptText="DNI Usuario" style="-fx-border-color: black; -fx-border-width: 3;">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>
-        <Button fx:id="Reservas" contentDisplay="TOP" defaultButton="true" layoutX="469.0" layoutY="616.0" mnemonicParsing="false" onAction="#ventanaReservas" prefHeight="111.0" prefWidth="105.0" style="-fx-background-color: transparent;" text="Reservas">
+        <Button fx:id="Reservas" contentDisplay="TOP" defaultButton="true" layoutX="611.0" layoutY="665.0" mnemonicParsing="false" onAction="#ventanaReservas" prefHeight="111.0" prefWidth="105.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstilosListas.css" text="Reservas">
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -36,7 +36,7 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <Button fx:id="Facturacion" contentDisplay="TOP" defaultButton="true" layoutX="723.0" layoutY="613.0" mnemonicParsing="false" prefHeight="115.0" prefWidth="93.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Facturas">
+        <Button fx:id="Facturacion" contentDisplay="TOP" defaultButton="true" layoutX="865.0" layoutY="662.0" mnemonicParsing="false" prefHeight="115.0" prefWidth="93.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstilosListas.css" text="Facturas">
             <graphic>
                 <ImageView fitHeight="78.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -48,7 +48,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-        <Button fx:id="ListaReservas" contentDisplay="TOP" defaultButton="true" layoutX="589.0" layoutY="616.0" mnemonicParsing="false" onAction="#ventanaListaReservas" prefHeight="111.0" prefWidth="119.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Lista Reservas">
+        <Button fx:id="ListaReservas" contentDisplay="TOP" defaultButton="true" layoutX="731.0" layoutY="665.0" mnemonicParsing="false" onAction="#ventanaListaReservas" prefHeight="111.0" prefWidth="119.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstilosListas.css" text="Lista Reservas">
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -60,7 +60,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-        <Button fx:id="AgregarClientes" contentDisplay="TOP" defaultButton="true" layoutX="201.0" layoutY="616.0" mnemonicParsing="false" onAction="#ventanaRegistro" prefHeight="92.0" prefWidth="112.0" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Usuarios">
+        <Button fx:id="AgregarClientes" contentDisplay="TOP" defaultButton="true" layoutX="343.0" layoutY="665.0" mnemonicParsing="false" onAction="#ventanaRegistro" prefHeight="92.0" prefWidth="112.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstilosListas.css" text="Usuarios">
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -72,7 +72,7 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <Button fx:id="ListaClientes" contentDisplay="TOP" defaultButton="true" layoutX="331.0" layoutY="616.0" mnemonicParsing="false" onAction="#ventanaListaClientes" prefHeight="114.0" prefWidth="119.0" style="-fx-background-color: transparent;" text="Lista Clientes">
+        <Button fx:id="ListaClientes" contentDisplay="TOP" defaultButton="true" layoutX="473.0" layoutY="665.0" mnemonicParsing="false" onAction="#ventanaListaClientes" prefHeight="114.0" prefWidth="119.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstilosListas.css" text="Lista Clientes">
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -84,7 +84,7 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <Button fx:id="btnModificar" layoutX="348.0" layoutY="146.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" style="-fx-border-color: orange; -fx-font-weight: bold;" text="Modificar">
+        <Button fx:id="btnModificar" layoutX="348.0" layoutY="146.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Modificar">
             <graphic>
                 <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -92,7 +92,7 @@
                     </image>
                 </ImageView>
             </graphic></Button>
-        <Button fx:id="btnEliminar" layoutX="474.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" style="-fx-border-color: orange; -fx-font-weight: bold;" text="Eliminar">
+        <Button fx:id="btnEliminar" layoutX="474.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Eliminar">
             <graphic>
                 <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -103,10 +103,14 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-      <TableView layoutX="62.0" layoutY="197.0" prefHeight="368.0" prefWidth="916.0">
+      <TableView layoutX="54.0" layoutY="202.0" prefHeight="431.0" prefWidth="1155.0">
         <columns>
-          <TableColumn prefWidth="107.0" text="C1" />
-          <TableColumn prefWidth="111.0" text="C2" />
+          <TableColumn prefWidth="164.0" text="Nº Factura" />
+          <TableColumn prefWidth="168.0" text="Fecha Factura" />
+            <TableColumn prefWidth="173.0" text="Total" />
+            <TableColumn prefWidth="191.0" text="DNI Cliente" />
+            <TableColumn prefWidth="218.0" text="Estado del pago" />
+            <TableColumn prefWidth="240.0" text="Fecha Pago" />
         </columns>
       </TableView>
     </children>
