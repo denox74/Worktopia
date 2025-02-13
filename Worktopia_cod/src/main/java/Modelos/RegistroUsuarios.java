@@ -68,7 +68,7 @@ public class RegistroUsuarios {
         if (dni.isEmpty() || nombre.isEmpty() || primerApellido.isEmpty() || segundoApellido.isEmpty() || eMail.isEmpty() || telefono.isEmpty()) {
             ;alert.setContentText("Debe completar todos los campos");
         }else{
-            String query = "INSERT INTO usuarios (dni, nombre, primerApellido, segundoApellido, eMail, telefono) " +
+            String query = "INSERT INTO Clientes (dni, nombre, primerApellido, segundoApellido, eMail, telefono) " +
                            "VALUES (?, ?, ?, ?, ?, ?)";
             try {
                 PreparedStatement stmt = conectionDB.getConn().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
