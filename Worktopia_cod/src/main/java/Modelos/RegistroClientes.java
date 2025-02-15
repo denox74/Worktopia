@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 
 
-public class RegistroUsuarios {
+public class RegistroClientes {
     private final ConectionDB conectionDB = new ConectionDB();
     @FXML private TextField dni;
     @FXML private TextField nombre;
@@ -32,7 +32,7 @@ public class RegistroUsuarios {
 
 
 
-    public RegistroUsuarios(){
+    public RegistroClientes(){
     }
 
 

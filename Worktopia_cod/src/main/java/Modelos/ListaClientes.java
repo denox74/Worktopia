@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 
-public class ListaUsuarios {
+public class ListaClientes {
 
     @FXML
     private Button AgregarClientes;
@@ -31,7 +31,7 @@ public class ListaUsuarios {
     private TextField DNIbuscar;
 
 
-    public ListaUsuarios() {
+    public ListaClientes() {
 
     }
     public void ventanaRegistro(ActionEvent event){
