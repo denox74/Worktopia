@@ -43,7 +43,7 @@ public class MenuPrincipal {
 
     public void nuevaVentana(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/listaUsuarios.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaClientes.fxml"));
             Parent cargaVentana = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(cargaVentana));

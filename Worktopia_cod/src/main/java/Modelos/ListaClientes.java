@@ -1,15 +1,19 @@
 package Modelos;
 
+import Clases.Clientes;
+import ConexionDB.ConectionDB;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 public class ListaClientes {
 
@@ -30,7 +34,35 @@ public class ListaClientes {
     @FXML
     private TextField DNIbuscar;
 
+    /*
+    private TableView<Clientes> tablaClientes;
+    @FXML
+    private TableColumn<Clientes, Integer> colIdCliente;
+    @FXML
+    private TableColumn<Clientes, String> colNombre;
+    @FXML
+    private TableColumn<Clientes, String> colEmail;
+    @FXML
+    private TableColumn<Clientes, String> colTelefono;
+    @FXML
+    private TableColumn<Clientes, Boolean> colFrecuente;
+    @FXML
+    private TableColumn<Clientes, BigDecimal> colDescuento;
 
+    @FXML
+    public void initialize() {
+        colIdCliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        colFrecuente.setCellValueFactory(new PropertyValueFactory<>("frecuente"));
+        colDescuento.setCellValueFactory(new PropertyValueFactory<>("descuento"));
+
+        ObservableList<Clientes> clientesList = FXCollections.observableArrayList(ConectionDB.getClientes());
+        tablaClientes.setItems(clientesList);
+    }
+
+*/
     public ListaClientes() {
 
     }

@@ -1,5 +1,7 @@
 package Aplicaciones;
 
+import Clases.TestDBConnection;
+import ConexionDB.ConectionDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,7 +19,13 @@ public class MenuPrincipalApp extends Application {
         menu.setMaxWidth(1300);
         menu.show();
     }
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        ConectionDB.testConnection();
+
+
+
+
         launch();
     }
 }

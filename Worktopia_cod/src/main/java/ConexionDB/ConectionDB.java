@@ -1,6 +1,10 @@
 package ConexionDB;
 
+import Clases.Clientes;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,10 +20,11 @@ public class ConectionDB {
     private static ResultSet rs;
 
     //Abrir la conexión de la BBDD
-    public static void openConn() {
+    public static void openConn() throws ClassNotFoundException {
+        // Hay que asegurar que ejecuta el DRIVER de MySQL
+        Class.forName("com.mysql.cj.jdbc.Driver");
         try {
-        // Primero se comprueba que carga el controlador (Si está la librería necesaria)
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+
         } catch (Exception ex) {
 
         }
@@ -27,18 +32,19 @@ public class ConectionDB {
         // Seguidamente se intenta establecer al conexión
         try {
             String sUrl = URL + ":" + PORT + "/" + DATABASE + "?zeroDateTimeBehavior=convertToNull";
-            conn = DriverManager.getConnection(sUrl, USER, PASSWORD);
-            System.out.println(sUrl);
-        } catch (Exception e) {
-
+            conn = DriverManager.getConnection("jdbc:mysql://db4free.net:3306/worktopiadb?zeroDateTimeBehavior=convertToNull", USER, PASSWORD);
+            System.out.println("Connected to: " + sUrl);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
         }
 
         // Por último se carga el objeto de la clase Statement que se utilizará para realizar las consultas
         try {
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-
     }
 
     public static Connection getConn() {
@@ -48,14 +54,64 @@ public class ConectionDB {
     //Cuando se cierre la aplicación hay que cerrar la conexión a la BBDD
     public static void closeConn() {
         try {
-            conn.close();
+            if (conn != null) {
+                conn.close();
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConectionDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static Statement getStmt() {
         return stmt;
     }
+
+
+
+    // Método de prueba para verificar la conexión
+    public static void testConnection() throws ClassNotFoundException {
+        openConn();
+        if (conn != null) {
+            System.out.println("Connection test successful.");
+        } else {
+            System.out.println("Connection test failed.");
+        }
+        closeConn();
+    }
+
+
+
+    // Adquirir Clientes
+
+    public static List<Clientes> getClientes() {
+        List<Clientes> clientes = new ArrayList<>();
+        String query = "SELECT id_cliente, nombre, email, telefono, frecuente, descuento FROM Clientes";
+        try {
+            openConn();
+            if (conn != null) {
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()) {
+                    Clientes cliente = new Clientes(
+                            rs.getInt("id_cliente"),
+                            rs.getString("nombre"),
+                            rs.getString("email"),
+                            rs.getString("telefono"),
+                            rs.getBoolean("frecuente"),
+                            rs.getBigDecimal("descuento")
+                    );
+                    clientes.add(cliente);
+                }
+                rs.close();
+            }
+            closeConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return clientes;
+    }
+
+
 }
 
 

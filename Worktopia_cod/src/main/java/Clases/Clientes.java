@@ -1,76 +1,66 @@
 package Clases;
 
+import java.math.BigDecimal;
+
 public class Clientes {
 
-    private static int ID = 0;
+    private int idCliente;
     private String nombre;
-    private String apellido;
-    private String dni;
-    private String telefono;
     private String email;
-    private String usuario;
-    private String contrasena;
+    private String telefono;
+    private boolean frecuente;
+    private BigDecimal descuento;
 
-    public Clientes(String nombre, String apellido, String dni, String telefono, String email, String direccion, String ciudad, String provincia, String pais, String cp, String usuario, String contrasena) {
-        this.ID = ID;
+    public Clientes(int idCliente, String nombre, String email, String telefono, boolean frecuente, BigDecimal descuento) {
+        this.idCliente = idCliente;
         this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.telefono = telefono;
         this.email = email;
-
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-        ++ID;
+        this.telefono = telefono;
+        this.frecuente = frecuente;
+        this.descuento = descuento;
     }
 
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
 
     public String getNombre() {
         return nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public String getContrasena() {
-        return contrasena;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public String getEmail() {
+        return email;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public boolean isFrecuente() {
+        return frecuente;
+    }
+
+    public BigDecimal getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(BigDecimal descuento) {
+        this.descuento = descuento;
     }
 }

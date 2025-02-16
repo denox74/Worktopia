@@ -103,14 +103,14 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <TableView layoutX="50.0" layoutY="201.0" prefHeight="428.0" prefWidth="1173.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
+      <TableView id="tablaClientes" layoutX="50.0" layoutY="201.0" prefHeight="428.0" prefWidth="1173.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
         <columns>
-            <TableColumn id="nºUsuario" prefWidth="130.0" text="Nº Usuario" />
-          <TableColumn id="dniUsuario" prefWidth="149.0" text="DNI" />
-          <TableColumn id="nombreUsuario" prefWidth="161.0" text="Nombre" />
-            <TableColumn id="apellido" prefWidth="210.0" text="Apellido" />
-            <TableColumn id="email" prefWidth="309.0" text="Email" />
-            <TableColumn id="telefono" minWidth="8.0" prefWidth="213.0" text="Telefono" />
+            <TableColumn fx:id="colIdCliente" prefWidth="130.0" text="Nº Cliente" />
+            <TableColumn fx:id="colNombre" prefWidth="161.0" text="Nombre" />
+            <TableColumn fx:id="colEmail" prefWidth="309.0" text="Email" />
+            <TableColumn fx:id="colTelefono" prefWidth="213.0" text="Telefono" />
+            <TableColumn fx:id="colFrecuente" prefWidth="100.0" text="Frecuente" />
+            <TableColumn fx:id="colDescuento" prefWidth="100.0" text="Descuento" />
         </columns>
       </TableView>
     </children>
