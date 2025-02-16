@@ -30,3 +30,16 @@
     -fx-font-weight: bold;
     -fx-text-fill: orange;
 }
+.BtnOficina{
+    -fx-background-color:  transparent;
+}
+.BtnOficina:hover{
+    -fx-background-color:  transparent;
+    -fx-border-color: #1eff00;
+    -fx-border-width: 3;
+}
+.BtnOficina:pressed{
+    -fx-background-color:  transparent;
+    -fx-scale-y: 1;
+    -fx-scale-x: 1;
+}
