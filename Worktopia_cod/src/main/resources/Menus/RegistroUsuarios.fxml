@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.RegistroUsuarios">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.RegistroClientes">
     <children>
       <ImageView id="portada" fx:id="portada" fitHeight="117.0" fitWidth="119.0" layoutX="591.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -45,7 +45,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-        <Button id="reservas" fx:id="Reservas" contentDisplay="TOP" defaultButton="true" layoutX="608.0" layoutY="669.0" mnemonicParsing="false" onAction="#ventanaReservas" prefHeight="111.0" prefWidth="105.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Reservas">
+        <Button id="reservas" fx:id="Reservas" onAction="#ventanaReservas" contentDisplay="TOP" defaultButton="true" layoutX="608.0" layoutY="669.0" mnemonicParsing="false"  prefHeight="111.0" prefWidth="105.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Reservas">
             <graphic>
                 <ImageView id="reservas" fitHeight="79.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                     <image>

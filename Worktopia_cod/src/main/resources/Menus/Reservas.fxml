@@ -120,6 +120,25 @@
       <TextField id="horario" fx:id="horario" layoutX="1046.0" layoutY="312.0" />
       <TextField id="precio" fx:id="precio" layoutX="1046.0" layoutY="347.0" />
       <DatePicker layoutX="948.0" layoutY="202.0" promptText="Fechas" styleClass="fechas" stylesheets="@../Estilos/EstiloReservas.css" />
+      <Button fx:id="BtnOficina1" layoutX="500.0" layoutY="466.0" mnemonicParsing="false" prefHeight="182.0" prefWidth="168.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Oficina 1">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <Button id="oficina2" fx:id="BtnOficina2" layoutX="664.0" layoutY="466.0" mnemonicParsing="false" prefHeight="182.0" prefWidth="155.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Oficina 2">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button id="oficina2" fx:id="BtnConferencias" layoutX="118.0" layoutY="150.0" mnemonicParsing="false" prefHeight="275.0" prefWidth="155.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Conferencias 1">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="BtnConferencias2" layoutX="375.0" layoutY="150.0" mnemonicParsing="false" prefHeight="176.0" prefWidth="168.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Conferencias 2">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
     </children>
 
 
