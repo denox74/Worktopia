@@ -32,7 +32,7 @@ public class ListaClientes {
     @FXML
     private ListView listaSQL;
     @FXML
-    private TextField DNIbuscar;
+    private TextField dniBuscar;
 
     /*
     private TableView<Clientes> tablaClientes;
@@ -44,10 +44,7 @@ public class ListaClientes {
     private TableColumn<Clientes, String> colEmail;
     @FXML
     private TableColumn<Clientes, String> colTelefono;
-    @FXML
-    private TableColumn<Clientes, Boolean> colFrecuente;
-    @FXML
-    private TableColumn<Clientes, BigDecimal> colDescuento;
+
 
     @FXML
     public void initialize() {
@@ -55,8 +52,7 @@ public class ListaClientes {
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-        colFrecuente.setCellValueFactory(new PropertyValueFactory<>("frecuente"));
-        colDescuento.setCellValueFactory(new PropertyValueFactory<>("descuento"));
+
 
         ObservableList<Clientes> clientesList = FXCollections.observableArrayList(ConectionDB.getClientes());
         tablaClientes.setItems(clientesList);
@@ -85,7 +81,7 @@ public class ListaClientes {
 
     public void RegistroUsuarios(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroUsuarios.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroClientes.fxml"));
             Parent cargaVentana = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(cargaVentana));

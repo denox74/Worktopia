@@ -82,9 +82,12 @@ public class ConectionDB {
 
     // Adquirir Clientes
 
+
+
+
     public static List<Clientes> getClientes() {
         List<Clientes> clientes = new ArrayList<>();
-        String query = "SELECT id_cliente, dni, nombre, primerApellido, segundoApellido, email, telefono, contrasenia, frecuente, descuento FROM Clientes";
+        String query = "SELECT id_cliente, dni, nombre, primerApellido, segundoApellido, email, telefono FROM Clientes";
         try {
             openConn();
             if (conn != null) {
@@ -97,10 +100,8 @@ public class ConectionDB {
                             rs.getString("primerApellido"),
                             rs.getString("segundoApellido"),
                             rs.getString("email"),
-                            rs.getString("telefono"),
-                            rs.getString("contrasenia"),
-                            rs.getBoolean("frecuente"),
-                            rs.getBigDecimal("descuento")
+                            rs.getString("telefono")
+
                     );
                     clientes.add(cliente);
                 }

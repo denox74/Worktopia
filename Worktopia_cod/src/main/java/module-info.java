@@ -17,6 +17,7 @@ module org.example.worktopia_cod {
 
     opens Modelos to javafx.fxml;
     opens Aplicaciones to javafx.graphics;
+    opens Clases to javafx.base;
     exports Aplicaciones;
     exports Modelos;
 
