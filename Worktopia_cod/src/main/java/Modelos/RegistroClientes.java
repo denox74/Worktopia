@@ -65,19 +65,16 @@ public class RegistroClientes {
         String segundoApellido = this.segundoApellido.getText();
         String eMail = this.eMail.getText();
         String telefono = this.telefono.getText();
-        if (dni.isEmpty() || nombre.isEmpty() || primerApellido.isEmpty() || segundoApellido.isEmpty() || eMail.isEmpty() || telefono.isEmpty()) {
+        if (nombre.isEmpty() || primerApellido.isEmpty() || segundoApellido.isEmpty() || eMail.isEmpty() || telefono.isEmpty()) {
             ;alert.setContentText("Debe completar todos los campos");
         }else{
-            String query = "INSERT INTO Clientes (dni, nombre, primerApellido, segundoApellido, eMail, telefono) " +
-                           "VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Clientes (nombre, eMail, telefono) " +
+                           "VALUES (?, ?, ?, ?)";
             try {
                 PreparedStatement stmt = conectionDB.getConn().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-                stmt.setString(1, dni);
-                stmt.setString(2, nombre);
-                stmt.setString(3, primerApellido);
-                stmt.setString(4, segundoApellido);
-                stmt.setString(5, eMail);
-                stmt.setString(6, telefono);
+                stmt.setString(2, (nombre + " " + primerApellido + " " + segundoApellido));
+                stmt.setString(3, eMail);
+                stmt.setString(4, telefono);
                 stmt.executeUpdate();
             } catch (Exception e) {
                 alert.setContentText("Error al agregar usuario");

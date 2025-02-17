@@ -30,11 +30,9 @@ public class ListaClientes {
     @FXML
     private Button btnEliminar;
     @FXML
-    private ListView listaSQL;
-    @FXML
     private TextField DNIbuscar;
 
-    /*
+/*
     private TableView<Clientes> tablaClientes;
     @FXML
     private TableColumn<Clientes, Integer> colIdCliente;
@@ -61,8 +59,8 @@ public class ListaClientes {
         ObservableList<Clientes> clientesList = FXCollections.observableArrayList(ConectionDB.getClientes());
         tablaClientes.setItems(clientesList);
     }
-
 */
+
     public ListaClientes() {
 
     }

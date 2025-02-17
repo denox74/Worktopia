@@ -22,10 +22,6 @@ public class MenuPrincipalApp extends Application {
 
     public static void main(String[] args) throws ClassNotFoundException {
         ConectionDB.testConnection();
-
-
-
-
         launch();
     }
 }
