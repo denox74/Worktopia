@@ -1,6 +1,5 @@
 package Aplicaciones;
 
-import Clases.TestDBConnection;
 import ConexionDB.ConectionDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +21,7 @@ public class MenuPrincipalApp extends Application {
 
     public static void main(String[] args) throws ClassNotFoundException {
         ConectionDB.testConnection();
-
+        ConectionDB.testGetClientes();
 
 
 
