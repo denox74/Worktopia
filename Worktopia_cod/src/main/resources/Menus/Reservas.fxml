@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" style="-fx-background-color: #DDDEDE;" styleClass="AnchorPane" stylesheets="@../Estilos/EstiloReservas.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Reservas">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" style="-fx-background-color: #DDDEDE;" styleClass="AnchorPane" stylesheets="@../Estilos/EstiloReservas.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Reservas">
     <children>
         <ImageView fx:id="portada" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -55,7 +55,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-        <Button fx:id="AgregarClientes" contentDisplay="TOP" defaultButton="true" layoutX="343.0" layoutY="672.0" mnemonicParsing="false" onAction="#ventanaRegistro" prefHeight="92.0" prefWidth="112.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
+        <Button fx:id="AgregarClientes" contentDisplay="TOP" defaultButton="true" layoutX="343.0" layoutY="672.0" mnemonicParsing="false" onAction="#ventanaRegistro" prefHeight="92.0" prefWidth="112.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Clientes">
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -91,7 +91,7 @@
          </font>
       </Label>
       <Line endX="-33.0" layoutX="1228.0" layoutY="268.0" startX="-324.0" strokeWidth="3.0" />
-      <ImageView fitHeight="501.0" fitWidth="706.0" layoutX="118.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="501.0" fitWidth="717.0" layoutX="118.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Imagenes/salasCoworkingFondo1.png" />
          </image>

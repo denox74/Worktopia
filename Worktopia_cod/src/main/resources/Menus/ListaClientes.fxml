@@ -7,13 +7,13 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" styleClass="AnchorPane" stylesheets="@../Estilos/EstilosListas.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ListaClientes">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" styleClass="AnchorPane" stylesheets="@../Estilos/EstilosListas.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ListaClientes">
     <children>
         <ImageView fx:id="portada" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../Imagenes/bannerTopiaC.png" />
             </image></ImageView>
-        <Label layoutX="562.0" layoutY="116.0" text="Lista De Usuarios">
+        <Label layoutX="562.0" layoutY="116.0" text="Lista De Clientes">
             <font>
                 <Font name="System Bold" size="22.0" />
             </font></Label>
@@ -60,7 +60,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-        <Button fx:id="AgregarClientes" contentDisplay="TOP" defaultButton="true" layoutX="343.0" layoutY="667.0" mnemonicParsing="false" onAction="#ventanaRegistro" prefHeight="92.0" prefWidth="112.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstilosListas.css" text="Usuarios">
+        <Button fx:id="AgregarClientes" contentDisplay="TOP" defaultButton="true" layoutX="343.0" layoutY="667.0" mnemonicParsing="false" onAction="#ventanaRegistro" prefHeight="92.0" prefWidth="112.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstilosListas.css" text="Clientes">
             <graphic>
                 <ImageView fitHeight="79.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -84,25 +84,25 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-      <Button id="modificar" layoutX="348.0" layoutY="146.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Modificar">
-         <graphic>
-            <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Imagenes/editar-perfil.png" />
-               </image>
-            </ImageView>
-         </graphic></Button>
-      <Button id="eliminar" layoutX="474.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Eliminar">
-         <graphic>
-            <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
-               </image></ImageView>
-         </graphic>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Button>
+        <Button id="modificar" layoutX="348.0" layoutY="146.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Modificar">
+            <graphic>
+                <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Imagenes/editar-perfil.png" />
+                    </image>
+                </ImageView>
+            </graphic></Button>
+        <Button id="eliminar" layoutX="474.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Eliminar">
+            <graphic>
+                <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
+                    </image></ImageView>
+            </graphic>
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor>
+        </Button>
         <TableView fx:id="tablaClientes" layoutX="50.0" layoutY="201.0" prefHeight="428.0" prefWidth="1173.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
             <columns>
                 <TableColumn fx:id="colIdCliente" prefWidth="130.0" text="Nº Cliente" />
@@ -112,8 +112,7 @@
                 <TableColumn fx:id="colSegundoApellido" prefWidth="161.0" text="Segundo Apellido" />
                 <TableColumn fx:id="colEmail" prefWidth="309.0" text="Email" />
                 <TableColumn fx:id="colTelefono" prefWidth="213.0" text="Telefono" />
-                <TableColumn fx:id="colFrecuente" prefWidth="100.0" text="Frecuente" />
-                <TableColumn fx:id="colDescuento" prefWidth="100.0" text="Descuento" />
+
             </columns>
         </TableView>
     </children>

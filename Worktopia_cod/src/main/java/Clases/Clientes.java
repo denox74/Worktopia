@@ -1,31 +1,27 @@
 package Clases;
 
-import java.math.BigDecimal;
-
 public class Clientes {
 
     private int id_cliente;
-    private String DNI;
+    private String dni;
     private String nombre;
     private String primerApellido;
     private String segundoApellido;
     private String email;
     private String telefono;
     private String contrasenia;
-    private boolean frecuente;
-    private BigDecimal descuento;
 
-    public Clientes(int id_cliente, String dni, String nombre, String primerApellido, String segundoApellido, String email, String telefono, String contrasenia, boolean frecuente, BigDecimal descuento) {
+
+    public Clientes(int id_cliente, String dni, String nombre, String primerApellido, String segundoApellido, String email, String telefono) {
         this.id_cliente = id_cliente;
-        this.DNI = dni;
+        this.dni = dni;
         this.nombre = nombre;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
         this.email = email;
         this.telefono = telefono;
         this.contrasenia = contrasenia;
-        this.frecuente = frecuente;
-        this.descuento = descuento;
+
     }
 
     public int getIdCliente() {
@@ -60,17 +56,6 @@ public class Clientes {
         this.telefono = telefono;
     }
 
-    public boolean isFrecuente() {
-        return frecuente;
-    }
-
-    public BigDecimal getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(BigDecimal descuento) {
-        this.descuento = descuento;
-    }
 
 
     public int getId_cliente() {
@@ -81,12 +66,8 @@ public class Clientes {
         this.id_cliente = id_cliente;
     }
 
-    public String getDNI() {
-        return DNI;
-    }
-
-    public void setDNI(String DNI) {
-        this.DNI = DNI;
+    public String getDni() {
+        return dni;
     }
 
     public String getPrimerApellido() {
@@ -113,24 +94,19 @@ public class Clientes {
         this.contrasenia = contrasenia;
     }
 
-    public void setFrecuente(boolean frecuente) {
-        this.frecuente = frecuente;
-    }
+
 
     @Override
     public String toString() {
         return "Clientes{" +
                 "id_cliente=" + id_cliente +
-                ", dni='" + DNI + '\'' +
+                ", dni='" + dni + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", primerApellido='" + primerApellido + '\'' +
                 ", segundoApellido='" + segundoApellido + '\'' +
                 ", email='" + email + '\'' +
                 ", telefono='" + telefono + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                ", frecuente=" + frecuente +
-                ", descuento=" + descuento +
-                '}';
+                ", contrasenia='" + contrasenia + '\'' + '}';
     }
 }
 
