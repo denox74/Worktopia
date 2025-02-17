@@ -4,28 +4,36 @@ import java.math.BigDecimal;
 
 public class Clientes {
 
-    private int idCliente;
+    private int id_cliente;
+    private String DNI;
     private String nombre;
+    private String primerApellido;
+    private String segundoApellido;
     private String email;
     private String telefono;
+    private String contrasenia;
     private boolean frecuente;
     private BigDecimal descuento;
 
-    public Clientes(int idCliente, String nombre, String email, String telefono, boolean frecuente, BigDecimal descuento) {
-        this.idCliente = idCliente;
+    public Clientes(int id_cliente, String dni, String nombre, String primerApellido, String segundoApellido, String email, String telefono, String contrasenia, boolean frecuente, BigDecimal descuento) {
+        this.id_cliente = id_cliente;
+        this.DNI = dni;
         this.nombre = nombre;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
         this.email = email;
         this.telefono = telefono;
+        this.contrasenia = contrasenia;
         this.frecuente = frecuente;
         this.descuento = descuento;
     }
 
     public int getIdCliente() {
-        return idCliente;
+        return id_cliente;
     }
 
     public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+        this.id_cliente = idCliente;
     }
 
     public String getNombre() {
@@ -63,4 +71,66 @@ public class Clientes {
     public void setDescuento(BigDecimal descuento) {
         this.descuento = descuento;
     }
+
+
+    public int getId_cliente() {
+        return id_cliente;
+    }
+
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+
+    public String getDNI() {
+        return DNI;
+    }
+
+    public void setDNI(String DNI) {
+        this.DNI = DNI;
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public void setFrecuente(boolean frecuente) {
+        this.frecuente = frecuente;
+    }
+
+    @Override
+    public String toString() {
+        return "Clientes{" +
+                "id_cliente=" + id_cliente +
+                ", dni='" + DNI + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", primerApellido='" + primerApellido + '\'' +
+                ", segundoApellido='" + segundoApellido + '\'' +
+                ", email='" + email + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", contrasenia='" + contrasenia + '\'' +
+                ", frecuente=" + frecuente +
+                ", descuento=" + descuento +
+                '}';
+    }
 }
+

@@ -103,16 +103,19 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <TableView id="tablaClientes" layoutX="50.0" layoutY="201.0" prefHeight="428.0" prefWidth="1173.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
-        <columns>
-            <TableColumn fx:id="colIdCliente" prefWidth="130.0" text="Nº Cliente" />
-            <TableColumn fx:id="colNombre" prefWidth="161.0" text="Nombre" />
-            <TableColumn fx:id="colEmail" prefWidth="309.0" text="Email" />
-            <TableColumn fx:id="colTelefono" prefWidth="213.0" text="Telefono" />
-            <TableColumn fx:id="colFrecuente" prefWidth="100.0" text="Frecuente" />
-            <TableColumn fx:id="colDescuento" prefWidth="100.0" text="Descuento" />
-        </columns>
-      </TableView>
+        <TableView fx:id="tablaClientes" layoutX="50.0" layoutY="201.0" prefHeight="428.0" prefWidth="1173.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
+            <columns>
+                <TableColumn fx:id="colIdCliente" prefWidth="130.0" text="Nº Cliente" />
+                <TableColumn fx:id="colDNI" prefWidth="130.0" text="DNI" />
+                <TableColumn fx:id="colNombre" prefWidth="161.0" text="Nombre" />
+                <TableColumn fx:id="colPrimerApellido" prefWidth="161.0" text="Primer Apellido" />
+                <TableColumn fx:id="colSegundoApellido" prefWidth="161.0" text="Segundo Apellido" />
+                <TableColumn fx:id="colEmail" prefWidth="309.0" text="Email" />
+                <TableColumn fx:id="colTelefono" prefWidth="213.0" text="Telefono" />
+                <TableColumn fx:id="colFrecuente" prefWidth="100.0" text="Frecuente" />
+                <TableColumn fx:id="colDescuento" prefWidth="100.0" text="Descuento" />
+            </columns>
+        </TableView>
     </children>
 
 
