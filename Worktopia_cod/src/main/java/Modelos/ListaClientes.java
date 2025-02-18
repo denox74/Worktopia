@@ -34,12 +34,18 @@ public class ListaClientes {
     @FXML
     private TextField dniBuscar;
 
-    /*
+    @FXML
     private TableView<Clientes> tablaClientes;
     @FXML
     private TableColumn<Clientes, Integer> colIdCliente;
     @FXML
+    private TableColumn<Clientes, String> colDNI;
+    @FXML
     private TableColumn<Clientes, String> colNombre;
+    @FXML
+    private TableColumn<Clientes, String> colPrimerApellido;
+    @FXML
+    private TableColumn<Clientes, String> colSegundoApellido;
     @FXML
     private TableColumn<Clientes, String> colEmail;
     @FXML
@@ -48,8 +54,11 @@ public class ListaClientes {
 
     @FXML
     public void initialize() {
-        colIdCliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
+        colIdCliente.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
+        colDNI.setCellValueFactory(new PropertyValueFactory<>("dni"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colPrimerApellido.setCellValueFactory(new PropertyValueFactory<>("primerApellido"));
+        colSegundoApellido.setCellValueFactory(new PropertyValueFactory<>("segundoApellido"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
 
@@ -58,13 +67,13 @@ public class ListaClientes {
         tablaClientes.setItems(clientesList);
     }
 
-*/
+
     public ListaClientes() {
 
     }
     public void ventanaRegistro(ActionEvent event){
-    RegistroUsuarios();
-    ((Stage) AgregarClientes.getScene().getWindow()).close();
+        RegistroUsuarios();
+        ((Stage) AgregarClientes.getScene().getWindow()).close();
     }
     public void ventanaReservas(ActionEvent event){
         Reservas();
