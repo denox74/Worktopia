@@ -14,6 +14,11 @@
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2 ;
 }
+.BtnEntrar:pressed{
+    -fx-background-color: #047f07;
+    -fx-scale-y: 1;
+    -fx-scale-x: 1;
+}
 .textfieldUsuario{
     -fx-border-color: #000000;
     -fx-border-width: 3px;

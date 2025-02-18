@@ -24,6 +24,11 @@
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2 ;
 }
+.BtnRegistro:pressed{
+    -fx-background-color: Transparent;
+    -fx-scale-y: 0.98;
+    -fx-scale-x: 0.98;
+}
 .fechas{
     -fx-background-color: #FFFFFF;
     -fx-font-size: 15px;
@@ -31,15 +36,15 @@
     -fx-text-fill: orange;
 }
 .BtnOficina{
-    -fx-background-color:  transparent;
+    -fx-background-color:  Transparent;
 }
 .BtnOficina:hover{
-    -fx-background-color:  transparent;
+    -fx-background-color:  Transparent;
     -fx-border-color: #1eff00;
     -fx-border-width: 3;
 }
 .BtnOficina:pressed{
-    -fx-background-color:  transparent;
-    -fx-scale-y: 1;
-    -fx-scale-x: 1;
+    -fx-background-color:  Transparent;
+    -fx-scale-y: 0.98;
+    -fx-scale-x: 0.98;
 }

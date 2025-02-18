@@ -13,15 +13,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Facturacion {
-    @FXML
-    private Button AgregarClientes;
+    @FXML private Button AgregarClientes;
     @FXML private Button Reservas;
     @FXML private Button ListaReservas;
     @FXML private Button ListaClientes;
     @FXML private Button btnModificar;
     @FXML private Button btnEliminar;
     @FXML private TextField DNIbuscar;
-    @FXML private ListView listaSQL;
 
     public Facturacion(){
     }
@@ -44,7 +42,7 @@ public class Facturacion {
 
     public void RegistroUsuarios(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroUsuarios.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroClientes.fxml"));
             Parent cargaVentana = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(cargaVentana));

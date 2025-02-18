@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 
@@ -71,24 +72,28 @@ public class ListaClientes {
     public ListaClientes() {
 
     }
-    public void ventanaRegistro(ActionEvent event){
+
+    public void ventanaRegistro(ActionEvent event) {
         RegistroUsuarios();
         ((Stage) AgregarClientes.getScene().getWindow()).close();
     }
-    public void ventanaReservas(ActionEvent event){
+
+    public void ventanaReservas(ActionEvent event) {
         Reservas();
         ((Stage) Reservas.getScene().getWindow()).close();
     }
-    public void ventanaListaReservas(ActionEvent event){
+
+    public void ventanaListaReservas(ActionEvent event) {
         ListaReservas();
         ((Stage) ListaReservas.getScene().getWindow()).close();
     }
-    public void ventanaFacturaciones(ActionEvent event){
+
+    public void ventanaFacturaciones(ActionEvent event) {
         Facturaciones();
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
 
-    public void RegistroUsuarios(){
+    public void RegistroUsuarios() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroClientes.fxml"));
             Parent cargaVentana = loader.load();
@@ -100,6 +105,7 @@ public class ListaClientes {
         }
 
     }
+
     public void Reservas() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Reservas.fxml"));
@@ -111,6 +117,7 @@ public class ListaClientes {
             throw new RuntimeException(e);
         }
     }
+
     public void ListaReservas() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaReservas.fxml"));
@@ -122,6 +129,7 @@ public class ListaClientes {
             throw new RuntimeException(e);
         }
     }
+
     public void Facturaciones() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Facturacion.fxml"));

@@ -1,7 +1,7 @@
 .AnchorPane{
     -fx-background-color: #DDDEDE;
 }
-.BtnMenu{
+.BtnMenu{ /*Botones del menu*/
     -fx-background-color: Transparent;
     -fx-text-fill: rgb(0, 0, 0);
     -fx-font-size: 15px;
@@ -12,11 +12,16 @@
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2 ;
 }
+.BtnMenu:pressed{
+    -fx-background-color: Trasparent;
+    -fx-scale-y: 1;
+    -fx-scale-x: 1;
+}
 .textFieldRegistro{
     -fx-border-color: #000000;
     -fx-border-width: 3;
 }
-.BtnRegistro{
+.BtnRegistro{ /*Botones de Confirmar*/
     -fx-background-color:  #4DFD73;
     -fx-border-color: #FFA500FF;
     -fx-text-fill: #FFFFFF;
@@ -27,5 +32,11 @@
     -fx-background-color: #046107;
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2 ;
+}
+
+.BtnRegistro:pressed{
+    -fx-background-color: #047f07;
+    -fx-scale-y: 1;
+    -fx-scale-x: 1;
 }
 
