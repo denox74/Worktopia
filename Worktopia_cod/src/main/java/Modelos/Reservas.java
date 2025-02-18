@@ -33,6 +33,50 @@ public class Reservas {
     private TextField precio;
     @FXML
     private VBox contenedorHorarios;
+    @FXML
+    private Button Mesa1;
+    @FXML
+    private Button Mesa2;
+    @FXML
+    private Button Mesa3;
+    @FXML
+    private Button Mesa4;
+    @FXML
+    private Button Mesa5;
+    @FXML
+    private Button Mesa6;
+    @FXML
+    private Button Mesa7;
+    @FXML
+    private Button Mesa8;
+    @FXML
+    private Button Mesa9;
+    @FXML
+    private Button Mesa10;
+    @FXML
+    private Button Mesa11;
+    @FXML
+    private Button Mesa12;
+    @FXML
+    private Button Mesa13;
+    @FXML
+    private Button Mesa14;
+    @FXML
+    private Button Mesa15;
+    @FXML
+    private Button Mesa16;
+    @FXML
+    private Button Mesa17;
+    @FXML
+    private Button Mesa18;
+    @FXML
+    private Button BtnOficina1;
+    @FXML
+    private Button BtnOficina2;
+    @FXML
+    private Button BtnConferencias1;
+    @FXML
+    private Button BtnConferencias2;
 
     private Button BtnSeleccionado;
 
@@ -71,13 +115,22 @@ public class Reservas {
         if (BtnSeleccionado != null && BtnSeleccionado != BtnSeleccion) {
             cierreVentanaHorarios();
         }
-
         BtnSeleccionado = BtnSeleccion;
-
-        Bounds alinear = BtnSeleccion.localToScreen(BtnSeleccion.getBoundsInLocal());
-        contenedorHorarios.setTranslateX(alinear.getMinX());
-        contenedorHorarios.setTranslateY(alinear.getMinY());
         contenedorHorarios.setVisible(true);
+        Bounds bounds = BtnSeleccionado.localToScreen(BtnSeleccionado.getBoundsInLocal());
+        contenedorHorarios.setLayoutX(bounds.getMinX() - 140);
+        contenedorHorarios.setLayoutY(bounds.getMinY() - 60);
+        if (BtnSeleccionado == Mesa1 || BtnSeleccionado == Mesa2 || BtnSeleccionado == Mesa3 ||
+                BtnSeleccionado == Mesa4 || BtnSeleccionado == Mesa7 || BtnSeleccionado == Mesa8 ||
+                BtnSeleccionado == Mesa9 || BtnSeleccionado == Mesa10 || BtnSeleccionado == Mesa13 ||
+                BtnSeleccionado == Mesa14 || BtnSeleccionado == Mesa15 || BtnSeleccionado == Mesa16) {
+            contenedorHorarios.setLayoutX(bounds.getMinX() - 200);
+            contenedorHorarios.setLayoutY(bounds.getMinY() - 150);
+        } else if (BtnSeleccionado == Mesa5 || BtnSeleccionado == Mesa6 || BtnSeleccionado == Mesa11 ||
+                BtnSeleccionado == Mesa12 || BtnSeleccionado == Mesa17 || BtnSeleccionado == Mesa18) {
+            contenedorHorarios.setLayoutX(bounds.getMinX() - 200);
+            contenedorHorarios.setLayoutY(bounds.getMinY() - 200);
+        }
     }
 
     public void cierreVentanaHorarios() {
