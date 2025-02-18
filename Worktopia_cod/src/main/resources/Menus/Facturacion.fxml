@@ -20,7 +20,7 @@
         <Line endX="690.0" layoutX="520.0" layoutY="650.0" startX="-452.0" strokeWidth="3.0" />
         <Line endX="155.0" layoutX="403.0" layoutY="130.0" startX="-340.0" strokeWidth="3.0" />
         <Line endX="-5.0" layoutX="1209.0" layoutY="131.0" startX="-470.0" strokeWidth="3.0" />
-        <TextField id="dnibuscar" fx:id="DNIBuscar" alignment="TOP_CENTER" layoutX="63.0" layoutY="147.0" prefHeight="32.0" prefWidth="249.0" promptText="DNI Usuario" style="-fx-border-color: black; -fx-border-width: 3;">
+        <TextField id="facturaBuscar" fx:id="facturaBuscar" alignment="TOP_CENTER" layoutX="63.0" layoutY="147.0" prefHeight="32.0" prefWidth="249.0" promptText="DNI Usuario" style="-fx-border-color: black; -fx-border-width: 3;">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>
@@ -93,6 +93,17 @@
                 </ImageView>
             </graphic></Button>
         <Button fx:id="btnEliminar" layoutX="474.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Eliminar">
+            <graphic>
+                <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
+                    </image></ImageView>
+            </graphic>
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor>
+        </Button>
+        <Button fx:id="btnGenerar" layoutX="600.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Generar" onAction="#generarFactura">
             <graphic>
                 <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                     <image>

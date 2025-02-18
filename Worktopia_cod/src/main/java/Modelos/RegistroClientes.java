@@ -56,142 +56,97 @@ public class RegistroClientes {
     public void guardarCliente(ActionEvent event){
         agregarCliente();
     }
-/**
-    public void agregarUsuario() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Usuario agregado correctamente");
-        String dni = this.dni.getText();
-        String nombre = this.nombre.getText();
-        String primerApellido = this.primerApellido.getText();
-        String segundoApellido = this.segundoApellido.getText();
-        String eMail = this.eMail.getText();
-        String telefono = this.telefono.getText();
-        if (dni.isEmpty() || nombre.isEmpty() || primerApellido.isEmpty() || segundoApellido.isEmpty() || eMail.isEmpty() || telefono.isEmpty()) {
-            ;alert.setContentText("Debe completar todos los campos");
-        }else{
+
+
+public void agregarCliente() {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    String dniText = this.dni.getText();
+    String nombreText = this.nombre.getText();
+    String primerApellidoText = this.primerApellido.getText();
+    String segundoApellidoText = this.segundoApellido.getText();
+    String EmailText = this.eMail.getText();
+    String telefonoText = this.telefono.getText();
+
+    if (dniText.isEmpty() || nombreText.isEmpty() || primerApellidoText.isEmpty() || segundoApellidoText.isEmpty() || EmailText.isEmpty() || telefonoText.isEmpty()) {
+        alert.setContentText("Debe completar todos los campos");
+        alert.show();
+    } else {
+        // Abre la conexión antes de ejecutarla
+        try {
+            ConectionDB.openConn();
+
             String query = "INSERT INTO Clientes (dni, nombre, primerApellido, segundoApellido, eMail, telefono) " +
-                           "VALUES (?, ?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?, ?)";
 
-            try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
-                stmt.setString(1, dni);
-                stmt.setString(2, nombre);
-                stmt.setString(3, primerApellido);
-                stmt.setString(4, segundoApellido);
-                stmt.setString(5, eMail);
-                stmt.setString(6, telefono);
+            try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)) {
+                stmt.setString(1, dni.getText());
+                stmt.setString(2, nombre.getText());
+                stmt.setString(3, primerApellido.getText());
+                stmt.setString(4, segundoApellido.getText());
+                stmt.setString(5, eMail.getText());
+                stmt.setString(6, telefono.getText());
+
                 int rowsInserted = stmt.executeUpdate();
-                if (rowsInserted > 0) {
-                    alert.setContentText("Usuario agregado correctamente");
-                    alert.show();
-                } else {
-                    alert.setContentText("No se pudo agregar el usuario");
-                    alert.show();
-                }
+                alert.setContentText(rowsInserted > 0 ? "Usuario agregado correctamente" : "No se pudo agregar el usuario");
+                alert.show();
             } catch (SQLException e) {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("Error SQL: " + e.getMessage());
-                alert.show();
-                e.printStackTrace();
-            } catch (Exception e) {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("Error inesperado: " + e.getMessage());
-                alert.show();
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
-        }
-
-
-    }
-    **/
-    public void agregarCliente() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        String dniText = this.dni.getText();
-        String nombreText = this.nombre.getText();
-        String primerApellidoText = this.primerApellido.getText();
-        String segundoApellidoText = this.segundoApellido.getText();
-        String EmailText = this.eMail.getText();
-        String telefonoText = this.telefono.getText();
-
-        if (dniText.isEmpty() || nombreText.isEmpty() || primerApellidoText.isEmpty() || segundoApellidoText.isEmpty() || EmailText.isEmpty() || telefonoText.isEmpty()) {
-            alert.setContentText("Debe completar todos los campos");
+        } catch (ClassNotFoundException e) {
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setContentText("Error: " + e.getMessage());
             alert.show();
-        } else {
-            // Abre la conexión antes de ejecutarla
+            e.printStackTrace();
+        } finally {
+            ConectionDB.closeConn(); // Cierra la conexión al terminar
+        }
+    }
+}
+
+        public void ListaUsuarios () {
             try {
-                ConectionDB.openConn();
-
-                String query = "INSERT INTO Clientes (dni, nombre, primerApellido, segundoApellido, eMail, telefono) " +
-                               "VALUES (?, ?, ?, ?, ?, ?)";
-
-                try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)) {
-                    stmt.setString(1, dni.getText());
-                    stmt.setString(2, nombre.getText());
-                    stmt.setString(3, primerApellido.getText());
-                    stmt.setString(4, segundoApellido.getText());
-                    stmt.setString(5, eMail.getText());
-                    stmt.setString(6, telefono.getText());
-
-                    int rowsInserted = stmt.executeUpdate();
-                    alert.setContentText(rowsInserted > 0 ? "Usuario agregado correctamente" : "No se pudo agregar el usuario");
-                    alert.show();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            } catch (ClassNotFoundException e) {
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setContentText("Error: " + e.getMessage());
-                alert.show();
-                e.printStackTrace();
-            } finally {
-                ConectionDB.closeConn(); // Cierra la conexión al terminar
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaClientes.fxml"));
+                Parent cargaVentana = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(cargaVentana));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
-    }
-
-    public void ListaUsuarios () {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaClientes.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        public void Reservas() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Reservas.fxml"));
+                Parent cargaVentana = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(cargaVentana));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
-    public void Reservas() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Reservas.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        public void ListaReservas() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaReservas.fxml"));
+                Parent cargaVentana = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(cargaVentana));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
-    public void ListaReservas() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaReservas.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        public void Facturaciones() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Facturacion.fxml"));
+                Parent cargaVentana = loader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(cargaVentana));
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
-    public void Facturaciones() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Facturacion.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 
 }
