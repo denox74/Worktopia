@@ -53,6 +53,10 @@ public class ListaClientes {
     private TableColumn<Clientes, String> colTelefono;
 
 
+
+
+
+
     @FXML
     public void initialize() {
         colIdCliente.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
