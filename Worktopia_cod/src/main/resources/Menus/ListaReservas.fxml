@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ListaReservas">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ListaReservas">
     <children>
         <ImageView id="portada" fx:id="portadaListaReservas" fitHeight="117.0" fitWidth="119.0" layoutX="591.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -106,8 +106,8 @@
       <TableView layoutX="59.0" layoutY="202.0" prefHeight="443.0" prefWidth="1163.0">
         <columns>
           <TableColumn prefWidth="163.0" text="Nº Reserva" />
-          <TableColumn prefWidth="166.0" text="Fecha Inicio" />
-            <TableColumn minWidth="8.0" prefWidth="182.0" text="Fecha Fin" />
+          <TableColumn prefWidth="166.0" text="Inicio Servicio" />
+            <TableColumn minWidth="8.0" prefWidth="182.0" text="Fin servicio" />
             <TableColumn minWidth="0.0" prefWidth="232.0" text="DNI Cliente" />
             <TableColumn prefWidth="202.0" text="Espacio Reservado" />
             <TableColumn prefWidth="217.0" text="Nº Factura" />
