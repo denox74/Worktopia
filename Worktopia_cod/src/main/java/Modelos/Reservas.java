@@ -126,7 +126,6 @@ public class Reservas {
         horaInicio.setText("");
         horaFin.setText("");
         contenedorHorarios.setVisible(true);
-        coloresHorarios(BtnSeleccionado.getText());
         Bounds bounds = BtnSeleccionado.localToScreen(BtnSeleccionado.getBoundsInLocal());
         contenedorHorarios.setLayoutX(bounds.getMinX() - 140);
         contenedorHorarios.setLayoutY(bounds.getMinY() - 60);
@@ -170,52 +169,7 @@ public class Reservas {
         }
     }
 
-    // verifica en la base de datos si ese espacio y hora esta ocupado
 
-    public boolean verificarHora(String espacioOcupado, String horarioOcupado) {
-        String SQL = "Select * from reservas where espacio = ? and horario = ?";
-        try {
-            PreparedStatement stm = conectionDB.getConn().prepareStatement(SQL);
-            stm.setString(1, espacioOcupado);
-            stm.setString(2, horarioOcupado);
-            ResultSet rs = stm.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    //Cambia de color a razon de la respuesta de la base de datos
-
-    public void coloresHorarios(String espacioOcupado) {
-        for (javafx.scene.Node horario : contenedorHorarios.getChildren()) {
-            if (horario instanceof Button) {
-                Button btnHorario = (Button) horario;
-                String hora = btnHorario.getId();
-                if (verificarHora(espacioOcupado, hora)) {
-                    btnHorario.setStyle("-fx-background-color: #c10808");
-                    btnHorario.setDisable(true);
-                } else {
-                    btnHorario.setStyle("-fx-background-color: #48ca06");
-                    btnHorario.setDisable(false);
-                }
-            }
-        }
-    }
-
-    public void RecibirIdAsiento(String nombreEspacio) {
-        String SQL = "SELECT id_asiento FROM asientos WHERE nombre = ? ";
-        int idAsiento = -1;
-        try {
-            PreparedStatement stm = conectionDB.getConn().prepareStatement(SQL);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                idAsiento = rs.getInt("id_asiento");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public void RegistroUsuarios() {
         try {
