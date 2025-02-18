@@ -13,7 +13,6 @@
     -fx-scale-y: 1.2 ;
 }
 .BtnMenu:pressed{
-    -fx-background-color: Trasparent;
     -fx-scale-y: 1;
     -fx-scale-x: 1;
 }

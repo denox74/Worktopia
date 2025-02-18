@@ -203,6 +203,20 @@ public class Reservas {
         }
     }
 
+    public void RecibirIdAsiento(String nombreEspacio) {
+        String SQL = "SELECT id_asiento FROM asientos WHERE nombre = ? ";
+        int idAsiento = -1;
+        try {
+            PreparedStatement stm = conectionDB.getConn().prepareStatement(SQL);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                idAsiento = rs.getInt("id_asiento");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void RegistroUsuarios() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroClientes.fxml"));
