@@ -1,27 +1,47 @@
 package Clases;
 
-public class Reservas {
-    private static int ID_reserva = 0;
-    private String fecha_inicio_reserva;
-    private String fecha_fin_reserva;
-    private String hora_reserva;
-    private Integer id_cliente;
-    private Integer id_asiento;
-    private Integer id_espacio;
-    private Integer id_factura;
-    private String estado_reserva;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
-    public Reservas(String fecha_inicio_reserva, String fecha_fin_reserva, String hora_reserva, Integer id_cliente, Integer id_asiento, Integer id_factura, String estado_reserva) {
-        this.ID_reserva = ID_reserva;
-        this.fecha_inicio_reserva = fecha_inicio_reserva;
-        this.fecha_fin_reserva = fecha_fin_reserva;
-        this.hora_reserva = hora_reserva;
+public class Reservas {
+    private int id_reserva;
+    private Timestamp fecha_hora_inicio;
+    private Timestamp fecha_hora_fin;
+    private int id_cliente;
+    private int id_asiento;
+
+    public Reservas(int id_reserva, int id_cliente, int id_asiento, Timestamp fecha_hora_inicio, Timestamp fecha_hora_fin) {
+        this.id_reserva = id_reserva;
         this.id_cliente = id_cliente;
         this.id_asiento = id_asiento;
-        this.id_factura = id_factura;
-        this.estado_reserva = estado_reserva;
-        ++ID_reserva;
+        this.fecha_hora_inicio = fecha_hora_inicio;
+        this.fecha_hora_fin = fecha_hora_fin;
     }
 
+    public Timestamp getFecha_hora_inicio() {
+        return fecha_hora_inicio;
+    }
 
+    public void setFecha_hora_inicio(Timestamp fecha_hora_inicio) {
+        this.fecha_hora_inicio = fecha_hora_inicio;
+    }
+
+    public Timestamp getFecha_hora_fin() {
+        return fecha_hora_fin;
+    }
+
+    public void setFecha_hora_fin(Timestamp fecha_hora_fin) {
+        this.fecha_hora_fin = fecha_hora_fin;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservas{" +
+                "id_reserva=" + id_reserva +
+                ", id_cliente=" + id_cliente +
+                ", id_asiento=" + id_asiento +
+                ", fecha_hora_inicio=" + fecha_hora_inicio +
+                ", fecha_hora_fin=" + fecha_hora_fin +
+                '}';
+    }
 }
