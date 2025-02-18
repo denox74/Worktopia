@@ -18,36 +18,51 @@ CREATE TABLE Espacios (
 CREATE TABLE Asientos (
     id_asiento INT AUTO_INCREMENT,
     estado ENUM('libre', 'ocupado', 'no disponible') NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
     tarifa_hora DECIMAL(10, 2) NOT NULL,
     id_espacio INT,
     CONSTRAINT pk_id_asiento PRIMARY KEY (id_asiento),
     CONSTRAINT fk_id_espacio FOREIGN KEY (id_espacio) REFERENCES Espacios(id_espacio)
 );
-
+DROP TABLE IF EXISTS Reservas;
 CREATE TABLE Reservas (
     id_reserva INT AUTO_INCREMENT,
     id_cliente INT,
+    id_asiento INT,
     fecha_hora_inicio DATETIME NOT NULL,
     fecha_hora_fin DATETIME NOT NULL,
     CONSTRAINT pk_id_reserva PRIMARY KEY (id_reserva),
-    CONSTRAINT fk_id_cliente FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente)
+    CONSTRAINT fk_id_cliente_reserva FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
+    CONSTRAINT fk_id_asiento_reserva FOREIGN KEY (id_asiento) REFERENCES Asientos(id_asiento)
 );
 
-CREATE TABLE Reserva_Asientos (
-    id_reserva INT,
-    id_asiento INT,
-    CONSTRAINT pk_reserva_asiento PRIMARY KEY (id_reserva, id_asiento),
-    CONSTRAINT fk_reserva FOREIGN KEY (id_reserva) REFERENCES Reservas(id_reserva),
-    CONSTRAINT fk_asiento FOREIGN KEY (id_asiento) REFERENCES Asientos(id_asiento)
-);
-
+DROP TABLE IF EXISTS Facturas;
 CREATE TABLE Facturas (
     id_factura INT AUTO_INCREMENT,
-    id_reserva INT,
     precio_total DECIMAL(10, 2) NOT NULL,
     tiene_descuento BOOLEAN DEFAULT FALSE,
-    CONSTRAINT pk_id_factura PRIMARY KEY (id_factura),
-    CONSTRAINT fk_id_reserva FOREIGN KEY (id_reserva) REFERENCES Reservas(id_reserva)
+    CONSTRAINT pk_id_factura PRIMARY KEY (id_factura)
+);
+
+ DROP TABLE IF EXISTS Facturas;
+ CREATE TABLE Facturas (
+    id_factura INT AUTO_INCREMENT,
+    precio_total DECIMAL(10, 2) NOT NULL,
+    tiene_descuento BOOLEAN DEFAULT FALSE,
+    fecha_hora_emision DATETIME NOT NULL,
+    estado ENUM('Pendiente', 'Pagada') NOT NULL,
+    fecha_pago DATETIME,
+    CONSTRAINT pk_id_factura PRIMARY KEY (id_factura)
+);
+
+
+DROP TABLE IF EXISTS Factura_Reservas;
+CREATE TABLE Factura_Reservas (
+    id_factura INT,
+    id_reserva INT,
+    CONSTRAINT pk_factura_reserva PRIMARY KEY (id_factura, id_reserva),
+    CONSTRAINT fk_factura FOREIGN KEY (id_factura) REFERENCES Facturas(id_factura) ON DELETE CASCADE,
+    CONSTRAINT fk_reserva FOREIGN KEY (id_reserva) REFERENCES Reservas(id_reserva) ON DELETE CASCADE
 );
 
 CREATE TABLE Usuarios (
@@ -57,22 +72,7 @@ CREATE TABLE Usuarios (
     contrasenia VARCHAR(255) NOT NULL,
     categoria ENUM('Admin', 'Empleado') NOT NULL,
     CONSTRAINT pk_id_usuario PRIMARY KEY (id_usuario)
-)
-
-
-    -- Cambio el orden de las columnas
-    ALTER TABLE Clientes
-    MODIFY COLUMN id_cliente INT AUTO_INCREMENT FIRST,
-    MODIFY COLUMN dni VARCHAR(10) NOT NULL AFTER id_cliente,
-    MODIFY COLUMN nombre VARCHAR(100) NOT NULL AFTER dni,
-    MODIFY COLUMN primerApellido VARCHAR(30) NOT NULL AFTER nombre,
-    MODIFY COLUMN segundoApellido VARCHAR(30) AFTER primerApellido,
-    MODIFY COLUMN email VARCHAR(100) NOT NULL AFTER segundoApellido,
-    MODIFY COLUMN telefono VARCHAR(15) AFTER email,
-    MODIFY COLUMN contrasenia VARCHAR(255) NOT NULL AFTER telefono,
-    MODIFY COLUMN frecuente BOOLEAN DEFAULT FALSE AFTER contrasenia,
-    MODIFY COLUMN descuento DECIMAL(5, 2) DEFAULT 0.00 AFTER frecuente;
-
+);
 
 
 DELETE FROM Clientes;
@@ -112,34 +112,70 @@ VALUES ("Eliu", "eliuadmin@worktopia.com", "Eliu.123E", "Admin"),
     ("Sofia", "lsofi@yahoo.es", "Sofia.123S", "Empleado");
 
 
-    -- Alterame la tabla de clientes para que no tenga contrasenia, frecuente ni descuento
-    ALTER TABLE Clientes
-    DROP COLUMN contrasenia,
-    DROP COLUMN frecuente,
-    DROP COLUMN descuento;
+
+INSERT INTO Espacios (nombre)
+VALUES ("Oficina IESRincón");
 
 
-
-
-
--- insertar datos en la tabla asientos, crea 18 asientos
-INSERT INTO Asientos (estado, tarifa_hora, id_espacio)
+DELETE FROM Asientos;
+ALTER TABLE Asientos AUTO_INCREMENT = 1;
+INSERT INTO Asientos (estado, nombre, tarifa_hora, id_espacio)
 VALUES
-('libre', 10.00, 1),
-('libre', 10.00, 1),
-('libre', 10.00, 1),
-('libre', 10.00, 1),
-('libre', 10.00, 1),
-('libre', 10.00, 1),
-('libre', 10.00, 1),
-('libre', 10.00, 1),
-('libre', 10.00, 1),
-('libre', 15.00, 2),
-('libre', 15.00, 2),
-('libre', 15.00, 2),
-('libre', 15.00, 2),
-('libre', 15.00, 2),
-('libre', 15.00, 2),
-('libre', 15.00, 2),
-('libre', 15.00, 2),
-('libre', 15.00, 2);
+("libre", "A1", 5.00, 1),
+("libre", "A2", 5.00, 1),
+("libre", "A3", 5.00, 1),
+("libre", "A4", 5.00, 1),
+("libre", "A5", 5.00, 1),
+("libre", "A6", 5.00, 1),
+("libre", "A7", 5.00, 1),
+("libre", "A8", 5.00, 1),
+("libre", "A9", 5.00, 1),
+("libre", "A10", 5.00, 1),
+("libre", "A11", 5.00, 1),
+("libre", "A12", 5.00, 1),
+("libre", "A13", 5.00, 1),
+("libre", "A14", 5.00, 1),
+("libre", "A15", 5.00, 1),
+("libre", "A16", 5.00, 1),
+("libre", "A17", 5.00, 1),
+("libre", "A18", 5.00, 1),
+("libre", "Oficina 1", 10.00, 1),
+("libre", "Oficina 2", 10.00, 1),
+("libre", "Sala de Conferencias 1", 20.00, 1),
+("libre", "Sala de Conferencias 2", 15.00, 1);
+
+DELETE FROM Reservas;
+ALTER TABLE Reservas AUTO_INCREMENT = 1;
+INSERT INTO Reservas (id_cliente, id_asiento, fecha_hora_inicio, fecha_hora_fin)
+VALUES
+(1, 1, "2025-01-01 09:00:00", "2025-01-01 12:00:00"),
+(1, 1, "2025-01-02 09:00:00", "2025-01-02 12:00:00"),
+(1, 1, "2025-01-03 09:00:00", "2025-01-03 12:00:00"),
+(1, 4, "2025-01-04 09:00:00", "2025-01-04 12:00:00"),
+(1, 1, "2025-01-05 09:00:00", "2025-01-05 12:00:00"),
+(2, 3, "2025-02-01 10:00:00", "2025-02-01 15:00:00"),
+(2, 3, "2025-02-02 10:00:00", "2025-02-02 15:00:00"),
+(2, 8, "2025-02-03 10:00:00", "2025-02-03 15:00:00"),
+(2, 4, "2025-02-04 10:00:00", "2025-02-04 15:00:00"),
+(2, 10, "2025-02-05 10:00:00", "2025-02-05 15:00:00");
+
+
+DELETE FROM Facturas;
+ALTER TABLE Facturas AUTO_INCREMENT = 1;
+INSERT INTO Facturas (precio_total, tiene_descuento)
+VALUES
+(0.00, FALSE),
+(0.00, FALSE);
+
+INSERT INTO Factura_Reservas (id_factura, id_reserva)
+VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(2, 6),
+(2, 7),
+(2, 8),
+(2, 9),
+(2, 10);
