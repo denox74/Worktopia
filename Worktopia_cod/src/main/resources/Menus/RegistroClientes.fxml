@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.RegistroClientes">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.RegistroClientes">
     <children>
       <ImageView id="portada" fx:id="portada" fitHeight="117.0" fitWidth="119.0" layoutX="591.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -29,7 +29,7 @@
       <TextField id="segundoApellido" fx:id="segundoApellido" alignment="TOP_LEFT" layoutX="452.0" layoutY="335.0" prefHeight="40.0" prefWidth="400.0" promptText="Segundo Apellido" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" />
       <TextField id="eMail" fx:id="eMail" alignment="TOP_LEFT" layoutX="452.0" layoutY="395.0" prefHeight="40.0" prefWidth="400.0" promptText="Email" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" />
       <TextField id="telefono" fx:id="telefono" alignment="TOP_LEFT" layoutX="452.0" layoutY="458.0" prefHeight="40.0" prefWidth="400.0" promptText="Telefono de contacto" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" />
-        <Button id="btnConfirmar" fx:id="btnConfirmar" onAction="#guardarCliente" alignment="CENTER" layoutX="680.0" layoutY="526.0" prefHeight="39.0" prefWidth="110.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Confirmar" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+        <Button id="btnConfirmar" fx:id="btnConfirmar" alignment="CENTER" layoutX="680.0" layoutY="526.0" onAction="#guardarCliente" prefHeight="39.0" prefWidth="110.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Confirmar" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
@@ -37,7 +37,7 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-      <Button id="btnCancelar" fx:id="btnCancelar" alignment="CENTER" layoutX="504.0" layoutY="526.0" prefHeight="39.0" prefWidth="110.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Cancelar" textAlignment="CENTER" textFill="#fcfcfc" textOverrun="CLIP">
+      <Button id="btnCancelar" fx:id="btnCancelar" alignment="CENTER" layoutX="504.0" layoutY="526.0" onAction="#cancelar" prefHeight="39.0" prefWidth="127.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Limpiar Datos" textAlignment="CENTER" textFill="#fcfcfc" textOverrun="CLIP">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

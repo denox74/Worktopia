@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" styleClass="AnchorPane" stylesheets="@../Estilos/EstilosListas.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ListaClientes">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" styleClass="AnchorPane" stylesheets="@../Estilos/EstilosListas.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ListaClientes">
     <children>
         <ImageView fx:id="portada" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -105,7 +105,7 @@
         </Button>
         <TableView fx:id="tablaClientes" layoutX="50.0" layoutY="201.0" prefHeight="428.0" prefWidth="1173.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
             <columns>
-                <TableColumn fx:id="colIdCliente" prefWidth="130.0" text="Nº Cliente" />
+                <TableColumn id="Cliente" fx:id="colIdCliente" prefWidth="130.0" text="Nº Cliente" />
                 <TableColumn fx:id="colDNI" prefWidth="130.0" text="DNI" />
                 <TableColumn fx:id="colNombre" prefWidth="161.0" text="Nombre" />
                 <TableColumn fx:id="colPrimerApellido" prefWidth="161.0" text="Primer Apellido" />

@@ -1,6 +1,6 @@
 package Aplicaciones;
 
-import Clases.TestDBConnection;
+
 import ConexionDB.ConectionDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
