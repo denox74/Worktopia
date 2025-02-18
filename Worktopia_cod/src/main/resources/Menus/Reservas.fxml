@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -103,12 +104,12 @@
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label layoutX="938.0" layoutY="315.0" style="-fx-font-weight: bold;" text="Horario:">
+        <Label layoutX="938.0" layoutY="315.0" style="-fx-font-weight: bold;" text="Hora inicio">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label layoutX="943.0" layoutY="350.0" style="-fx-font-weight: bold;" text="Precio:">
+        <Label layoutX="943.0" layoutY="388.0" style="-fx-font-weight: bold;" text="Precio:">
             <font>
                 <Font size="14.0" />
             </font>
@@ -118,9 +119,9 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <TextField id="espacio" fx:id="espacio" layoutX="1046.0" layoutY="278.0" />
-        <TextField id="horario" fx:id="horario" layoutX="1046.0" layoutY="312.0" />
-        <TextField id="precio" fx:id="precio" layoutX="1046.0" layoutY="347.0" />
+        <TextField id="espacio" fx:id="espacio" layoutX="1044.0" layoutY="279.0" />
+        <TextField id="horario" fx:id="horaInicio" layoutX="1044.0" layoutY="313.0" />
+        <TextField id="precio" fx:id="precio" layoutX="1044.0" layoutY="385.0" />
         <DatePicker layoutX="948.0" layoutY="202.0" promptText="Fechas" styleClass="fechas" stylesheets="@../Estilos/EstiloReservas.css" />
         <Button fx:id="BtnOficina1" alignment="TOP_CENTER" layoutX="500.0" layoutY="466.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="182.0" prefWidth="168.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Oficina 1">
             <font>
@@ -234,7 +235,7 @@
         </Button>
         <VBox id="contenedorHorarios" fx:id="contenedorHorarios" layoutX="561.0" layoutY="282.0" prefHeight="176.0" prefWidth="137.0" visible="false">
             <children>
-            <GridPane prefHeight="160.0" prefWidth="137.0">
+            <GridPane prefHeight="175.0" prefWidth="137.0">
               <columnConstraints>
                 <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -249,24 +250,33 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="08:00" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="09:00" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="10:00" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="11:00" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="12:00" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="13:00" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="14:00" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="15:00" GridPane.columnIndex="1" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="16:00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="17:00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="18:00" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="19:00" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="20:00" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="21:00" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="08:00" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="09:00" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="10:00" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="11:00" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="12:00" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="13:00" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="14:00" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="15:00" GridPane.columnIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="16:00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="17:00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="18:00" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="19:00" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="20:00" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#datosTextFieldMesa" prefHeight="30.0" prefWidth="65.0" styleClass="BtnHoras" stylesheets="@../Estilos/EstiloHorario.css" text="21:00" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </GridPane>
             </children>
         </VBox>
+      <Label layoutX="918.0" layoutY="350.0" style="-fx-font-weight: bold;" text="Hora finalizacion">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField id="horaFin" fx:id="horaFin" onAction="#datosTextFieldMesa" layoutX="1044.0" layoutY="348.0" />
     </children>
 
 

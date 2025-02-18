@@ -1,5 +1,6 @@
 package Modelos;
 
+import ConexionDB.ConectionDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +13,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Reservas {
 
+    private final ConectionDB conectionDB = new ConectionDB();
     @FXML
     private Button AgregarClientes;
     @FXML
@@ -28,7 +33,9 @@ public class Reservas {
     @FXML
     private TextField espacio;
     @FXML
-    private TextField horario;
+    private TextField horaInicio;
+    @FXML
+    private TextField horaFin;
     @FXML
     private TextField precio;
     @FXML
@@ -105,18 +112,21 @@ public class Reservas {
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
 
+    // configuracion de ventana de apertura de los horarios
     public void ventanaHorarios(ActionEvent event) {
         Button BtnSeleccion = (Button) event.getSource();
         if (contenedorHorarios.isVisible() && BtnSeleccionado == BtnSeleccion) {
             cierreVentanaHorarios();
             return;
         }
-
         if (BtnSeleccionado != null && BtnSeleccionado != BtnSeleccion) {
             cierreVentanaHorarios();
         }
         BtnSeleccionado = BtnSeleccion;
+        horaInicio.setText("");
+        horaFin.setText("");
         contenedorHorarios.setVisible(true);
+        coloresHorarios(BtnSeleccionado.getText());
         Bounds bounds = BtnSeleccionado.localToScreen(BtnSeleccionado.getBoundsInLocal());
         contenedorHorarios.setLayoutX(bounds.getMinX() - 140);
         contenedorHorarios.setLayoutY(bounds.getMinY() - 60);
@@ -124,18 +134,73 @@ public class Reservas {
                 BtnSeleccionado == Mesa4 || BtnSeleccionado == Mesa7 || BtnSeleccionado == Mesa8 ||
                 BtnSeleccionado == Mesa9 || BtnSeleccionado == Mesa10 || BtnSeleccionado == Mesa13 ||
                 BtnSeleccionado == Mesa14 || BtnSeleccionado == Mesa15 || BtnSeleccionado == Mesa16) {
-            contenedorHorarios.setLayoutX(bounds.getMinX() - 200);
-            contenedorHorarios.setLayoutY(bounds.getMinY() - 150);
+            contenedorHorarios.setLayoutX(bounds.getMinX() - 250);
+            contenedorHorarios.setLayoutY(bounds.getMinY() - 200);
         } else if (BtnSeleccionado == Mesa5 || BtnSeleccionado == Mesa6 || BtnSeleccionado == Mesa11 ||
                 BtnSeleccionado == Mesa12 || BtnSeleccionado == Mesa17 || BtnSeleccionado == Mesa18) {
-            contenedorHorarios.setLayoutX(bounds.getMinX() - 200);
-            contenedorHorarios.setLayoutY(bounds.getMinY() - 200);
+            contenedorHorarios.setLayoutX(bounds.getMinX() - 250);
+            contenedorHorarios.setLayoutY(bounds.getMinY() - 220);
+        }
+        if (BtnSeleccionado == BtnOficina1) {
+            contenedorHorarios.setLayoutX(bounds.getMinX() - 300);
+            contenedorHorarios.setLayoutY(bounds.getMinY() - 300);
+        } else if (BtnSeleccionado == BtnOficina2) {
+            contenedorHorarios.setLayoutX(bounds.getMinX() - 300);
+            contenedorHorarios.setLayoutY(bounds.getMinY() - 300);
         }
     }
 
     public void cierreVentanaHorarios() {
         contenedorHorarios.setVisible(false);
         BtnSeleccionado = null;
+    }
+
+    //Expone los datos del espacio mas el horario
+    public void datosTextFieldMesa(ActionEvent event) {
+        Button BtnSeleccionHora = (Button) event.getSource();
+        if (BtnSeleccionHora != null) {
+            espacio.setText(BtnSeleccionado.getText());
+            if(horaInicio.getText().isEmpty()){
+                horaInicio.setText(BtnSeleccionHora.getText());
+            }else if (horaFin.getText().isEmpty()) {
+                horaFin.setText(BtnSeleccionHora.getText());
+                cierreVentanaHorarios();
+            }
+
+        }
+    }
+
+    // verifica en la base de datos si ese espacio y hora esta ocupado
+
+    public boolean verificarHora(String espacioOcupado, String horarioOcupado) {
+        String SQL = "Select * from reservas where espacio = ? and horario = ?";
+        try {
+            PreparedStatement stm = conectionDB.getConn().prepareStatement(SQL);
+            stm.setString(1, espacioOcupado);
+            stm.setString(2, horarioOcupado);
+            ResultSet rs = stm.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Cambia de color a razon de la respuesta de la base de datos
+
+    public void coloresHorarios(String espacioOcupado) {
+        for (javafx.scene.Node horario : contenedorHorarios.getChildren()) {
+            if (horario instanceof Button) {
+                Button btnHorario = (Button) horario;
+                String hora = btnHorario.getId();
+                if (verificarHora(espacioOcupado, hora)) {
+                    btnHorario.setStyle("-fx-background-color: #c10808");
+                    btnHorario.setDisable(true);
+                } else {
+                    btnHorario.setStyle("-fx-background-color: #48ca06");
+                    btnHorario.setDisable(false);
+                }
+            }
+        }
     }
 
     public void RegistroUsuarios() {
