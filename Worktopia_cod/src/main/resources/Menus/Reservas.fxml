@@ -122,7 +122,7 @@
         <TextField id="espacio" fx:id="espacio" layoutX="1044.0" layoutY="358.0" />
         <TextField id="horario" fx:id="horaInicio" layoutX="1044.0" layoutY="388.0" />
         <TextField id="precio" fx:id="precio" layoutX="1044.0" layoutY="455.0" />
-        <DatePicker layoutX="939.0" layoutY="282.0" promptText="Fechas" styleClass="fechas" stylesheets="@../Estilos/EstiloReservas.css" />
+        <DatePicker fx:id="fecha" layoutX="939.0" layoutY="282.0" promptText="Fechas" styleClass="fechas" stylesheets="@../Estilos/EstiloReservas.css" />
         <Button fx:id="BtnOficina1" alignment="TOP_CENTER" layoutX="500.0" layoutY="466.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="182.0" prefWidth="168.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Oficina 1">
             <font>
                 <Font name="System Bold" size="18.0" />

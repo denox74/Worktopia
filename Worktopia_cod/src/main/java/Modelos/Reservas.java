@@ -7,7 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,6 +18,13 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.AbstractMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Reservas {
 
@@ -38,6 +47,8 @@ public class Reservas {
     private TextField horaFin;
     @FXML
     private TextField precio;
+    @FXML
+    private DatePicker fecha;
     @FXML
     private VBox contenedorHorarios;
     @FXML
@@ -147,6 +158,11 @@ public class Reservas {
             contenedorHorarios.setLayoutX(bounds.getMinX() - 300);
             contenedorHorarios.setLayoutY(bounds.getMinY() - 300);
         }
+        int espacioId = obtenerIdEspacio(BtnSeleccionado.getText());
+        actualizarColoresHorarios(espacioId);
+
+
+
     }
 
     public void cierreVentanaHorarios() {
@@ -166,6 +182,117 @@ public class Reservas {
                 cierreVentanaHorarios();
             }
 
+        }
+    }
+    public int obtenerIdEspacio(String nombreEspacio) {
+        try {
+            ConectionDB.openConn();
+            String consulta = "SELECT id_asiento FROM Asientos WHERE nombre = ?";
+            int idEspacio = -1;
+            try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
+                stmt.setString(1, nombreEspacio);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    idEspacio = rs.getInt("id_asiento");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return idEspacio;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            conectionDB.closeConn();
+        }
+
+    }
+
+    public Set<String> obtenerHorariosReservados(int asiento) {
+        try {
+            ConectionDB.openConn();
+            Set<String> horariosOcupados = new HashSet<>();
+            String consulta = "SELECT TIME(fecha_hora_inicio) FROM Reservas WHERE id_asiento = ?";
+
+            try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
+                stmt.setInt(1, asiento);
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    horariosOcupados.add(rs.getString(1));
+                }
+            } catch (SQLException e) {
+            }
+
+            return horariosOcupados;
+
+        } catch (ClassNotFoundException e) {
+
+            throw new RuntimeException(e);
+        }finally {
+            conectionDB.closeConn();
+        }
+
+    }
+    public Set<String> obtenerFechasReservadas(int idEspacio) {
+        try {
+            ConectionDB.openConn();
+            Set<String> fechasOcupadas = new HashSet<>();
+            String consulta = "SELECT DATE(fecha_hora_inicio) FROM Reservas WHERE id_asiento = ?";
+
+            try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
+                stmt.setInt(1, idEspacio);
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    fechasOcupadas.add(rs.getString(1)); // Obtener la fecha como String
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return fechasOcupadas;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            conectionDB.closeConn();
+        }
+    }
+
+
+    public void actualizarColoresHorarios(int idEspacio) {
+
+        Set<String> horariosOcupados = obtenerHorariosReservados(idEspacio);
+        Set<String> fechasOcupadas = obtenerFechasReservadas(idEspacio);
+
+        LocalDate fechaSeleccionada = fecha.getValue();
+        if (fechaSeleccionada == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Debe seleccionar una fecha.");
+            alert.showAndWait();
+            return;
+        }
+
+        String fechaString = fechaSeleccionada.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        for (javafx.scene.Node node : contenedorHorarios.lookupAll(".button")) {
+            if (node instanceof Button) {
+                Button btnHorario = (Button) node;
+                String horario = btnHorario.getText();
+
+                for(String horaReserva : horariosOcupados){
+                    String horaM = horaReserva.substring(0,5);
+                    if (horaM.equals(horario) && fechasOcupadas.contains(fechaString)) {
+                        btnHorario.setStyle("-fx-background-color: #e60415; -fx-text-fill: white;");
+                        btnHorario.setDisable(true);
+                    } else {
+                        btnHorario.setStyle("-fx-background-color: #047f07; -fx-text-fill: black;");
+                        btnHorario.setDisable(false);
+                    }
+                }
+
+            }
         }
     }
 
