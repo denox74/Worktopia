@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
     <children>
         <ImageView id="portada" fx:id="portadaListaReservas" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -84,7 +84,7 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <Button fx:id="btnModificar" layoutX="348.0" layoutY="146.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Modificar">
+        <Button fx:id="btnModificar" layoutX="346.0" layoutY="144.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Pagar">
             <graphic>
                 <ImageView fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -92,18 +92,7 @@
                     </image>
                 </ImageView>
             </graphic></Button>
-        <Button fx:id="btnEliminar" layoutX="474.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Eliminar">
-            <graphic>
-                <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
-                    </image></ImageView>
-            </graphic>
-            <cursor>
-                <Cursor fx:constant="DEFAULT" />
-            </cursor>
-        </Button>
-        <Button fx:id="btnGenerar" layoutX="600.0" layoutY="147.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Generar" onAction="#generarFactura">
+        <Button fx:id="btnGenerar" layoutX="456.0" layoutY="147.0" mnemonicParsing="false" onAction="#generarFactura" prefHeight="40.0" prefWidth="142.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Generar Factura">
             <graphic>
                 <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -124,6 +113,12 @@
             <TableColumn prefWidth="240.0" text="Fecha Pago" />
         </columns>
       </TableView>
+      <VBox layoutX="461.0" layoutY="131.0" prefHeight="66.0" prefWidth="116.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="111.0" text="Descargar Factura" />
+            <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="110.0" text="Enviar por E-mail" />
+         </children>
+      </VBox>
     </children>
 
 
