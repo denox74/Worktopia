@@ -137,6 +137,8 @@ public class Reservas {
         horaInicio.setText("");
         horaFin.setText("");
         contenedorHorarios.setVisible(true);
+        int espacioId = obtenerIdEspacio(BtnSeleccionado.getText());
+        actualizarColoresHorarios(espacioId);
         Bounds bounds = BtnSeleccionado.localToScreen(BtnSeleccionado.getBoundsInLocal());
         contenedorHorarios.setLayoutX(bounds.getMinX() - 140);
         contenedorHorarios.setLayoutY(bounds.getMinY() - 60);
@@ -158,10 +160,6 @@ public class Reservas {
             contenedorHorarios.setLayoutX(bounds.getMinX() - 300);
             contenedorHorarios.setLayoutY(bounds.getMinY() - 300);
         }
-        int espacioId = obtenerIdEspacio(BtnSeleccionado.getText());
-        actualizarColoresHorarios(espacioId);
-
-
 
     }
 
