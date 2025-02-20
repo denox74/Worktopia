@@ -6,8 +6,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 DROP TABLE IF EXISTS Factura_Reservas;
 DROP TABLE IF EXISTS Espacios;
 
-CREATE DATABASE IF NOT EXISTS Worktopia;
-USE Worktopia;
+CREATE DATABASE IF NOT EXISTS worktopiadb;
+USE worktopiadb;
 
 DROP TABLE IF EXISTS Clientes;
 CREATE TABLE Clientes (
@@ -29,21 +29,6 @@ CREATE TABLE Asientos (
     CONSTRAINT pk_id_asiento PRIMARY KEY (id_asiento)
 );
 
-DROP TABLE IF EXISTS Reservas;
-CREATE TABLE Reservas (
-    id_reserva INT AUTO_INCREMENT,
-    dni INT NOT NULL,
-    id_asiento INT NOT NULL,
-    id_factura NOT NULL,
-    fecha_hora_inicio DATETIME NOT NULL,
-    fecha_hora_fin DATETIME NOT NULL,
-    subtotal DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
-    CONSTRAINT pk_id_reserva PRIMARY KEY (id_reserva),
-    CONSTRAINT fk_dni_reserva FOREIGN KEY (dni) REFERENCES Clientes(dni),
-    CONSTRAINT fk_id_asiento_reserva FOREIGN KEY (id_asiento) REFERENCES Asientos(id_asiento),
-    CONSTRAINT fk_id_factura_reserva FOREIGN KEY (id_factura) REFERENCES Facturas(id_factura)
-);
-
  DROP TABLE IF EXISTS Facturas;
  CREATE TABLE Facturas (
     id_factura INT AUTO_INCREMENT,
@@ -56,6 +41,23 @@ CREATE TABLE Reservas (
     CONSTRAINT pk_id_factura PRIMARY KEY (id_factura),
     CONSTRAINT fk_dni_factura FOREIGN KEY (dni) REFERENCES Clientes(dni)
 );
+
+DROP TABLE IF EXISTS Reservas;
+CREATE TABLE Reservas (
+    id_reserva INT AUTO_INCREMENT,
+    dni VARCHAR(10) NOT NULL,
+    id_asiento INT NOT NULL,
+    id_factura UNT NOT NULL,
+    fecha_hora_inicio DATETIME NOT NULL,
+    fecha_hora_fin DATETIME NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    CONSTRAINT pk_id_reserva PRIMARY KEY (id_reserva),
+    CONSTRAINT fk_dni_reserva FOREIGN KEY (dni) REFERENCES Clientes(dni),
+    CONSTRAINT fk_id_asiento_reserva FOREIGN KEY (id_asiento) REFERENCES Asientos(id_asiento),
+    CONSTRAINT fk_id_factura_reserva FOREIGN KEY (id_factura) REFERENCES Facturas(id_factura)
+);
+
+
 
 DROP TABLE IF EXISTS Usuarios;
 CREATE TABLE Usuarios (
@@ -108,37 +110,37 @@ VALUES ("Eliu", "eliuadmin@worktopia.com", "Eliu.123E", "Admin"),
 
 DELETE FROM Asientos;
 ALTER TABLE Asientos AUTO_INCREMENT = 1;
-INSERT INTO Asientos (estado, nombre, tarifa_hora)
+INSERT INTO Asientos (nombre, tarifa_hora)
 VALUES
-("libre", "A1", 3.00),
-("libre", "A2", 3.00),
-("libre", "A3", 3.00),
-("libre", "A4", 3.00),
-("libre", "A5", 3.00),
-("libre", "A6", 3.00),
-("libre", "A7", 3.00),
-("libre", "A8", 3.00),
-("libre", "A9", 3.00),
-("libre", "A10", 3.00),
-("libre", "A11", 3.00),
-("libre", "A12", 3.00),
-("libre", "A13", 3.00),
-("libre", "A14", 3.00),
-("libre", "A15", 3.00),
-("libre", "A16", 3.00),
-("libre", "A17", 3.00),
-("libre", "A18", 3.00),
-("libre", "Oficina 1", 8.00),
-("libre", "Oficina 2", 8.00),
-("libre", "Sala de Conferencias 1", 15.00),
-("libre", "Sala de Conferencias 2", 10.00);
+("A1", 3.00),
+("A2", 3.00),
+("A3", 3.00),
+("A4", 3.00),
+("A5", 3.00),
+("A6", 3.00),
+("A7", 3.00),
+("A8", 3.00),
+("A9", 3.00),
+("A10", 3.00),
+("A11", 3.00),
+("A12", 3.00),
+("A13", 3.00),
+("A14", 3.00),
+("A15", 3.00),
+("A16", 3.00),
+("A17", 3.00),
+("A18", 3.00),
+("Oficina 1", 8.00),
+("Oficina 2", 8.00),
+("Sala de Conferencias 1", 15.00),
+("Sala de Conferencias 2", 10.00);
 
 DELETE FROM Facturas;
 ALTER TABLE Facturas AUTO_INCREMENT = 1;
-INSERT INTO Facturas (tiene_descuento, dni)
+INSERT INTO Facturas (dni)
 VALUES
-(FALSE. "12345678A"),
-(FALSE, "23456789B");
+("12345678A"),
+("23456789B");
 
 -- El calculo de la factura deberá de programarse en el backend de java sumando el total de las horas de la reserva y multiplicando por la tarifa de la hora del asiento.
 

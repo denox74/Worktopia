@@ -111,6 +111,7 @@ public class Reservas {
                 ", id_asiento=" + id_asiento +
                 ", fecha_hora_inicio=" + fecha_hora_inicio +
                 ", fecha_hora_fin=" + fecha_hora_fin +
+                ", subtotal=" + subtotal +
                 '}';
     }
 }

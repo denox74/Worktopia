@@ -37,7 +37,7 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-      <Button id="btnCancelar" fx:id="btnCancelar" alignment="CENTER" layoutX="504.0" layoutY="526.0" onAction="#cancelar" prefHeight="39.0" prefWidth="127.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Limpiar Datos" textAlignment="CENTER" textFill="#fcfcfc" textOverrun="CLIP">
+      <Button id="btnCancelar" fx:id="btnCancelar" alignment="CENTER" layoutX="504.0" layoutY="526.0" prefHeight="39.0" prefWidth="127.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Limpiar Datos" textAlignment="CENTER" textFill="#fcfcfc" textOverrun="CLIP">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

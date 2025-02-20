@@ -37,8 +37,7 @@ public class ListaClientes {
 
     @FXML
     private TableView<Clientes> tablaClientes;
-    @FXML
-    private TableColumn<Clientes, Integer> colIdCliente;
+
     @FXML
     private TableColumn<Clientes, String> colDNI;
     @FXML
@@ -59,7 +58,6 @@ public class ListaClientes {
 
     @FXML
     public void initialize() {
-        colIdCliente.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
         colDNI.setCellValueFactory(new PropertyValueFactory<>("dni"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colPrimerApellido.setCellValueFactory(new PropertyValueFactory<>("primerApellido"));
