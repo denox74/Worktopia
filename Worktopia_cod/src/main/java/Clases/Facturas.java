@@ -4,19 +4,21 @@ import java.math.BigDecimal;
 
 public class Facturas {
     private Integer id_factura;
+    private String dni;
     private BigDecimal precio_total;
-    private Boolean tiene_descuento;
+    private BigDecimal descuento;
     private String fecha_hora_emision;
     private String estado;
-    private String fecha_pago;
+    private String fecha_hora_pago;
 
-    public Facturas(Integer id_factura, BigDecimal precio_total, Boolean tiene_descuento, String fecha_hora_emision, String estado, String fecha_pago) {
+    public Facturas(Integer id_factura, String dni, BigDecimal precio_total, BigDecimal descuento, String fecha_hora_emision, String estado, String fecha_hora_pago) {
         this.id_factura = id_factura;
+        this.dni = dni;
         this.precio_total = precio_total;
-        this.tiene_descuento = tiene_descuento;
+        this.descuento = descuento;
         this.fecha_hora_emision = fecha_hora_emision;
         this.estado = estado;
-        this.fecha_pago = fecha_pago;
+        this.fecha_hora_pago = fecha_hora_pago;
     }
 
     public Integer getId_factura() {
@@ -35,12 +37,12 @@ public class Facturas {
         this.precio_total = precio_total;
     }
 
-    public Boolean getTiene_descuento() {
-        return tiene_descuento;
+    public BigDecimal getdescuento() {
+        return descuento;
     }
 
-    public void setTiene_descuento(Boolean tiene_descuento) {
-        this.tiene_descuento = tiene_descuento;
+    public void setTiene_descuento(BigDecimal descuento) {
+        this.descuento = descuento;
     }
 
     public String getFecha_hora_emision() {
@@ -59,23 +61,24 @@ public class Facturas {
         this.estado = estado;
     }
 
-    public String getFecha_pago() {
-        return fecha_pago;
+    public String getFecha_hora_pago() {
+        return fecha_hora_pago;
     }
 
-    public void setFecha_pago(String fecha_pago) {
-        this.fecha_pago = fecha_pago;
+    public void setFecha_hora_pago(String fecha_hora_pago) {
+        this.fecha_hora_pago = fecha_hora_pago;
     }
 
     @Override
     public String toString() {
         return "Facturas{" +
                 "id_factura=" + id_factura +
+                ", dni='" + dni + '\'' +
                 ", precio_total=" + precio_total +
-                ", tiene_descuento=" + tiene_descuento +
+                ", descuento=" + descuento +
                 ", fecha_hora_emision='" + fecha_hora_emision + '\'' +
                 ", estado='" + estado + '\'' +
-                ", fecha_pago='" + fecha_pago + '\'' +
+                ", fecha_pago='" + fecha_hora_pago + '\'' +
                 '}';
     }
 }

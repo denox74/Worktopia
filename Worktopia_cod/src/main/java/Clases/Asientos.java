@@ -5,17 +5,14 @@ import java.math.BigDecimal;
 public class Asientos {
 
     private int id_asiento;
-    private String estado;
     private String nombre;
     private BigDecimal tarifa_hora;
-    private int id_espacio;
 
-    public Asientos(int id_asiento, String estado, String nombre, BigDecimal tarifa_hora, int id_espacio) {
+
+    public Asientos(int id_asiento, String nombre, BigDecimal tarifa_hora) {
         this.id_asiento = id_asiento;
-        this.estado = estado;
         this.nombre = nombre;
         this.tarifa_hora = tarifa_hora;
-        this.id_espacio = id_espacio;
     }
 
     public int getId_asiento() {
@@ -24,14 +21,6 @@ public class Asientos {
 
     public void setId_asiento(int id_asiento) {
         this.id_asiento = id_asiento;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     public String getNombre() {
@@ -50,22 +39,12 @@ public class Asientos {
         this.tarifa_hora = tarifa_hora;
     }
 
-    public int getId_espacio() {
-        return id_espacio;
-    }
-
-    public void setId_espacio(int id_espacio) {
-        this.id_espacio = id_espacio;
-    }
-
     @Override
     public String toString() {
         return "Asientos{" +
                 "id_asiento=" + id_asiento +
-                ", estado='" + estado + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", tarifa_hora=" + tarifa_hora +
-                ", id_espacio=" + id_espacio +
                 '}';
     }
 }

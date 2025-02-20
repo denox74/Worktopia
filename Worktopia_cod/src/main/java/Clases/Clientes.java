@@ -2,7 +2,7 @@ package Clases;
 
 public class Clientes {
 
-    private int id_cliente;
+
     private String dni;
     private String nombre;
     private String primerApellido;
@@ -12,8 +12,8 @@ public class Clientes {
     private String contrasenia;
 
 
-    public Clientes(int id_cliente, String dni, String nombre, String primerApellido, String segundoApellido, String email, String telefono) {
-        this.id_cliente = id_cliente;
+    public Clientes(String dni, String nombre, String primerApellido, String segundoApellido, String email, String telefono) {
+
         this.dni = dni;
         this.nombre = nombre;
         this.primerApellido = primerApellido;
@@ -24,13 +24,7 @@ public class Clientes {
 
     }
 
-    public int getIdCliente() {
-        return id_cliente;
-    }
 
-    public void setIdCliente(int idCliente) {
-        this.id_cliente = idCliente;
-    }
 
     public String getNombre() {
         return nombre;
@@ -58,13 +52,7 @@ public class Clientes {
 
 
 
-    public int getId_cliente() {
-        return id_cliente;
-    }
 
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
-    }
 
     public String getDni() {
         return dni;
@@ -99,7 +87,6 @@ public class Clientes {
     @Override
     public String toString() {
         return "Clientes{" +
-                "id_cliente=" + id_cliente +
                 ", dni='" + dni + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", primerApellido='" + primerApellido + '\'' +

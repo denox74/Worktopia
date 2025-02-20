@@ -1,70 +1,63 @@
+--Desabilita temporalmente las restricciones de clave foránea
+SET FOREIGN_KEY_CHECKS = 0;
+-- Vuelve a habilitar las restricciones de clave foránea
+SET FOREIGN_KEY_CHECKS = 1;
+-- Borrar esta cuando funcione..
+DROP TABLE IF EXISTS Factura_Reservas;
+DROP TABLE IF EXISTS Espacios;
+
+CREATE DATABASE IF NOT EXISTS Worktopia;
+USE Worktopia;
+
+DROP TABLE IF EXISTS Clientes;
 CREATE TABLE Clientes (
-    id_cliente INT AUTO_INCREMENT ,
     dni VARCHAR(10) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     primerApellido VARCHAR(30) NOT NULL,
     segundoApellido VARCHAR(30),
     email VARCHAR(100) NOT NULL UNIQUE,
     telefono VARCHAR(15),
-    CONSTRAINT pk_id_cliente PRIMARY KEY (id_cliente)
+    CONSTRAINT pk_dni_cliente PRIMARY KEY (dni)
 );
 
-CREATE TABLE Espacios (
-    id_espacio INT AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    CONSTRAINT pk_id_espacio PRIMARY KEY (id_espacio)
-);
 
+DROP TABLE IF EXISTS Asientos;
 CREATE TABLE Asientos (
     id_asiento INT AUTO_INCREMENT,
-    estado ENUM('libre', 'ocupado', 'no disponible') NOT NULL,
     nombre VARCHAR(255) NOT NULL,
     tarifa_hora DECIMAL(10, 2) NOT NULL,
-    id_espacio INT,
-    CONSTRAINT pk_id_asiento PRIMARY KEY (id_asiento),
-    CONSTRAINT fk_id_espacio FOREIGN KEY (id_espacio) REFERENCES Espacios(id_espacio)
+    CONSTRAINT pk_id_asiento PRIMARY KEY (id_asiento)
 );
+
 DROP TABLE IF EXISTS Reservas;
 CREATE TABLE Reservas (
     id_reserva INT AUTO_INCREMENT,
-    id_cliente INT,
-    id_asiento INT,
+    dni INT NOT NULL,
+    id_asiento INT NOT NULL,
+    id_factura NOT NULL,
     fecha_hora_inicio DATETIME NOT NULL,
     fecha_hora_fin DATETIME NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     CONSTRAINT pk_id_reserva PRIMARY KEY (id_reserva),
-    CONSTRAINT fk_id_cliente_reserva FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
-    CONSTRAINT fk_id_asiento_reserva FOREIGN KEY (id_asiento) REFERENCES Asientos(id_asiento)
-);
-
-DROP TABLE IF EXISTS Facturas;
-CREATE TABLE Facturas (
-    id_factura INT AUTO_INCREMENT,
-    precio_total DECIMAL(10, 2) NOT NULL,
-    tiene_descuento BOOLEAN DEFAULT FALSE,
-    CONSTRAINT pk_id_factura PRIMARY KEY (id_factura)
+    CONSTRAINT fk_dni_reserva FOREIGN KEY (dni) REFERENCES Clientes(dni),
+    CONSTRAINT fk_id_asiento_reserva FOREIGN KEY (id_asiento) REFERENCES Asientos(id_asiento),
+    CONSTRAINT fk_id_factura_reserva FOREIGN KEY (id_factura) REFERENCES Facturas(id_factura)
 );
 
  DROP TABLE IF EXISTS Facturas;
  CREATE TABLE Facturas (
     id_factura INT AUTO_INCREMENT,
-    precio_total DECIMAL(10, 2) NOT NULL,
-    tiene_descuento BOOLEAN DEFAULT FALSE,
-    fecha_hora_emision DATETIME NOT NULL,
-    estado ENUM('Pendiente', 'Pagada') NOT NULL,
-    fecha_pago DATETIME,
-    CONSTRAINT pk_id_factura PRIMARY KEY (id_factura)
+    dni VARCHAR(10) NOT NULL,
+    precio_total DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    descuento DECIMAL(5,2) DEFAULT 0.00,
+    fecha_hora_emision DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('Pendiente', 'Pagada') NOT NULL DEFAULT 'Pendiente',
+    fecha_hora_pago DATETIME,
+    CONSTRAINT pk_id_factura PRIMARY KEY (id_factura),
+    CONSTRAINT fk_dni_factura FOREIGN KEY (dni) REFERENCES Clientes(dni)
 );
 
-
-DROP TABLE IF EXISTS Factura_Reservas;
-CREATE TABLE Factura_Reservas (
-    id_factura INT,
-    id_reserva INT,
-    CONSTRAINT pk_factura_reserva PRIMARY KEY (id_factura, id_reserva),
-    CONSTRAINT fk_factura FOREIGN KEY (id_factura) REFERENCES Facturas(id_factura) ON DELETE CASCADE,
-    CONSTRAINT fk_reserva FOREIGN KEY (id_reserva) REFERENCES Reservas(id_reserva) ON DELETE CASCADE
-);
-
+DROP TABLE IF EXISTS Usuarios;
 CREATE TABLE Usuarios (
     id_usuario INT AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
@@ -76,8 +69,6 @@ CREATE TABLE Usuarios (
 
 
 DELETE FROM Clientes;
-ALTER TABLE Clientes AUTO_INCREMENT = 1;
-
 INSERT INTO Clientes (dni, nombre, primerApellido, segundoApellido, email, telefono) 
 VALUES ("12345678A", "Agustín", "Perez", "Perez", "aguseltin@gmail.com", "646053394"),
     ("23456789B", "Beatriz", "Gomez", "Lopez", "beatrizgomez@hotmail.com", "654789321"),
@@ -105,6 +96,9 @@ VALUES ("12345678A", "Agustín", "Perez", "Perez", "aguseltin@gmail.com", "64605
     ("45678901X", "Ximena", "Martinez", "Ruiz", "ximenamartinez@outlook.com", "612345890"),
     ("56789012Y", "Yolanda", "Sanchez", "Diaz", "yolandasanchez@outlook.com", "698765321");
 
+
+DELETE FROM Usuarios;
+ALTER TABLE Usuarios AUTO_INCREMENT = 1;
 INSERT INTO Usuarios (nombre, email, contrasenia, categoria)
 VALUES ("Eliu", "eliuadmin@worktopia.com", "Eliu.123E", "Admin"),
     ("David", "davidadmin@worktopia.com", "David.123D", "Admin"),
@@ -112,70 +106,57 @@ VALUES ("Eliu", "eliuadmin@worktopia.com", "Eliu.123E", "Admin"),
     ("Sofia", "lsofi@yahoo.es", "Sofia.123S", "Empleado");
 
 
-
-INSERT INTO Espacios (nombre)
-VALUES ("Oficina IESRincón");
-
-
 DELETE FROM Asientos;
 ALTER TABLE Asientos AUTO_INCREMENT = 1;
-INSERT INTO Asientos (estado, nombre, tarifa_hora, id_espacio)
+INSERT INTO Asientos (estado, nombre, tarifa_hora)
 VALUES
-("libre", "A1", 5.00, 1),
-("libre", "A2", 5.00, 1),
-("libre", "A3", 5.00, 1),
-("libre", "A4", 5.00, 1),
-("libre", "A5", 5.00, 1),
-("libre", "A6", 5.00, 1),
-("libre", "A7", 5.00, 1),
-("libre", "A8", 5.00, 1),
-("libre", "A9", 5.00, 1),
-("libre", "A10", 5.00, 1),
-("libre", "A11", 5.00, 1),
-("libre", "A12", 5.00, 1),
-("libre", "A13", 5.00, 1),
-("libre", "A14", 5.00, 1),
-("libre", "A15", 5.00, 1),
-("libre", "A16", 5.00, 1),
-("libre", "A17", 5.00, 1),
-("libre", "A18", 5.00, 1),
-("libre", "Oficina 1", 10.00, 1),
-("libre", "Oficina 2", 10.00, 1),
-("libre", "Sala de Conferencias 1", 20.00, 1),
-("libre", "Sala de Conferencias 2", 15.00, 1);
-
-DELETE FROM Reservas;
-ALTER TABLE Reservas AUTO_INCREMENT = 1;
-INSERT INTO Reservas (id_cliente, id_asiento, fecha_hora_inicio, fecha_hora_fin)
-VALUES
-(1, 1, "2025-01-01 09:00:00", "2025-01-01 12:00:00"),
-(1, 1, "2025-01-02 09:00:00", "2025-01-02 12:00:00"),
-(1, 1, "2025-01-03 09:00:00", "2025-01-03 12:00:00"),
-(1, 4, "2025-01-04 09:00:00", "2025-01-04 12:00:00"),
-(1, 1, "2025-01-05 09:00:00", "2025-01-05 12:00:00"),
-(2, 3, "2025-02-01 10:00:00", "2025-02-01 15:00:00"),
-(2, 3, "2025-02-02 10:00:00", "2025-02-02 15:00:00"),
-(2, 8, "2025-02-03 10:00:00", "2025-02-03 15:00:00"),
-(2, 4, "2025-02-04 10:00:00", "2025-02-04 15:00:00"),
-(2, 10, "2025-02-05 10:00:00", "2025-02-05 15:00:00");
-
+("libre", "A1", 3.00),
+("libre", "A2", 3.00),
+("libre", "A3", 3.00),
+("libre", "A4", 3.00),
+("libre", "A5", 3.00),
+("libre", "A6", 3.00),
+("libre", "A7", 3.00),
+("libre", "A8", 3.00),
+("libre", "A9", 3.00),
+("libre", "A10", 3.00),
+("libre", "A11", 3.00),
+("libre", "A12", 3.00),
+("libre", "A13", 3.00),
+("libre", "A14", 3.00),
+("libre", "A15", 3.00),
+("libre", "A16", 3.00),
+("libre", "A17", 3.00),
+("libre", "A18", 3.00),
+("libre", "Oficina 1", 8.00),
+("libre", "Oficina 2", 8.00),
+("libre", "Sala de Conferencias 1", 15.00),
+("libre", "Sala de Conferencias 2", 10.00);
 
 DELETE FROM Facturas;
 ALTER TABLE Facturas AUTO_INCREMENT = 1;
-INSERT INTO Facturas (precio_total, tiene_descuento)
+INSERT INTO Facturas (tiene_descuento, dni)
 VALUES
-(0.00, FALSE),
-(0.00, FALSE);
+(FALSE. "12345678A"),
+(FALSE, "23456789B");
 
-INSERT INTO Factura_Reservas (id_factura, id_reserva)
+-- El calculo de la factura deberá de programarse en el backend de java sumando el total de las horas de la reserva y multiplicando por la tarifa de la hora del asiento.
+
+DELETE FROM Reservas;
+ALTER TABLE Reservas AUTO_INCREMENT = 1;
+INSERT INTO Reservas (dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin)
 VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(2, 6),
-(2, 7),
-(2, 8),
-(2, 9),
-(2, 10);
+("12345678A", 1, 1, "2025-01-01 09:00:00", "2025-01-01 12:00:00"),
+("12345678A", 1, 1, "2025-01-02 09:00:00", "2025-01-02 12:00:00"),
+("12345678A", 1, 1, "2025-01-03 09:00:00", "2025-01-03 12:00:00"),
+("12345678A", 4, 1, "2025-01-04 09:00:00", "2025-01-04 12:00:00"),
+("12345678A", 1, 1, "2025-01-05 09:00:00", "2025-01-05 12:00:00"),
+("23456789B", 3, 2, "2025-02-01 10:00:00", "2025-02-01 15:00:00"),
+("23456789B", 3, 2, "2025-02-02 10:00:00", "2025-02-02 15:00:00"),
+("23456789B", 8, 2, "2025-02-03 10:00:00", "2025-02-03 15:00:00"),
+("23456789B", 4, 2, "2025-02-04 10:00:00", "2025-02-04 15:00:00"),
+("23456789B", 10, 2, "2025-02-05 10:00:00", "2025-02-05 15:00:00");
+
+
+
+

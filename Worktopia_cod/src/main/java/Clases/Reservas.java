@@ -1,21 +1,89 @@
 package Clases;
 
+import ConexionDB.ConectionDB;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 public class Reservas {
     private int id_reserva;
+    private String dni;
     private Timestamp fecha_hora_inicio;
     private Timestamp fecha_hora_fin;
-    private int id_cliente;
     private int id_asiento;
+    private int id_factura;
+    private BigDecimal subtotal ;
 
-    public Reservas(int id_reserva, int id_cliente, int id_asiento, Timestamp fecha_hora_inicio, Timestamp fecha_hora_fin) {
+    public Reservas(int id_reserva, String dni, int id_asiento, int id_factura,Timestamp fecha_hora_inicio, Timestamp fecha_hora_fin) {
         this.id_reserva = id_reserva;
-        this.id_cliente = id_cliente;
+        this.dni = dni;
         this.id_asiento = id_asiento;
+        this.id_factura = id_factura;
         this.fecha_hora_inicio = fecha_hora_inicio;
         this.fecha_hora_fin = fecha_hora_fin;
+        this.subtotal = calcularSubtotal();
+    }
+
+    public int getId_reserva() {
+        return id_reserva;
+    }
+
+    public void setId_reserva(int id_reserva) {
+        this.id_reserva = id_reserva;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public int getId_asiento() {
+        return id_asiento;
+    }
+
+    public void setId_asiento(int id_asiento) {
+        this.id_asiento = id_asiento;
+    }
+
+    public int getId_factura() {
+        return id_factura;
+    }
+
+    public void setId_factura(int id_factura) {
+        this.id_factura = id_factura;
+    }
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    private BigDecimal calcularSubtotal() {
+        BigDecimal tarifaHora = getTarifaHoraId(id_asiento);
+        LocalDateTime inicio = fecha_hora_inicio.toLocalDateTime();
+        LocalDateTime fin = fecha_hora_fin.toLocalDateTime();
+        long horas = Duration.between(inicio, fin).toHours();
+        return tarifaHora.multiply(BigDecimal.valueOf(horas));
+    }
+
+    private BigDecimal getTarifaHoraId(int id_asiento) {
+        List<Asientos> asientos = ConectionDB.getAsientos();
+        for (Asientos asiento : asientos) {
+            if (asiento.getId_asiento() == id_asiento) {
+                return asiento.getTarifa_hora();
+            }
+        }
+        return BigDecimal.ZERO;
     }
 
     public Timestamp getFecha_hora_inicio() {
@@ -38,7 +106,8 @@ public class Reservas {
     public String toString() {
         return "Reservas{" +
                 "id_reserva=" + id_reserva +
-                ", id_cliente=" + id_cliente +
+                ", dni='" + dni + '\'' +
+                ", id_cliente=" + id_factura+
                 ", id_asiento=" + id_asiento +
                 ", fecha_hora_inicio=" + fecha_hora_inicio +
                 ", fecha_hora_fin=" + fecha_hora_fin +
