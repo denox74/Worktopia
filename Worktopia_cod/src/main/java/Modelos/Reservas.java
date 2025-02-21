@@ -15,12 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.AbstractMap;
 import java.util.HashSet;
@@ -92,9 +91,7 @@ public class Reservas {
     @FXML
     private Button BtnOficina2;
     @FXML
-    private Button BtnConferencias1;
-    @FXML
-    private Button BtnConferencias2;
+    private TextField dniCliente;
 
     private Button BtnSeleccionado;
 
@@ -122,6 +119,14 @@ public class Reservas {
         Facturaciones();
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
+    public void insertarReserva(ActionEvent event) {
+        insertarDatos();
+        fecha.setValue(null);
+        horaInicio.setText("");
+        horaFin.setText("");
+        espacio.setText("");
+        dniCliente.setText("");
+    }
 
     // configuracion de ventana de apertura de los horarios
     public void ventanaHorarios(ActionEvent event) {
@@ -136,6 +141,7 @@ public class Reservas {
         BtnSeleccionado = BtnSeleccion;
         horaInicio.setText("");
         horaFin.setText("");
+        precio.setText("");
         contenedorHorarios.setVisible(true);
         int espacioId = obtenerIdEspacio(BtnSeleccionado.getText());
         actualizarColoresHorarios(espacioId);
@@ -173,95 +179,56 @@ public class Reservas {
         Button BtnSeleccionHora = (Button) event.getSource();
         if (BtnSeleccionHora != null) {
             espacio.setText(BtnSeleccionado.getText());
-            if(horaInicio.getText().isEmpty()){
+            if (horaInicio.getText().isEmpty()) {
                 horaInicio.setText(BtnSeleccionHora.getText());
-            }else if (horaFin.getText().isEmpty()) {
+            } else if (horaFin.getText().isEmpty()) {
                 horaFin.setText(BtnSeleccionHora.getText());
                 cierreVentanaHorarios();
             }
-
         }
     }
+
     public int obtenerIdEspacio(String nombreEspacio) {
-        try {
-            ConectionDB.openConn();
-            String consulta = "SELECT id_asiento FROM Asientos WHERE nombre = ?";
-            int idEspacio = -1;
-            try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
-                stmt.setString(1, nombreEspacio);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    idEspacio = rs.getInt("id_asiento");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return idEspacio;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }finally {
-            conectionDB.closeConn();
-        }
 
+        String consulta = "SELECT id_asiento FROM Asientos WHERE nombre = ?";
+        int idEspacio = -1;
+        try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
+            stmt.setString(1, nombreEspacio);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                idEspacio = rs.getInt("id_asiento");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idEspacio;
     }
 
-    public Set<String> obtenerHorariosReservados(int asiento) {
-        try {
-            ConectionDB.openConn();
-            Set<String> horariosOcupados = new HashSet<>();
-            String consulta = "SELECT TIME(fecha_hora_inicio) FROM Reservas WHERE id_asiento = ?";
 
-            try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
-                stmt.setInt(1, asiento);
-                ResultSet rs = stmt.executeQuery();
+    public Set<String> obtenerHorariosReservados(int asiento, LocalDate fecha) {
 
-                while (rs.next()) {
-                    horariosOcupados.add(rs.getString(1));
-                }
-            } catch (SQLException e) {
-            }
+        Set<String> horariosOcupados = new HashSet<>();
+        String consulta = "SELECT TIME(fecha_hora_inicio),TIME(fecha_hora_fin) FROM Reservas WHERE id_asiento = ? AND DATE(fecha_hora_inicio) = ?";
 
-            return horariosOcupados;
+        try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
+            stmt.setInt(1, asiento);
+            stmt.setString(2, fecha.toString());
+            ResultSet rs = stmt.executeQuery();
 
-        } catch (ClassNotFoundException e) {
-
-            throw new RuntimeException(e);
-        }finally {
-            conectionDB.closeConn();
+            while (rs.next()) {
+                LocalTime inicio = rs.getTime(1).toLocalTime();
+                LocalTime fin = rs.getTime(2).toLocalTime();
+                while(!inicio.isAfter(fin)){
+                    horariosOcupados.add(inicio.toString());
+                    inicio = inicio.plusMinutes(30);
+                }            }
+        } catch (SQLException e) {
         }
-
-    }
-    public Set<String> obtenerFechasReservadas(int idEspacio) {
-        try {
-            ConectionDB.openConn();
-            Set<String> fechasOcupadas = new HashSet<>();
-            String consulta = "SELECT DATE(fecha_hora_inicio) FROM Reservas WHERE id_asiento = ?";
-
-            try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
-                stmt.setInt(1, idEspacio);
-                ResultSet rs = stmt.executeQuery();
-
-                while (rs.next()) {
-                    fechasOcupadas.add(rs.getString(1)); // Obtener la fecha como String
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            return fechasOcupadas;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }finally {
-            conectionDB.closeConn();
-        }
+        return horariosOcupados;
     }
 
 
     public void actualizarColoresHorarios(int idEspacio) {
-
-        Set<String> horariosOcupados = obtenerHorariosReservados(idEspacio);
-        Set<String> fechasOcupadas = obtenerFechasReservadas(idEspacio);
-
         LocalDate fechaSeleccionada = fecha.getValue();
         if (fechaSeleccionada == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -269,31 +236,70 @@ public class Reservas {
             alert.setHeaderText(null);
             alert.setContentText("Debe seleccionar una fecha.");
             alert.showAndWait();
+            contenedorHorarios.setVisible(false);
             return;
         }
 
-        String fechaString = fechaSeleccionada.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        Set<String> horariosOcupados = obtenerHorariosReservados(idEspacio , fechaSeleccionada);
 
         for (javafx.scene.Node node : contenedorHorarios.lookupAll(".button")) {
             if (node instanceof Button) {
                 Button btnHorario = (Button) node;
                 String horario = btnHorario.getText();
 
-                for(String horaReserva : horariosOcupados){
-                    String horaM = horaReserva.substring(0,5);
-                    if (horaM.equals(horario) && fechasOcupadas.contains(fechaString)) {
-                        btnHorario.setStyle("-fx-background-color: #e60415; -fx-text-fill: white;");
-                        btnHorario.setDisable(true);
-                    } else {
-                        btnHorario.setStyle("-fx-background-color: #047f07; -fx-text-fill: black;");
-                        btnHorario.setDisable(false);
-                    }
+                if (horariosOcupados.contains(horario)) {
+                    // La hora está dentro del rango de una reserva
+                    btnHorario.setStyle("-fx-background-color: #e60415; -fx-text-fill: white;");
+                    btnHorario.setDisable(true);
+                } else {
+                    // La fecha está reservada, pero no esta hora específica
+                    btnHorario.setStyle("-fx-background-color: #047f07; -fx-text-fill: black;");
+                    btnHorario.setDisable(false);
                 }
-
             }
         }
     }
 
+    public void insertarDatos(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        String dniText = this.dniCliente.getText();
+        String espacioText = this.espacio.getText();
+        String horaInicioText = this.horaInicio.getText();
+        String horaFinText = this.horaFin.getText();
+        LocalDate fechaReserva = this.fecha.getValue();
+        int idAsiento = obtenerIdEspacio(espacioText);
+
+        LocalDateTime fechaHoraInicio = LocalDateTime.of(fechaReserva, LocalTime.parse(horaInicio.getText()));
+        LocalDateTime fechaHoraFin = LocalDateTime.of(fechaReserva, LocalTime.parse(horaFin.getText()));
+
+        if (dniText.isEmpty() || espacioText.isEmpty() || horaInicioText.isEmpty() || horaFinText.isEmpty()) {
+            alert.setContentText("Debe completar todos los campos");
+            alert.show();
+        } else {
+            try {
+                String query = "INSERT INTO Reservas (dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin)" +
+                        "VALUES (?, ?, ?, ?, ?)";
+
+                try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)) {
+                    stmt.setString(1, dniCliente.getText());
+                    stmt.setInt(2, idAsiento);
+                    stmt.setInt(3, 2);
+
+                    stmt.setTimestamp(4, Timestamp.valueOf(fechaHoraInicio));
+                    stmt.setTimestamp(5, Timestamp.valueOf(fechaHoraFin));
+
+                    int rowsInserted = stmt.executeUpdate();
+                    alert.setContentText(rowsInserted > 0 ? "Reserva creada correctamente" : "No se pudo crear la reserva");
+                    alert.show();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
 
     public void RegistroUsuarios() {
@@ -344,7 +350,6 @@ public class Reservas {
             throw new RuntimeException(e);
         }
     }
-
 
 
 }
