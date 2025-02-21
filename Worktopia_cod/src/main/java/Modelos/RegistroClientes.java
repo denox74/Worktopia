@@ -71,10 +71,7 @@ public void agregarCliente() {
         alert.setContentText("Debe completar todos los campos");
         alert.show();
     } else {
-        // Abre la conexión antes de ejecutarla
         try {
-            ConectionDB.openConn();
-
             String query = "INSERT INTO Clientes (dni, nombre, primerApellido, segundoApellido, eMail, telefono) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -92,13 +89,8 @@ public void agregarCliente() {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        } catch (ClassNotFoundException e) {
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setContentText("Error: " + e.getMessage());
-            alert.show();
-            e.printStackTrace();
         } finally {
-            ConectionDB.closeConn(); // Cierra la conexión al terminar
+
         }
     }
 }

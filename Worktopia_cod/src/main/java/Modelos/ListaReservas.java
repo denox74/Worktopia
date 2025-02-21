@@ -1,16 +1,21 @@
 package Modelos;
 
+import Clases.Reservas;
+import ConexionDB.ConectionDB;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 
 public class ListaReservas {
@@ -31,6 +36,49 @@ public class ListaReservas {
     private TextField DNIbuscar;
     @FXML
     private ListView listaSQL;
+
+    @FXML
+    private TableView<Clases.Reservas> tablarReservas;
+    @FXML
+    private TableColumn<Clases.Reservas, Integer> colNReserva;
+    @FXML
+    private TableColumn<Clases.Reservas, String> colDNI;
+    @FXML
+    private TableColumn<Clases.Reservas, Integer> colAsiento;
+    @FXML
+    private TableColumn<Clases.Reservas, Integer> colFactura;
+    @FXML
+    private TableColumn<Clases.Reservas, java.sql.Timestamp> colFechaInicio;
+    @FXML
+    private TableColumn<Clases.Reservas, java.sql.Timestamp> colFechaFin;
+    @FXML
+    private TableColumn<Clases.Reservas, java.math.BigDecimal> colSubtotal;
+
+    private ObservableList<Clases.Reservas> reservasList;
+
+    @FXML
+    public void initialize() {
+        colNReserva.setCellValueFactory(new PropertyValueFactory<>("id_reserva"));
+        colDNI.setCellValueFactory(new PropertyValueFactory<>("dni"));
+        colAsiento.setCellValueFactory(new PropertyValueFactory<>("id_asiento"));
+        colFactura.setCellValueFactory(new PropertyValueFactory<>("id_factura"));
+        colFechaInicio.setCellValueFactory(new PropertyValueFactory<>("fecha_hora_inicio"));
+        colFechaFin.setCellValueFactory(new PropertyValueFactory<>("fecha_hora_fin"));
+        colSubtotal.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
+
+        try {
+            loadReservasFromDatabase();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadReservasFromDatabase() throws SQLException, ClassNotFoundException {
+        List<Reservas> reservas = ConectionDB.getReservas();
+        reservasList = FXCollections.observableArrayList(reservas);
+        tablarReservas.setItems(reservasList);
+    }
+
 
     public ListaReservas() {
     }

@@ -21,8 +21,12 @@ public class MenuPrincipalApp extends Application {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
+        ConectionDB.openConn();
         ConectionDB.testConnection();
-        ConectionDB.testGetReservas();
         launch();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            ConectionDB.closeConn();
+            System.out.println("Connection closed.");
+        }));
     }
 }

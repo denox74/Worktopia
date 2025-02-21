@@ -2,6 +2,7 @@ package ConexionDB;
 
 import Clases.*;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,13 +73,11 @@ public class ConectionDB {
 
     // Método de prueba para verificar la conexión
     public static void testConnection() throws ClassNotFoundException {
-        openConn();
         if (conn != null) {
             System.out.println("Connection test successful.");
         } else {
             System.out.println("Connection test failed.");
         }
-        closeConn();
     }
 
 
@@ -88,7 +87,6 @@ public class ConectionDB {
         List<Clientes> clientes = new ArrayList<>();
         String query = "SELECT dni, nombre, primerApellido, segundoApellido, email, telefono FROM Clientes";
         try {
-            openConn();
             if (conn != null) {
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
@@ -104,11 +102,8 @@ public class ConectionDB {
                 }
                 rs.close();
             }
-            closeConn();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
         return clientes;
     }
@@ -119,7 +114,6 @@ public class ConectionDB {
         List<Asientos> asientos = new ArrayList<>();
         String query = "SELECT id_asiento, nombre, tarifa_hora FROM Asientos";
         try {
-            openConn();
             if (conn != null) {
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
@@ -133,11 +127,8 @@ public class ConectionDB {
                 }
                 rs.close();
             }
-            closeConn();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
         return asientos;
     }
@@ -147,39 +138,51 @@ public class ConectionDB {
     public static List<Reservas> getReservas() {
         List<Reservas> reservas = new ArrayList<>();
         String query = "SELECT id_reserva, dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin FROM Reservas";
-        try {
-            openConn();
-            if (conn != null) {
-                ResultSet rs = stmt.executeQuery(query);
-                while (rs.next()) {
-                    Reservas reserva = new Reservas(
-                            rs.getInt("id_reserva"),
-                            rs.getString("dni"),
-                            rs.getInt("id_asiento"),
-                            rs.getInt("id_factura"),
-                            rs.getTimestamp("fecha_hora_inicio"),
-                            rs.getTimestamp("fecha_hora_fin")
+        String updateQuery = "UPDATE Reservas SET subtotal = ? WHERE id_reserva = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
 
-                    );
-                    reservas.add(reserva);
+            while (rs.next()) {
+                Reservas reserva = new Reservas(
+                        rs.getInt("id_reserva"),
+                        rs.getString("dni"),
+                        rs.getInt("id_asiento"),
+                        rs.getInt("id_factura"),
+                        rs.getTimestamp("fecha_hora_inicio"),
+                        rs.getTimestamp("fecha_hora_fin")
+                );
+                // Calculate the subtotal
+                BigDecimal subtotal = reserva.calcularSubtotal();
+
+                // Update the subtotal in the database
+                try (PreparedStatement updatePs = conn.prepareStatement(updateQuery)) {
+                    updatePs.setBigDecimal(1, subtotal);
+                    updatePs.setInt(2, reserva.getId_reserva());
+                    updatePs.executeUpdate();
                 }
-                rs.close();
+
+                reserva.setSubtotal(subtotal);
+                reservas.add(reserva);
             }
-            closeConn();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
         return reservas;
     }
 
+
+
+
+
+
+
+
     // Adquirir Facturas
+
     public static List<Facturas> getFacturas() {
         List<Facturas> facturas = new ArrayList<>();
         String query = "SELECT id_factura, dni, precio_total, tiene_descuento, fecha_hora_emision, estado, fecha_hora_pago FROM Facturas";
         try {
-            openConn();
             if (conn != null) {
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
@@ -196,11 +199,8 @@ public class ConectionDB {
                 }
                 rs.close();
             }
-            closeConn();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
         return facturas;
     }
@@ -213,7 +213,6 @@ public class ConectionDB {
         List<Usuarios> usuarios = new ArrayList<>();
         String query = "SELECT id_usuario, nombre, email, contrasenia, categoria FROM Usuarios";
         try {
-            openConn();
             if (conn != null) {
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
@@ -228,14 +227,13 @@ public class ConectionDB {
                 }
                 rs.close();
             }
-            closeConn();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
         return usuarios;
     }
+
+
 
 /////////////////////////////////////////////TESTS//////////////////////////////////////////////////////////
 

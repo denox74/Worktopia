@@ -68,7 +68,7 @@ public class Reservas {
         this.subtotal = subtotal;
     }
 
-    private BigDecimal calcularSubtotal() {
+    public BigDecimal calcularSubtotal() {
         BigDecimal tarifaHora = getTarifaHoraId(id_asiento);
         LocalDateTime inicio = fecha_hora_inicio.toLocalDateTime();
         LocalDateTime fin = fecha_hora_fin.toLocalDateTime();
