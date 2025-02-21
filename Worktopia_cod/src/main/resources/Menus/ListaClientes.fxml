@@ -105,7 +105,6 @@
         </Button>
         <TableView fx:id="tablaClientes" layoutX="50.0" layoutY="201.0" prefHeight="428.0" prefWidth="1173.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
             <columns>
-                <TableColumn id="Cliente" fx:id="colIdCliente" prefWidth="130.0" text="Nº Cliente" />
                 <TableColumn fx:id="colDNI" prefWidth="130.0" text="DNI" />
                 <TableColumn fx:id="colNombre" prefWidth="161.0" text="Nombre" />
                 <TableColumn fx:id="colPrimerApellido" prefWidth="161.0" text="Primer Apellido" />

@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class ConectionDB {
 //     private static final String URL = "jdbc:mysql://bd-4free.net";
-    private static final String URL = "jdbc:mysql://uqxj2bxqdgq4e1fp:bt33sWO8fH9pN8LVVDGr@bwj6lss5tgchvux8qwv9-mysql.services.clever-cloud.com:3306/bwj6lss5tgchvux8qwv9";
+    private static final String URL = "jdbc:mysql://bt33sWO8fH9pN8LVVDGr@bwj6lss5tgchvux8qwv9-mysql.services.clever-cloud.com:3306/bwj6lss5tgchvux8qwv9";
     private static final String PORT = "3306";
     //private static final String USER = "worktopia";
     private static final String USER = "uqxj2bxqdgq4e1fp";
@@ -99,7 +99,6 @@ public class ConectionDB {
                             rs.getString("segundoApellido"),
                             rs.getString("email"),
                             rs.getString("telefono")
-
                     );
                     clientes.add(cliente);
                 }
