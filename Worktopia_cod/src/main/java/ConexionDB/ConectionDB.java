@@ -171,17 +171,11 @@ public class ConectionDB {
     }
 
 
-
-
-
-
-
-
     // Adquirir Facturas
 
     public static List<Facturas> getFacturas() {
         List<Facturas> facturas = new ArrayList<>();
-        String query = "SELECT id_factura, dni, precio_total, tiene_descuento, fecha_hora_emision, estado, fecha_hora_pago FROM Facturas";
+        String query = "SELECT id_factura, dni, precio_total, descuento, fecha_hora_emision, estado, fecha_hora_pago FROM Facturas";
         try {
             if (conn != null) {
                 ResultSet rs = stmt.executeQuery(query);

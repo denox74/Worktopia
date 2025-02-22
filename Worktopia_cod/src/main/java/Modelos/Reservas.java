@@ -16,12 +16,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.AbstractMap;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -128,6 +126,37 @@ public class Reservas {
         dniCliente.setText("");
     }
 
+    public double facturaPrecioText (TextField nombreEspacio, TextField horaInicio , TextField horaFin) {
+        String consulta = "SELECT tarifa_hora FROM Asientos WHERE nombre = ?";
+
+
+        String inicioTexto = horaInicio.getText();
+        String finTexto = horaFin.getText();
+
+        double tarifa = 0;
+        try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
+            stmt.setString(1, nombreEspacio.getText());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                tarifa = rs.getInt("tarifa_hora");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        try {
+            LocalTime inicio = LocalTime.parse(inicioTexto);
+            LocalTime fin = LocalTime.parse(finTexto);
+
+            double horasPasadas = (double) ChronoUnit.HOURS.between(inicio, fin);
+            return horasPasadas * tarifa;
+
+        } catch (Exception e) {
+            return  0;
+        }
+    }
+
     // configuracion de ventana de apertura de los horarios
     public void ventanaHorarios(ActionEvent event) {
         Button BtnSeleccion = (Button) event.getSource();
@@ -186,6 +215,8 @@ public class Reservas {
                 cierreVentanaHorarios();
             }
         }
+        double precioTotal = facturaPrecioText(espacio,horaInicio,horaFin);
+        precio.setText(precioTotal + "0 €");
     }
 
     public int obtenerIdEspacio(String nombreEspacio) {
@@ -260,6 +291,26 @@ public class Reservas {
         }
     }
 
+
+    public int insertarIdFactura(String DNI) {
+        String subQuery = "SELECT id_factura FROM Facturas WHERE dni = ?";
+        int idFactura = -1;
+        try {
+            PreparedStatement stmt = ConectionDB.getConn().prepareStatement(subQuery);
+            stmt.setString(1, DNI);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next() && rs.getString("dni").equals(dniCliente.getText())) {
+                idFactura = rs.getInt("id_factura");
+            } else {
+                idFactura++;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return idFactura;
+    }
+
+        // Corregir la parte de los datos para crear la factura una vez este dentro la reserva para crear la reserva y la factura de la misma
     public void insertarDatos(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         String dniText = this.dniCliente.getText();
@@ -276,28 +327,32 @@ public class Reservas {
             alert.setContentText("Debe completar todos los campos");
             alert.show();
         } else {
-            try {
                 String query = "INSERT INTO Reservas (dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin)" +
                         "VALUES (?, ?, ?, ?, ?)";
 
                 try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)) {
                     stmt.setString(1, dniCliente.getText());
                     stmt.setInt(2, idAsiento);
-                    stmt.setInt(3, 2);
-
+                    stmt.setInt(3, insertarIdFactura(dniText));
                     stmt.setTimestamp(4, Timestamp.valueOf(fechaHoraInicio));
                     stmt.setTimestamp(5, Timestamp.valueOf(fechaHoraFin));
-
                     int rowsInserted = stmt.executeUpdate();
                     alert.setContentText(rowsInserted > 0 ? "Reserva creada correctamente" : "No se pudo crear la reserva");
                     alert.show();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-
-            } catch (RuntimeException e) {
-                throw new RuntimeException(e);
-            }
+                String queryFacturas = "INSERT INTO Facturas (dni, fecha_hora_inicio, fecha_hora_fin, id_factura)" +
+                        "VALUES (?, ?, ?, ?)";
+                try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(queryFacturas)) {
+                    stmt.setString(1, dniCliente.getText());
+                    stmt.setTimestamp(2, Timestamp.valueOf(fechaHoraInicio));
+                    stmt.setTimestamp(3, Timestamp.valueOf(fechaHoraFin));
+                    stmt.setInt(4, insertarIdFactura(dniText));
+                    int rowsInserted = stmt.executeUpdate();
+                    alert.setContentText(rowsInserted > 0 ? "Factura creada correctamente" : "No se pudo crear la factura");
+                    alert.show();
+                } catch (SQLException e) {}
         }
     }
 

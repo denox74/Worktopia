@@ -1,17 +1,26 @@
 package Modelos;
 
+import Clases.Clientes;
+import Clases.Facturas;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ConexionDB.ConectionDB;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+
 import java.awt.*;
 import java.io.*;
 import java.sql.Connection;
@@ -21,14 +30,37 @@ import java.sql.SQLException;
 import java.io.IOException;
 
 public class Facturacion {
-    @FXML private Button AgregarClientes;
-    @FXML private Button Reservas;
-    @FXML private Button ListaReservas;
-    @FXML private Button ListaClientes;
-    @FXML private Button btnModificar;
-    @FXML private Button btnEliminar;
-    @FXML private Button btnGenerar;
-    @FXML private TextField facturaBuscar;
+    @FXML
+    private Button AgregarClientes;
+    @FXML
+    private Button Reservas;
+    @FXML
+    private Button ListaReservas;
+    @FXML
+    private Button ListaClientes;
+    @FXML
+    private Button btnGenerar;
+    @FXML
+    private TextField facturaBuscar;
+    @FXML
+    private VBox contenedorDatos;
+    @FXML
+    private TableView<Facturas> tablaFacturas;
+
+    @FXML
+    private TableColumn<Facturas, String> colNFactura   ;
+    @FXML
+    private TableColumn<Facturas, String> colFechaFactura;
+    @FXML
+    private TableColumn<Facturas, String> colTotal;
+    @FXML
+    private TableColumn<Facturas, String> colDni;
+    @FXML
+    private TableColumn<Facturas, String> colDescuento;
+    @FXML
+    private TableColumn<Facturas, String> colEstadoPago;
+    @FXML
+    private TableColumn<Facturas, String> colFechaPago;
 
     @FXML
     private void generarFactura() {
@@ -40,27 +72,49 @@ public class Facturacion {
         }
     }
 
+    @FXML
+    public void initialize() {
+        colNFactura.setCellValueFactory(new PropertyValueFactory<>("id_factura"));
+        colFechaFactura.setCellValueFactory(new PropertyValueFactory<>("fecha_hora_emision"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("precio_total"));
+        colDni.setCellValueFactory(new PropertyValueFactory<>("dni"));
+        colDescuento.setCellValueFactory(new PropertyValueFactory<>("descuento"));
+        colEstadoPago.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        colFechaPago.setCellValueFactory(new PropertyValueFactory<>("fecha_hora_pago"));
 
-    public Facturacion(){
+
+        ObservableList<Facturas> facturasList = FXCollections.observableArrayList(ConectionDB.getFacturas());
+        tablaFacturas.setItems(facturasList);
     }
-    public void ventanaRegistro(ActionEvent event){
+
+    public Facturacion() {
+    }
+
+    public void ventanaRegistro(ActionEvent event) {
         RegistroUsuarios();
         ((Stage) AgregarClientes.getScene().getWindow()).close();
     }
-    public void ventanaReservas(ActionEvent event){
+
+    public void ventanaReservas(ActionEvent event) {
         Reservas();
         ((Stage) Reservas.getScene().getWindow()).close();
     }
-    public void ventanaListaClientes(ActionEvent event){
+
+    public void ventanaListaClientes(ActionEvent event) {
         ListaUsuarios();
         ((Stage) ListaClientes.getScene().getWindow()).close();
     }
-    public void ventanaListaReservas(ActionEvent event){
+
+    public void ventanaListaReservas(ActionEvent event) {
         ListaReservas();
         ((Stage) ListaReservas.getScene().getWindow()).close();
     }
 
-    public void RegistroUsuarios(){
+    public void btnDescarga(ActionEvent event) {
+        contenedorDatos.setVisible(true);
+    }
+
+    public void RegistroUsuarios() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroClientes.fxml"));
             Parent cargaVentana = loader.load();
@@ -72,6 +126,7 @@ public class Facturacion {
         }
 
     }
+
     public void Reservas() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Reservas.fxml"));
@@ -83,6 +138,7 @@ public class Facturacion {
             throw new RuntimeException(e);
         }
     }
+
     public void ListaUsuarios() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaClientes.fxml"));
@@ -94,6 +150,7 @@ public class Facturacion {
             throw new RuntimeException(e);
         }
     }
+
     public void ListaReservas() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaReservas.fxml"));
