@@ -1,6 +1,5 @@
 package Modelos;
 
-import Clases.Clientes;
 import Clases.Facturas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,9 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
@@ -23,13 +21,12 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import java.awt.*;
 import java.io.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.io.IOException;
 
 public class Facturacion {
+
+    private static ReservasPanel ReservasP;
     @FXML
     private Button AgregarClientes;
     @FXML
@@ -48,7 +45,7 @@ public class Facturacion {
     private TableView<Facturas> tablaFacturas;
 
     @FXML
-    private TableColumn<Facturas, String> colNFactura   ;
+    private TableColumn<Facturas, String> colNFactura;
     @FXML
     private TableColumn<Facturas, String> colFechaFactura;
     @FXML
@@ -88,7 +85,9 @@ public class Facturacion {
     }
 
     public Facturacion() {
+        this.ReservasP = new ReservasPanel();
     }
+
 
     public void ventanaRegistro(ActionEvent event) {
         RegistroUsuarios();
@@ -113,6 +112,10 @@ public class Facturacion {
     public void btnDescarga(ActionEvent event) {
         contenedorDatos.setVisible(true);
     }
+
+
+
+
 
     public void RegistroUsuarios() {
         try {
