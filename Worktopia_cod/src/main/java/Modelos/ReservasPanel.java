@@ -308,14 +308,12 @@ public class ReservasPanel {
 
     public static int insertarIdFactura(String DNI) {
         String selectQuery = "SELECT id_factura FROM Facturas WHERE dni = ?";
-        String insertQuery = "INSERT INTO Facturas (dni) VALUES (?)";
         int idFactura = 0;
 
         try {
-            Connection conn = ConectionDB.getConn();
 
 
-            try (PreparedStatement stmt = conn.prepareStatement(selectQuery)) {
+            try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(selectQuery, Statement.RETURN_GENERATED_KEYS)) {
                 stmt.setString(1, DNI);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
@@ -324,17 +322,6 @@ public class ReservasPanel {
                 }
             }
 
-
-            try (PreparedStatement stmt = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
-                stmt.setString(1, DNI);
-                stmt.executeUpdate();
-
-
-                ResultSet generatedKeys = stmt.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    idFactura = generatedKeys.getInt(1);
-                }
-            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -369,14 +356,14 @@ public class ReservasPanel {
         LocalDateTime fechaHoraFin = LocalDateTime.of(fechaReserva, LocalTime.parse(horaFinText));
 
         // Iniciar la transacción
-        try (Connection conn = ConectionDB.getConn()) {
-            conn.setAutoCommit(false); // Iniciar transacción
+        try  {
+            // Iniciar transacción
 
             // 1️⃣ Insertar la reserva en la tabla `Reservas`
             String queryReserva = "INSERT INTO Reservas (dni, id_asiento, fecha_hora_inicio, fecha_hora_fin) VALUES (?, ?, ?, ?)";
             int idReserva = -1;
 
-            try (PreparedStatement stmtReserva = conn.prepareStatement(queryReserva, Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement stmtReserva = ConectionDB.getConn().prepareStatement(queryReserva, Statement.RETURN_GENERATED_KEYS)) {
                 stmtReserva.setString(1, dniText);
                 stmtReserva.setInt(2, idAsiento);
                 stmtReserva.setTimestamp(3, Timestamp.valueOf(fechaHoraInicio));
@@ -385,17 +372,11 @@ public class ReservasPanel {
                 int rowsInserted = stmtReserva.executeUpdate();
 
                 if (rowsInserted == 0) {
-                    conn.rollback();
                     alert.setContentText("No se pudo crear la reserva.");
                     alert.show();
                     return;
                 }
 
-                // Obtener el ID de la reserva generada
-                ResultSet generatedKeys = stmtReserva.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    idReserva = generatedKeys.getInt(1);
-                }
             }
 
             // 2️⃣ Insertar o recuperar la factura
@@ -404,7 +385,7 @@ public class ReservasPanel {
             // 3️⃣ Insertar la factura
             String queryFactura = "INSERT INTO Facturas (id_factura, dni, precio_total, descuento, fecha_hora_emision, estado, fecha_hora_pago) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            try (PreparedStatement stmtFactura = conn.prepareStatement(queryFactura)) {
+            try (PreparedStatement stmtFactura = ConectionDB.getConn().prepareStatement(queryFactura)) {
                 LocalDateTime fechaHoraCreacion = LocalDateTime.now(); // Fecha de emisión actual
                 double subTotal = subtotal;
                 double descuentos = descuento;
@@ -418,16 +399,14 @@ public class ReservasPanel {
                 stmtFactura.setNull(7, Types.TIMESTAMP); // fecha_hora_pago es NULL por defecto
 
                 int rowsInsertedFactura = stmtFactura.executeUpdate();
+
                 if (rowsInsertedFactura == 0) {
-                    conn.rollback();
                     alert.setContentText("No se pudo crear la factura.");
                     alert.show();
                     return;
                 }
             }
 
-            // 4️⃣ Confirmar la transacción
-            conn.commit();
             alert.setContentText("Reserva y factura creadas correctamente.");
             alert.show();
 
