@@ -105,13 +105,13 @@
         </Button>
         <TableView fx:id="tablarReservas" layoutX="59.0" layoutY="202.0" prefHeight="443.0" prefWidth="1163.0">
             <columns>
-                <TableColumn fx:id="colNReserva" prefWidth="163.0" text="Nº Reserva" />
-                <TableColumn fx:id="colFechaInicio" prefWidth="166.0" text="Inicio Servicio" />
-                <TableColumn fx:id="colFechaFin" minWidth="8.0" prefWidth="182.0" text="Fin servicio" />
-                <TableColumn fx:id="colDNI" minWidth="0.0" prefWidth="232.0" text="DNI Cliente" />
-                <TableColumn fx:id="colAsiento" prefWidth="202.0" text="Asiento Reservado" />
-                <TableColumn fx:id="colFactura" prefWidth="217.0" text="Nº Factura" />
-                <TableColumn fx:id="colSubtotal" prefWidth="217.0" text="Subtotal" />
+                <TableColumn fx:id="colNReserva" prefWidth="114.0" text="Nº Reserva" />
+                <TableColumn fx:id="colFechaInicio" prefWidth="241.0" text="Inicio Servicio" />
+                <TableColumn fx:id="colFechaFin" minWidth="8.0" prefWidth="208.0" text="Fin servicio" />
+                <TableColumn fx:id="colDNI" minWidth="0.0" prefWidth="201.0" text="DNI Cliente" />
+                <TableColumn fx:id="colAsiento" prefWidth="140.0" text="Asiento Reservado" />
+                <TableColumn fx:id="colFactura" minWidth="0.0" prefWidth="107.0" text="Nº Factura" />
+                <TableColumn fx:id="colSubtotal" maxWidth="418.0" prefWidth="151.0" text="Subtotal" />
             </columns>
       </TableView>
     </children>

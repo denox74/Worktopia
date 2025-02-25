@@ -26,7 +26,6 @@ import java.io.IOException;
 
 public class Facturacion {
 
-    private static ReservasPanel ReservasP;
     @FXML
     private Button AgregarClientes;
     @FXML
@@ -85,7 +84,7 @@ public class Facturacion {
     }
 
     public Facturacion() {
-        this.ReservasP = new ReservasPanel();
+
     }
 
 

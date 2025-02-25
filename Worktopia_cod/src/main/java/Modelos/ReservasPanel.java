@@ -1,5 +1,6 @@
 package Modelos;
 
+
 import ConexionDB.ConectionDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,7 +28,6 @@ import java.util.Set;
 public class ReservasPanel {
 
     private final ConectionDB conectionDB = new ConectionDB();
-
     @FXML
     private Button AgregarClientes;
     @FXML
@@ -97,8 +98,9 @@ public class ReservasPanel {
     private TextField TextSubtotal;
 
     private Button BtnSeleccionado;
-    private Double descuento;
-    private Double subtotal;
+    private BigDecimal subtotales;
+    private BigDecimal descuentos;
+    private double precioTotal;
 
 
     public ReservasPanel() {
@@ -214,6 +216,8 @@ public class ReservasPanel {
     //Expone los datos del espacio mas el horario
     public void datosTextFieldMesa(ActionEvent event) {
         Button BtnSeleccionHora = (Button) event.getSource();
+        descuentos = BigDecimal.valueOf(0.0);
+        String descuentoTexto = TextDescuento.getText();
 
         if (BtnSeleccionHora != null) {
             espacio.setText(BtnSeleccionado.getText());
@@ -224,11 +228,21 @@ public class ReservasPanel {
                 cierreVentanaHorarios();
             }
         }
-        double precioTotal = facturaPrecioText(espacio, horaInicio, horaFin);
-        precio.setText(precioTotal + "0 €");
-        descuento = Double.parseDouble(TextDescuento.getText()) / 100;
-        subtotal = precioTotal - (precioTotal * descuento);
-        TextSubtotal.setText(subtotal + "0 €");
+        precioTotal = facturaPrecioText(espacio, horaInicio, horaFin);
+        precio.setText(String.format("%.2f €", precioTotal));
+
+
+        if (!descuentoTexto.isEmpty()) {
+            try {
+                descuentos = BigDecimal.valueOf(Double.parseDouble(descuentoTexto) / 100);
+            } catch (NumberFormatException e) {
+                System.out.println("Error: El campo de descuento no es un número válido.");
+                descuentos = BigDecimal.valueOf(0.0); // Asignar 0 si el número no es válido
+            }
+        }
+
+        subtotales = BigDecimal.valueOf(precioTotal - (precioTotal * descuentos.doubleValue()));
+        TextSubtotal.setText(String.format("%.2f", subtotales));
 
     }
 
@@ -306,29 +320,50 @@ public class ReservasPanel {
     }
 
 
-    public static int insertarIdFactura(String DNI) {
-        String selectQuery = "SELECT id_factura FROM Facturas WHERE dni = ?";
-        int idFactura = 0;
+    public int insertarIdFactura(String DNI, double nuevoPrecio) {
+        String selectQuery = "SELECT id_factura, precio_total FROM Facturas WHERE dni = ?";
+        String updateQuery = "UPDATE Facturas SET precio_total = ? WHERE id_factura = ?";
+        String insertQuery = "INSERT INTO Facturas (dni, precio_total, descuento, fecha_hora_emision, estado) VALUES (?, ?, 0.00, NOW(), 'Pendiente')";
 
-        try {
+        int idFactura;
+        double precioTotal;
 
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(selectQuery)) {
+            stmt.setString(1, DNI);
+            ResultSet rs = stmt.executeQuery();
 
-            try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(selectQuery, Statement.RETURN_GENERATED_KEYS)) {
-                stmt.setString(1, DNI);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    idFactura = rs.getInt("id_factura");
-                    return idFactura;
+            if (rs.next()) { // Si la factura existe, actualizamos el precio
+                idFactura = rs.getInt("id_factura");
+                precioTotal = rs.getDouble("precio_total");
+
+                double nuevoTotal = precioTotal + nuevoPrecio; // Sumamos el nuevo precio
+
+                try (PreparedStatement updateStmt = ConectionDB.getConn().prepareStatement(updateQuery)) {
+                    updateStmt.setDouble(1, nuevoTotal);
+                    updateStmt.setInt(2, idFactura);
+                    updateStmt.executeUpdate();
+                }
+                return idFactura;
+
+            } else { // Si la factura no existe, la creamos
+                try (PreparedStatement insertStmt = ConectionDB.getConn().prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+                    insertStmt.setString(1, DNI);
+                    insertStmt.setDouble(2, nuevoPrecio);
+                    insertStmt.executeUpdate();
+
+                    ResultSet generatedKeys = insertStmt.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1);
+                    }
                 }
             }
 
-
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error al insertar la factura.", e);
+            System.err.println("Error en la facturación: " + e.getMessage());
+            throw new RuntimeException("Error al gestionar la factura.", e);
         }
 
-        return idFactura;
+        return -1;
     }
 
 
@@ -336,87 +371,62 @@ public class ReservasPanel {
     public void insertarDatos() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
-        // Obtener datos del formulario
-        String dniText = this.dniCliente.getText();
-        String espacioText = this.espacio.getText();
-        String horaInicioText = this.horaInicio.getText();
-        String horaFinText = this.horaFin.getText();
-        LocalDate fechaReserva = this.fecha.getValue();
+        String dniText = dniCliente.getText();
+        String espacioText = espacio.getText();
+        String horaInicioText = horaInicio.getText();
+        String horaFinText = horaFin.getText();
+        LocalDate fechaReserva = fecha.getValue();
         int idAsiento = obtenerIdEspacio(espacioText);
 
-        // Validación de datos obligatorios
         if (dniText.isEmpty() || espacioText.isEmpty() || horaInicioText.isEmpty() || horaFinText.isEmpty()) {
             alert.setContentText("Debe completar todos los campos.");
             alert.show();
             return;
         }
 
-        // Convertir fechas
         LocalDateTime fechaHoraInicio = LocalDateTime.of(fechaReserva, LocalTime.parse(horaInicioText));
         LocalDateTime fechaHoraFin = LocalDateTime.of(fechaReserva, LocalTime.parse(horaFinText));
 
-        // Iniciar la transacción
-        try  {
-            // Iniciar transacción
+        // Obtener subtotal correctamente
+        BigDecimal subTotal;
 
-            // 1️⃣ Insertar la reserva en la tabla `Reservas`
-            String queryReserva = "INSERT INTO Reservas (dni, id_asiento, fecha_hora_inicio, fecha_hora_fin) VALUES (?, ?, ?, ?)";
-            int idReserva = -1;
+        subTotal = new BigDecimal(TextSubtotal.getText().replace("," ,"."));
 
-            try (PreparedStatement stmtReserva = ConectionDB.getConn().prepareStatement(queryReserva, Statement.RETURN_GENERATED_KEYS)) {
-                stmtReserva.setString(1, dniText);
-                stmtReserva.setInt(2, idAsiento);
-                stmtReserva.setTimestamp(3, Timestamp.valueOf(fechaHoraInicio));
-                stmtReserva.setTimestamp(4, Timestamp.valueOf(fechaHoraFin));
 
-                int rowsInserted = stmtReserva.executeUpdate();
+        // Obtener ID de factura, pasándole el subtotal
+        int idFactura = insertarIdFactura(dniText, subTotal.doubleValue());
 
-                if (rowsInserted == 0) {
-                    alert.setContentText("No se pudo crear la reserva.");
-                    alert.show();
-                    return;
-                }
-
-            }
-
-            // 2️⃣ Insertar o recuperar la factura
-            int idFactura = insertarIdFactura(dniText);
-
-            // 3️⃣ Insertar la factura
-            String queryFactura = "INSERT INTO Facturas (id_factura, dni, precio_total, descuento, fecha_hora_emision, estado, fecha_hora_pago) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-            try (PreparedStatement stmtFactura = ConectionDB.getConn().prepareStatement(queryFactura)) {
-                LocalDateTime fechaHoraCreacion = LocalDateTime.now(); // Fecha de emisión actual
-                double subTotal = subtotal;
-                double descuentos = descuento;
-
-                stmtFactura.setInt(1, idFactura);
-                stmtFactura.setString(2, dniText);
-                stmtFactura.setDouble(3, subTotal);
-                stmtFactura.setDouble(4, descuentos);
-                stmtFactura.setTimestamp(5, Timestamp.valueOf(fechaHoraCreacion));
-                stmtFactura.setString(6, "Pendiente");
-                stmtFactura.setNull(7, Types.TIMESTAMP); // fecha_hora_pago es NULL por defecto
-
-                int rowsInsertedFactura = stmtFactura.executeUpdate();
-
-                if (rowsInsertedFactura == 0) {
-                    alert.setContentText("No se pudo crear la factura.");
-                    alert.show();
-                    return;
-                }
-            }
-
-            alert.setContentText("Reserva y factura creadas correctamente.");
+        if (idFactura == -1) {
+            alert.setContentText("No se pudo generar la factura.");
             alert.show();
+            return;
+        }
+
+        // Insertar la reserva
+        String queryReserva = "INSERT INTO Reservas (dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin, subtotal) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmtReserva = ConectionDB.getConn().prepareStatement(queryReserva, Statement.RETURN_GENERATED_KEYS)) {
+            stmtReserva.setString(1, dniText);
+            stmtReserva.setInt(2, idAsiento);
+            stmtReserva.setInt(3, idFactura);
+            stmtReserva.setTimestamp(4, Timestamp.valueOf(fechaHoraInicio));
+            stmtReserva.setTimestamp(5, Timestamp.valueOf(fechaHoraFin));
+            stmtReserva.setBigDecimal(6, subTotal);
+
+            int rowsInserted = stmtReserva.executeUpdate();
+            if (rowsInserted == 0) {
+                alert.setContentText("No se pudo crear la reserva.");
+                alert.show();
+            } else {
+                alert.setContentText("Reserva y factura creadas correctamente.");
+                alert.show();
+            }
 
         } catch (SQLException e) {
-            e.printStackTrace();
             alert.setContentText("Error en la base de datos: " + e.getMessage());
             alert.show();
         }
     }
-
 
 
 
@@ -469,45 +479,5 @@ public class ReservasPanel {
         }
     }
 
-    public TextField getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(TextField precio) {
-        this.precio = precio;
-    }
-
-    public TextField getDniCliente() {
-        return dniCliente;
-    }
-
-    public void setDniCliente(TextField dniCliente) {
-        this.dniCliente = dniCliente;
-    }
-
-    public TextField getTextDescuento() {
-        return TextDescuento;
-    }
-
-    public void setTextDescuento(TextField textDescuento) {
-        TextDescuento = textDescuento;
-    }
-
-    public TextField getTextSubtotal() {
-        return TextSubtotal;
-    }
-
-    public void setTextSubtotal(TextField textSubtotal) {
-        TextSubtotal = textSubtotal;
-    }
-
-    public DatePicker getFecha() {
-
-        return fecha;
-    }
-
-    public void setFecha(DatePicker fecha) {
-        this.fecha = fecha;
-    }
 
 }
