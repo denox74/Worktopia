@@ -36,7 +36,12 @@ public class ListaReservas {
     private TextField DNIbuscar;
     @FXML
     private ListView listaSQL;
-
+    @FXML
+    private TextField TextInicio;
+    @FXML
+    private TextField TextFin;
+    @FXML
+    private TextField TextDniCliente;
     @FXML
     private TableView<Clases.Reservas> tablarReservas;
     @FXML
@@ -101,6 +106,19 @@ public class ListaReservas {
     public void ventanaFacturaciones(ActionEvent event) {
         Facturaciones();
         ((Stage) Facturacion.getScene().getWindow()).close();
+    }
+
+    public void modificarReserva(ActionEvent event) {
+
+    }
+
+    public void modificarClientes(){
+        String dni = colDNI.getText();
+        String inicio = colFechaInicio.getText();
+        String fin = colFechaFin.getText();
+        TextDniCliente.setText(inicio);
+        TextInicio.setText(fin);
+        TextDniCliente.setText(dni);
     }
 
     public void RegistroUsuarios() {

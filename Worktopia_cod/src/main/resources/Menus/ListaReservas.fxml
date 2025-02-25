@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -114,6 +115,32 @@
                 <TableColumn fx:id="colSubtotal" maxWidth="418.0" prefWidth="151.0" text="Subtotal" />
             </columns>
       </TableView>
+      <VBox alignment="TOP_CENTER" layoutX="482.0" layoutY="238.0" prefHeight="273.0" prefWidth="271.0" spacing="7.0" style="-fx-background-color: DDDEDE;" visible="false">
+         <children>
+            <Label text="Inicio Servicio">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TextInicio" prefHeight="36.0" prefWidth="268.0" />
+            <Label text="Fin Servicio">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TextFin" prefHeight="39.0" prefWidth="312.0" />
+            <Label style="-fx-font-weight: bold;" text="DNI Cliente">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TextDniCliente" prefHeight="40.0" prefWidth="266.0" />
+            <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="203.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloReservas.css" text="Modificar">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+         </children></VBox>
     </children>
 
 

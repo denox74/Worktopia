@@ -429,7 +429,6 @@ public class ReservasPanel {
     }
 
 
-
     public void RegistroUsuarios() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroClientes.fxml"));
