@@ -93,12 +93,13 @@
                     </image>
                 </ImageView>
             </graphic></Button>
-        <Button fx:id="btnGenerar" layoutX="462.0" layoutY="147.0" mnemonicParsing="false" onAction="#btnDescarga" prefHeight="40.0" prefWidth="142.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Generar Factura">
+        <Button fx:id="btnGenerar" layoutX="462.0" layoutY="147.0" mnemonicParsing="false" onAction="#generarFactura" prefHeight="40.0" prefWidth="142.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Generar Factura">
             <graphic>
                 <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
-                    </image></ImageView>
+                    </image>
+                </ImageView>
             </graphic>
             <cursor>
                 <Cursor fx:constant="DEFAULT" />

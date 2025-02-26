@@ -138,7 +138,6 @@ public class ConectionDB {
     public static List<Reservas> getReservas() {
         List<Reservas> reservas = new ArrayList<>();
         String query = "SELECT id_reserva, dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin FROM Reservas";
-        String updateQuery = "UPDATE Reservas SET subtotal = ? WHERE id_reserva = ?";
         try (PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
 
@@ -153,14 +152,6 @@ public class ConectionDB {
                 );
                 // Calculate the subtotal
                 BigDecimal subtotal = reserva.calcularSubtotal();
-
-                // Update the subtotal in the database
-                try (PreparedStatement updatePs = conn.prepareStatement(updateQuery)) {
-                    updatePs.setBigDecimal(1, subtotal);
-                    updatePs.setInt(2, reserva.getId_reserva());
-                    updatePs.executeUpdate();
-                }
-
                 reserva.setSubtotal(subtotal);
                 reservas.add(reserva);
             }

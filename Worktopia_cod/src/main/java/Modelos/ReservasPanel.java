@@ -1,7 +1,15 @@
+
+
+
+
+
+
 package Modelos;
 
 
+import Clases.Reservas;
 import ConexionDB.ConectionDB;
+import Manejadores_Reservas_Facturas.ReservaDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +35,6 @@ import java.util.Set;
 
 public class ReservasPanel {
 
-    private final ConectionDB conectionDB = new ConectionDB();
     @FXML
     private Button AgregarClientes;
     @FXML
@@ -93,14 +100,13 @@ public class ReservasPanel {
     @FXML
     private TextField dniCliente;
     @FXML
-    private TextField TextDescuento;
-    @FXML
     private TextField TextSubtotal;
 
     private Button BtnSeleccionado;
     private BigDecimal subtotales;
     private BigDecimal descuentos;
     private double precioTotal;
+
 
 
     public ReservasPanel() {
@@ -139,12 +145,11 @@ public class ReservasPanel {
     public double facturaPrecioText(TextField nombreEspacio, TextField horaInicio, TextField horaFin) {
         String consulta = "SELECT tarifa_hora FROM Asientos WHERE nombre = ?";
 
-
         String inicioTexto = horaInicio.getText();
         String finTexto = horaFin.getText();
 
         double tarifa = 0;
-        try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(consulta)) {
             stmt.setString(1, nombreEspacio.getText());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -217,7 +222,6 @@ public class ReservasPanel {
     public void datosTextFieldMesa(ActionEvent event) {
         Button BtnSeleccionHora = (Button) event.getSource();
         descuentos = BigDecimal.valueOf(0.0);
-        String descuentoTexto = TextDescuento.getText();
 
         if (BtnSeleccionHora != null) {
             espacio.setText(BtnSeleccionado.getText());
@@ -232,25 +236,15 @@ public class ReservasPanel {
         precio.setText(String.format("%.2f €", precioTotal));
 
 
-        if (!descuentoTexto.isEmpty()) {
-            try {
-                descuentos = BigDecimal.valueOf(Double.parseDouble(descuentoTexto) / 100);
-            } catch (NumberFormatException e) {
-                System.out.println("Error: El campo de descuento no es un número válido.");
-                descuentos = BigDecimal.valueOf(0.0); // Asignar 0 si el número no es válido
-            }
-        }
-
         subtotales = BigDecimal.valueOf(precioTotal - (precioTotal * descuentos.doubleValue()));
         TextSubtotal.setText(String.format("%.2f", subtotales));
 
     }
 
     public int obtenerIdEspacio(String nombreEspacio) {
-
         String consulta = "SELECT id_asiento FROM Asientos WHERE nombre = ?";
         int idEspacio = -1;
-        try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(consulta)) {
             stmt.setString(1, nombreEspacio);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -264,11 +258,10 @@ public class ReservasPanel {
 
 
     public Set<String> obtenerHorariosReservados(int asiento, LocalDate fecha) {
-
         Set<String> horariosOcupados = new HashSet<>();
         String consulta = "SELECT TIME(fecha_hora_inicio),TIME(fecha_hora_fin) FROM Reservas WHERE id_asiento = ? AND DATE(fecha_hora_inicio) = ?";
 
-        try (PreparedStatement stmt = conectionDB.getConn().prepareStatement(consulta)) {
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(consulta)) {
             stmt.setInt(1, asiento);
             stmt.setString(2, fecha.toString());
             ResultSet rs = stmt.executeQuery();
@@ -319,7 +312,7 @@ public class ReservasPanel {
         }
     }
 
-
+/*
     public int insertarIdFactura(String DNI, double nuevoPrecio) {
         String selectQuery = "SELECT id_factura, precio_total FROM Facturas WHERE dni = ?";
         String updateQuery = "UPDATE Facturas SET precio_total = ? WHERE id_factura = ?";
@@ -364,7 +357,7 @@ public class ReservasPanel {
         }
 
         return -1;
-    }
+    }*/
 
 
 
@@ -387,13 +380,30 @@ public class ReservasPanel {
         LocalDateTime fechaHoraInicio = LocalDateTime.of(fechaReserva, LocalTime.parse(horaInicioText));
         LocalDateTime fechaHoraFin = LocalDateTime.of(fechaReserva, LocalTime.parse(horaFinText));
 
-        // Obtener subtotal correctamente
-        BigDecimal subTotal;
+        BigDecimal subTotal = new BigDecimal(TextSubtotal.getText().replace(",", "."));
 
+        try {
+            int idFactura = ReservaDAO.obtenerFacturaPendiente(dniText);
+            if (idFactura == -1) {
+                idFactura = ReservaDAO.crearFactura(dniText, subTotal);
+            }
+
+            Reservas reserva = new Reservas(0, dniText, idAsiento, idFactura, Timestamp.valueOf(fechaHoraInicio), Timestamp.valueOf(fechaHoraFin), subTotal);
+            int idReserva = ReservaDAO.insertarReserva(reserva);
+
+            alert.setContentText("Reserva y factura creadas correctamente. ID Reserva: " + idReserva);
+            alert.show();
+
+        } catch (SQLException e) {
+            alert.setContentText("Error en la base de datos: " + e.getMessage());
+            alert.show();
+        }
+    }
+    /*
+        // Obtener ID de factura, pasándole el subtotal
         subTotal = new BigDecimal(TextSubtotal.getText().replace("," ,"."));
 
 
-        // Obtener ID de factura, pasándole el subtotal
         int idFactura = insertarIdFactura(dniText, subTotal.doubleValue());
 
         if (idFactura == -1) {
@@ -401,6 +411,7 @@ public class ReservasPanel {
             alert.show();
             return;
         }
+
 
         // Insertar la reserva
         String queryReserva = "INSERT INTO Reservas (dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin, subtotal) VALUES (?, ?, ?, ?, ?, ?)";
@@ -426,7 +437,7 @@ public class ReservasPanel {
             alert.setContentText("Error en la base de datos: " + e.getMessage());
             alert.show();
         }
-    }
+    }*/
 
 
     public void RegistroUsuarios() {

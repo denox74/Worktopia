@@ -12,20 +12,29 @@ import java.util.List;
 public class Reservas {
     private int id_reserva;
     private String dni;
-    private Timestamp fecha_hora_inicio;
-    private Timestamp fecha_hora_fin;
     private int id_asiento;
     private int id_factura;
-    private BigDecimal subtotal ;
+    private Timestamp fecha_hora_inicio;
+    private Timestamp fecha_hora_fin;
+    private BigDecimal subtotal;
 
-    public Reservas(int id_reserva, String dni, int id_asiento, int id_factura,Timestamp fecha_hora_inicio, Timestamp fecha_hora_fin) {
+    public Reservas(int id_reserva, String dni, int id_asiento, int id_factura, Timestamp fecha_hora_inicio, Timestamp fecha_hora_fin) {
         this.id_reserva = id_reserva;
         this.dni = dni;
         this.id_asiento = id_asiento;
         this.id_factura = id_factura;
         this.fecha_hora_inicio = fecha_hora_inicio;
         this.fecha_hora_fin = fecha_hora_fin;
-        this.subtotal = calcularSubtotal();
+    }
+
+    public Reservas(int id_reserva, String dni, int id_asiento, int id_factura, Timestamp fecha_hora_inicio, Timestamp fecha_hora_fin, BigDecimal subtotal) {
+        this.id_reserva = id_reserva;
+        this.dni = dni;
+        this.id_asiento = id_asiento;
+        this.id_factura = id_factura;
+        this.fecha_hora_inicio = fecha_hora_inicio;
+        this.fecha_hora_fin = fecha_hora_fin;
+        this.subtotal = subtotal;
     }
 
     public int getId_reserva() {

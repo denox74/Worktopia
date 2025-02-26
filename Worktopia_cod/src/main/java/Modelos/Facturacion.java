@@ -1,5 +1,6 @@
 package Modelos;
 
+import Clases.Asientos;
 import Clases.Facturas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,14 +16,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ConexionDB.ConectionDB;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 import java.awt.*;
 import java.io.*;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Facturacion {
 
@@ -58,15 +68,23 @@ public class Facturacion {
     @FXML
     private TableColumn<Facturas, String> colFechaPago;
 
+
     @FXML
-    private void generarFactura() {
-        String idFactura = facturaBuscar.getText();
-        if (idFactura != null && !idFactura.trim().isEmpty()) {
-            GeneradorFactura.generarFactura(idFactura);
-        } else {
-            System.out.println("Ingrese un ID de factura válido.");
+    public void generarFactura(ActionEvent event) {
+        String facturaId = facturaBuscar.getText();
+        if (facturaId.isEmpty()) {
+            showAlert("Error", "Debe ingresar un número de factura.");
+            return;
+        }
+
+        try {
+            generarFacturaExcel(facturaId);
+            showAlert("Éxito", "Factura generada correctamente.");
+        } catch (Exception e) {
+            showAlert("Error", "Error al generar la factura: " + e.getMessage());
         }
     }
+
 
     @FXML
     public void initialize() {
@@ -111,9 +129,6 @@ public class Facturacion {
     public void btnDescarga(ActionEvent event) {
         contenedorDatos.setVisible(true);
     }
-
-
-
 
 
     public void RegistroUsuarios() {
@@ -165,81 +180,203 @@ public class Facturacion {
         }
     }
 
+    private void generarFacturaExcel(String facturaId) throws SQLException, IOException, ClassNotFoundException {
+        String queryFactura = "SELECT * FROM Facturas WHERE id_factura = ?";
+        String queryCliente = "SELECT * FROM Clientes WHERE dni = ?";
+        String queryReservas = "SELECT * FROM Reservas WHERE id_factura = ?";
 
-    public class GeneradorFactura {
-        public static void generarFactura(String idFactura) {
-            Connection conn = null;
-            try {
-                conn = ConectionDB.getConn();
-                if (conn == null) {
-                    System.out.println("No hay conexión a la base de datos");
-                    return;
-                }
+        try (Connection conn = ConectionDB.getConn();
+             PreparedStatement psFactura = conn.prepareStatement(queryFactura);
+             PreparedStatement psCliente = conn.prepareStatement(queryCliente);
+             PreparedStatement psReservas = conn.prepareStatement(queryReservas)) {
 
-                String query = "SELECT * FROM Factura WHERE id_factura = ?";
-                PreparedStatement pstmt = conn.prepareStatement(query);
-                pstmt.setString(1, idFactura);
-                ResultSet rs = pstmt.executeQuery();
+            psFactura.setString(1, facturaId);
+            ResultSet rsFactura = psFactura.executeQuery();
+            if (!rsFactura.next()) {
+                throw new SQLException("Factura no encontrada.");
+            }
 
-                if (!rs.next()) {
-                    System.out.println("No se encontró la factura con ID: " + idFactura);
-                    return;
-                }
+            String dniCliente = rsFactura.getString("dni");
+            LocalDateTime fechaEmision = rsFactura.getTimestamp("fecha_hora_emision").toLocalDateTime();
+            BigDecimal totalFactura = rsFactura.getBigDecimal("precio_total");
+            BigDecimal descuento = rsFactura.getBigDecimal("descuento");
 
-                String fecha = rs.getString("fecha");
-                double total = rs.getDouble("total");
-                int idCliente = rs.getInt("id_cliente");
+            psCliente.setString(1, dniCliente);
+            ResultSet rsCliente = psCliente.executeQuery();
+            if (!rsCliente.next()) {
+                throw new SQLException("Cliente no encontrado.");
+            }
 
-                String queryCliente = "SELECT nombre, primerApellido, segundoApellido, email FROM Clientes WHERE id_cliente = ?";
-                pstmt = conn.prepareStatement(queryCliente);
-                pstmt.setInt(1, idCliente);
-                ResultSet rsCliente = pstmt.executeQuery();
+            String nombreCliente = rsCliente.getString("nombre");
+            String telefonoCliente = rsCliente.getString("telefono");
+            String emailCliente = rsCliente.getString("email");
 
-                String nombre = "";
-                String apellido1 = "";
-                String apellido2 = "";
-                String email = "";
+            psReservas.setString(1, facturaId);
+            ResultSet rsReservas = psReservas.executeQuery();
+            List<String> reservas = new ArrayList<>();
+            List<BigDecimal> subtotales = new ArrayList<>();
+            BigDecimal totalSubtotales = BigDecimal.ZERO;
+            while (rsReservas.next()) {
+                int idReserva = rsReservas.getInt("id_reserva");
+                int idAsiento = rsReservas.getInt("id_asiento");
+                Timestamp inicio = rsReservas.getTimestamp("fecha_hora_inicio");
+                Timestamp fin = rsReservas.getTimestamp("fecha_hora_fin");
 
-                if (rsCliente.next()) {
-                    nombre = rsCliente.getString("nombre");
-                    apellido1 = rsCliente.getString("primerApellido");
-                    apellido2 = rsCliente.getString("segundoApellido");
-                    email = rsCliente.getString("email");
-                }
+                // Calcula el subtotal
+                BigDecimal subtotal = calcularSubtotal(idAsiento, inicio, fin);
+                totalSubtotales = totalSubtotales.add(subtotal);
 
-                File plantilla = new File("Modelo_factura.docx");
-                FileInputStream fis = new FileInputStream(plantilla);
-                XWPFDocument documento = new XWPFDocument(fis);
+                String reserva = String.format("Reserva ID: %d Asiento ID: %d fecha y hora de inicio %s y fin %s",
+                        idReserva, idAsiento, inicio.toLocalDateTime(), fin.toLocalDateTime());
+                reservas.add(reserva);
+                subtotales.add(subtotal);
+            }
 
-                for (XWPFParagraph paragraph : documento.getParagraphs()) {
-                    for (XWPFRun run : paragraph.getRuns()) {
-                        String text = run.getText(0);
-                        if (text != null) {
-                            text = text.replace("{{ID_FACTURA}}", idFactura)
-                                    .replace("{{FECHA}}", fecha)
-                                    .replace("{{TOTAL}}", String.valueOf(total))
-                                    .replace("{{NOMBRE}}", nombre + " " + apellido1 + " " + apellido2)
-                                    .replace("{{EMAIL}}", email);
-                            run.setText(text, 0);
-                        }
+            try (FileInputStream fis = new FileInputStream("src/main/resources/Docs/Modelo_factura_excel.xlsx");
+                 Workbook workbook = new XSSFWorkbook(fis)) {
+
+                Sheet sheet = workbook.getSheetAt(0);
+
+                // Rellenar los datos básicos
+                setCellValue(sheet, 14, 1, facturaId);
+                setCellValue(sheet, 15, 1, dniCliente);
+                setCellValue(sheet, 16, 1, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                setCellValue(sheet, 15, 5, nombreCliente);
+                setCellValue(sheet, 16, 5, telefonoCliente);
+                setCellValue(sheet, 16, 7, emailCliente);
+
+                // Rellenar las reservas y subtotales
+                int rowIndex = 17;
+                for (int i = 0; i < reservas.size(); i++) {
+                    Row row = sheet.getRow(rowIndex); // Obtener la fila existente (si ya existe)
+                    if (row == null) {  // Si no existe, crearla
+                        row = sheet.createRow(rowIndex);
                     }
+
+                    // Aquí se asegura que las celdas no se sobrescriban y no se cambie el estilo
+                    Cell cell0 = row.getCell(0);
+                    if (cell0 == null) {
+                        cell0 = row.createCell(0);
+                    }
+                    cell0.setCellValue(reservas.get(i));
+
+                    Cell cell8 = row.getCell(8);
+                    if (cell8 == null) {
+                        cell8 = row.createCell(8);
+                    }
+                    cell8.setCellValue(subtotales.get(i).doubleValue());
+
+                    // Avanzar a la siguiente fila
+                    rowIndex++;
                 }
 
-                fis.close();
-                File facturaGenerada = new File("Factura_" + idFactura + ".docx");
-                FileOutputStream fos = new FileOutputStream(facturaGenerada);
-                documento.write(fos);
-                fos.close();
-                documento.close();
+                // Calcular el total con descuento
+                BigDecimal totalConDescuento = totalSubtotales.subtract(totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100))));
+                BigDecimal baseImponible = totalConDescuento.divide(BigDecimal.valueOf(1.07), BigDecimal.ROUND_HALF_UP);
+                BigDecimal impuestos = baseImponible.multiply(BigDecimal.valueOf(0.07));
 
-                System.out.println("Factura generada: " + facturaGenerada.getAbsolutePath());
+                // Rellenar el porcentaje de descuento en la celda 45,7 (ya estaba en el modelo)
+                setCellValue(sheet, 45, 6, descuento.doubleValue()/100);
 
-                // Abrir la factura generada automáticamente
-                Desktop.getDesktop().open(facturaGenerada);
+                // Rellenar el valor del descuento (dinero) en la celda 45,6
+                BigDecimal valorDescuento = totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100)));
+                setCellValue(sheet, 45, 7, valorDescuento.doubleValue());
 
-            } catch (SQLException | IOException e) {
-                e.printStackTrace();
+                // Rellenar el total con descuento en la celda 46,7
+                setCellValue(sheet, 46, 7, totalConDescuento.doubleValue());
+
+                // Rellenar base imponible, impuestos y total
+                setCellValue(sheet, 43, 7, baseImponible.doubleValue());
+                setCellValue(sheet, 44, 7, impuestos.doubleValue());
+                setCellValue(sheet, 47, 7, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
+                // Guardar el archivo Excel con el nuevo nombre
+                try (FileOutputStream fos = new FileOutputStream("src/main/resources/Docs/Factura_" + facturaId + ".xlsx")) {
+                    workbook.write(fos);
+                }
             }
         }
+        ConectionDB.openConn();
+    }
+
+
+
+
+
+
+    private void setCellValue(Sheet sheet, int rowNum, int colNum, Object value, CellStyle cellStyle) {
+        Row row = sheet.getRow(rowNum);
+        if (row == null) {
+            row = sheet.createRow(rowNum);
+        }
+        Cell cell = row.createCell(colNum);
+
+        if (value instanceof String) {
+            cell.setCellValue((String) value);
+        } else if (value instanceof Double) {
+            cell.setCellValue((Double) value);
+        } else if (value instanceof BigDecimal) {
+            cell.setCellValue(((BigDecimal) value).doubleValue());
+        }
+
+        // Asignar el estilo a la celda
+        cell.setCellStyle(cellStyle);
+    }
+
+    public BigDecimal calcularSubtotal(int idAsiento, Timestamp fechaInicio, Timestamp fechaFin) {
+        BigDecimal tarifaHora = getTarifaHoraId(idAsiento);
+        LocalDateTime inicio = fechaInicio.toLocalDateTime();
+        LocalDateTime fin = fechaFin.toLocalDateTime();
+        long horas = Duration.between(inicio, fin).toHours();
+        return tarifaHora.multiply(BigDecimal.valueOf(horas));
+    }
+
+    private static Map<Integer, BigDecimal> tarifaHoraCache = new HashMap<>();
+
+    private BigDecimal getTarifaHoraId(int id_asiento) {
+        if (!tarifaHoraCache.containsKey(id_asiento)) {
+            List<Asientos> asientos = ConectionDB.getAsientos();
+            for (Asientos asiento : asientos) {
+                if (asiento.getId_asiento() == id_asiento) {
+                    tarifaHoraCache.put(id_asiento, asiento.getTarifa_hora());
+                    return asiento.getTarifa_hora();
+                }
+            }
+        }
+        return tarifaHoraCache.getOrDefault(id_asiento, BigDecimal.ZERO);
+    }
+
+    private void setCellValue(Sheet sheet, int rowIndex, int colIndex, Object value) {
+        Row row = sheet.getRow(rowIndex);
+        if (row == null) {
+            row = sheet.createRow(rowIndex);
+        }
+        Cell cell = row.getCell(colIndex);
+        if (cell == null) {
+            cell = row.createCell(colIndex);
+        }
+        if (value instanceof String) {
+            cell.setCellValue((String) value);
+        } else if (value instanceof Double) {
+            cell.setCellValue((Double) value);
+        } else if (value instanceof BigDecimal) {
+            cell.setCellValue(((BigDecimal) value).doubleValue());
+        }
+    }
+
+
+        private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
+
+
+
+
+
+
+
