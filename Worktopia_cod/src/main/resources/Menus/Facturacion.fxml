@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -92,7 +93,7 @@
                     </image>
                 </ImageView>
             </graphic></Button>
-        <Button fx:id="btnGenerar" layoutX="456.0" layoutY="147.0" mnemonicParsing="false" onAction="#generarFactura" prefHeight="40.0" prefWidth="142.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Generar Factura">
+        <Button fx:id="btnGenerar" layoutX="462.0" layoutY="147.0" mnemonicParsing="false" onAction="#btnDescarga" prefHeight="40.0" prefWidth="142.0" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Generar Factura">
             <graphic>
                 <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -103,23 +104,41 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-      <TableView layoutX="54.0" layoutY="202.0" prefHeight="431.0" prefWidth="1155.0">
+      <TableView fx:id="tablaFacturas" layoutX="54.0" layoutY="202.0" prefHeight="431.0" prefWidth="1155.0">
         <columns>
-          <TableColumn prefWidth="164.0" text="Nº Factura" />
-          <TableColumn prefWidth="168.0" text="Fecha Factura" />
-            <TableColumn prefWidth="173.0" text="Total" />
-            <TableColumn prefWidth="191.0" text="DNI Cliente" />
-            <TableColumn prefWidth="218.0" text="Estado del pago" />
-            <TableColumn prefWidth="240.0" text="Fecha Pago" />
+          <TableColumn fx:id="colNFactura" prefWidth="164.0" text="Nº Factura" />
+          <TableColumn fx:id="colFechaFactura" prefWidth="168.0" text="Fecha Factura" />
+            <TableColumn fx:id="colDni" prefWidth="219.0" text="DNI Cliente" />
+            <TableColumn fx:id="colDescuento" prefWidth="110.0" text="Descuento" />
+            <TableColumn fx:id="colTotal" prefWidth="126.0" text="Total" />
+            <TableColumn fx:id="colEstadoPago" prefWidth="194.0" text="Estado del pago" />
+            <TableColumn fx:id="colFechaPago" prefWidth="173.0" text="Fecha Pago" />
         </columns>
       </TableView>
-      <VBox layoutX="461.0" layoutY="131.0" prefHeight="66.0" prefWidth="116.0">
+      <VBox fx:id="contenedorDatos" layoutX="521.0" layoutY="360.0" prefHeight="123.0" prefWidth="207.0" spacing="15.0" visible="false">
          <children>
-            <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="111.0" text="Descargar Factura" />
-            <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="110.0" text="Enviar por E-mail" />
+            <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="203.0" styleClass="btnVbox" stylesheets="@../Estilos/EstilosListas.css" text="Descargar Factura">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/descarga-directa-removebg-preview.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="203.0" styleClass="btnVbox" stylesheets="@../Estilos/EstilosListas.css" text="Enviar por E-mail">
+               <graphic>
+                  <ImageView fitHeight="44.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/email.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </VBox>
     </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 
 
 </AnchorPane>
