@@ -1,9 +1,12 @@
 package Modelos;
 
+
 import Clases.Reservas;
 import ConexionDB.ConectionDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,15 +14,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 
 public class ListaReservas {
 
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private int idReserva;
     @FXML
     private Button AgregarClientes;
     @FXML
@@ -33,17 +42,19 @@ public class ListaReservas {
     @FXML
     private Button btnEliminar;
     @FXML
-    private TextField DNIbuscar;
-    @FXML
-    private ListView listaSQL;
+    private TextField DNIBuscar;
     @FXML
     private TextField TextInicio;
     @FXML
     private TextField TextFin;
     @FXML
-    private TextField TextDniCliente;
+    private TextField TextDni;
     @FXML
-    private TableView<Clases.Reservas> tablarReservas;
+    private TextField TextAsiento;
+    @FXML
+    private VBox vboxReservas;
+    @FXML
+    private TableView<Clases.Reservas> tablaReservas;
     @FXML
     private TableColumn<Clases.Reservas, Integer> colNReserva;
     @FXML
@@ -59,7 +70,6 @@ public class ListaReservas {
     @FXML
     private TableColumn<Clases.Reservas, java.math.BigDecimal> colSubtotal;
 
-    private ObservableList<Clases.Reservas> reservasList;
 
     @FXML
     public void initialize() {
@@ -71,17 +81,56 @@ public class ListaReservas {
         colFechaFin.setCellValueFactory(new PropertyValueFactory<>("fecha_hora_fin"));
         colSubtotal.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
 
+
+
+        tablaReservas.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Reservas reserva = tablaReservas.getSelectionModel().getSelectedItem();
+                if (reserva != null) {
+                    exportarDatos(reserva);
+                }
+            }
+        });
+
+        vboxReservas.setOnMousePressed(event -> {
+            xOffset = event.getSceneX() - vboxReservas.getLayoutX() + 250;
+            yOffset = event.getSceneY() - vboxReservas.getLayoutY() + 70;
+        });
+        vboxReservas.setOnMouseDragged(event -> {
+            vboxReservas.setLayoutX(event.getScreenX() - xOffset);
+            vboxReservas.setLayoutY(event.getScreenY() - yOffset);
+        });
+
         try {
             loadReservasFromDatabase();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException |
+                 ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
+
     private void loadReservasFromDatabase() throws SQLException, ClassNotFoundException {
         List<Reservas> reservas = ConectionDB.getReservas();
-        reservasList = FXCollections.observableArrayList(reservas);
-        tablarReservas.setItems(reservasList);
+        ObservableList<Clases.Reservas> reservasList = FXCollections.observableArrayList(reservas);
+        tablaReservas.setItems(reservasList);
+
+        FilteredList<Reservas> filtroReservas = new FilteredList<Reservas>(reservasList, p -> true);
+        DNIBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtroReservas.setPredicate(Reservas -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                } else {
+                    return Reservas.getDni().toLowerCase().contains(newValue.toLowerCase());
+                }
+            });
+        });
+
+        SortedList<Reservas> sortedData = new SortedList<>(filtroReservas);
+        sortedData.comparatorProperty().bind(tablaReservas.comparatorProperty());
+        tablaReservas.setItems(sortedData);
+
+
     }
 
 
@@ -108,18 +157,75 @@ public class ListaReservas {
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
 
-    public void modificarReserva(ActionEvent event) {
-
+    public void salirVbox(ActionEvent event) {
+        vboxReservas.setVisible(false);
     }
 
-    public void modificarClientes(){
-        String dni = colDNI.getText();
-        String inicio = colFechaInicio.getText();
-        String fin = colFechaFin.getText();
-        TextDniCliente.setText(inicio);
-        TextInicio.setText(fin);
-        TextDniCliente.setText(dni);
+    public void exportarDatos(Reservas reservas) {
+        idReserva = reservas.getId_reserva();
+        TextInicio.setText(String.valueOf(reservas.getFecha_hora_inicio()));
+        TextFin.setText(String.valueOf(reservas.getFecha_hora_fin()));
+        TextDni.setText(reservas.getDni());
+        TextAsiento.setText(String.valueOf(reservas.getId_asiento()));
+        vboxReservas.setVisible(true);
     }
+    public void modificarReservas(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Quiere modificar el Cliente con dni: " + TextDni.getText());
+
+        ButtonType si = new ButtonType("Sí");
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(si, no);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == si) {
+            String query = "UPDATE Reservas SET dni = ?, fecha_hora_inicio = ?, fecha_hora_fin = ?,id_asiento = ? WHERE id_reserva = ?";
+            try (PreparedStatement update = ConectionDB.getConn().prepareStatement(query)) {
+                update.setString(1, TextDni.getText());
+                update.setString(2, TextInicio.getText());
+                update.setString(3, TextFin.getText());
+                update.setString(4, TextAsiento.getText());
+                update.setInt(5, idReserva);
+                int actualizado = update.executeUpdate();
+                if (actualizado > 0) {
+                    alert2.setContentText("Datos actualizados correctamente");
+                    alert2.show();
+                }
+
+            } catch(SQLException e){
+                throw new RuntimeException(e);
+            }
+            initialize();
+
+        }
+    }
+    public void eliminarReservas(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Quiere eliminar el Cliente con dni: " + TextDni.getText());
+        ButtonType si = new ButtonType("Sí");
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(si, no);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == si) {
+            String query = "DELETE FROM Reservas WHERE id_reserva = ?";
+            try(PreparedStatement delete = ConectionDB.getConn().prepareStatement(query)){
+                delete.setInt(1, idReserva);
+                int actualizado = delete.executeUpdate();
+                if (actualizado > 0) {
+                    alert2.setContentText("Datos Eliminados correctamente");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        initialize();
+    }
+
 
     public void RegistroUsuarios() {
         try {

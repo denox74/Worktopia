@@ -11,9 +11,10 @@ module org.example.worktopia_cod {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
-    requires java.desktop;
-    requires java.sql;
     requires org.apache.poi.ooxml;
+    requires com.fasterxml.jackson.databind;
+    requires java.sql;
+    requires java.desktop;
 
 
     opens Modelos to javafx.fxml;

@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" styleClass="AnchorPane" stylesheets="@../Estilos/EstiloReservas.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ReservasPanel">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ReservasPanel">
     <children>
         <ImageView fx:id="portada" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -82,47 +82,47 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <Label layoutX="977.0" layoutY="279.0" text="Seleccionar Fecha">
+        <Label layoutX="977.0" layoutY="246.0" text="Seleccionar Fecha">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <Line endX="-33.0" layoutX="1228.0" layoutY="307.0" startX="-324.0" strokeWidth="3.0" />
-        <Label layoutX="997.0" layoutY="361.0" text="Confirmación">
+        <Line endX="-33.0" layoutX="1228.0" layoutY="274.0" startX="-324.0" strokeWidth="3.0" />
+        <Label layoutX="997.0" layoutY="328.0" text="Confirmación">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <Line endX="-33.0" layoutX="1228.0" layoutY="388.0" startX="-324.0" strokeWidth="3.0" />
+        <Line endX="-33.0" layoutX="1228.0" layoutY="355.0" startX="-324.0" strokeWidth="3.0" />
         <ImageView fitHeight="501.0" fitWidth="717.0" layoutX="118.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../Imagenes/salasCoworkingFondo1.png" />
             </image>
         </ImageView>
-        <Label layoutX="902.0" layoutY="401.0" style="-fx-font-weight: bold;" text="Espacio Reservado:">
+        <Label layoutX="902.0" layoutY="368.0" style="-fx-font-weight: bold;" text="Espacio Reservado:">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label layoutX="952.0" layoutY="432.0" style="-fx-font-weight: bold;" text="Hora inicio:">
+        <Label layoutX="952.0" layoutY="399.0" style="-fx-font-weight: bold;" text="Hora inicio:">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label layoutX="983.0" layoutY="499.0" style="-fx-font-weight: bold;" text="Precio:">
+        <Label layoutX="983.0" layoutY="466.0" style="-fx-font-weight: bold;" text="Precio:">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Button fx:id="btnConfirmar" alignment="CENTER" layoutX="995.0" layoutY="599.0" onAction="#insertarReserva" prefHeight="39.0" prefWidth="110.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloReservas.css" text="Confirmar" textAlignment="CENTER" textOverrun="CLIP">
+        <Button fx:id="btnConfirmar" alignment="CENTER" layoutX="995.0" layoutY="566.0" onAction="#insertarReserva" prefHeight="39.0" prefWidth="110.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloReservas.css" text="Confirmar" textAlignment="CENTER" textOverrun="CLIP">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <TextField id="espacio" fx:id="espacio" layoutX="1044.0" layoutY="399.0" />
-        <TextField id="horario" fx:id="horaInicio" layoutX="1044.0" layoutY="429.0" />
-        <TextField id="precio" fx:id="precio" layoutX="1044.0" layoutY="496.0" />
-        <DatePicker id="Fecha" fx:id="fecha" layoutX="939.0" layoutY="323.0" promptText="Fechas" styleClass="fechas" stylesheets="@../Estilos/EstiloReservas.css" />
+        <TextField id="espacio" fx:id="espacio" layoutX="1044.0" layoutY="366.0" />
+        <TextField id="horario" fx:id="horaInicio" layoutX="1044.0" layoutY="396.0" />
+        <TextField id="precio" fx:id="precio" layoutX="1045.0" layoutY="467.0" />
+        <DatePicker id="Fecha" fx:id="fecha" layoutX="939.0" layoutY="290.0" promptText="Fechas" styleClass="fechas" stylesheets="@../Estilos/EstiloReservas.css" />
         <Button fx:id="BtnOficina1" alignment="TOP_CENTER" layoutX="500.0" layoutY="466.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="182.0" prefWidth="168.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Oficina 1">
             <font>
                 <Font name="System Bold" size="18.0" />
@@ -271,12 +271,12 @@
             </GridPane>
             </children>
         </VBox>
-      <Label layoutX="919.0" layoutY="467.0" style="-fx-font-weight: bold;" text="Hora finalizacion:">
+      <Label layoutX="919.0" layoutY="434.0" style="-fx-font-weight: bold;" text="Hora finalizacion:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField id="horaFin" fx:id="horaFin" layoutX="1044.0" layoutY="464.0" onAction="#datosTextFieldMesa" />
+      <TextField id="horaFin" fx:id="horaFin" layoutX="1044.0" layoutY="431.0" onAction="#datosTextFieldMesa" />
       <Label layoutX="975.0" layoutY="147.0" text="Seleccionar Cliente">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -284,12 +284,20 @@
       </Label>
       <Line endX="-33.0" layoutX="1228.0" layoutY="176.0" startX="-324.0" strokeWidth="3.0" />
       <TextField fx:id="dniCliente" alignment="CENTER" layoutX="928.0" layoutY="191.0" prefHeight="32.0" prefWidth="251.0" promptText="DNI - 1111111A" />
-      <Label layoutX="976.0" layoutY="538.0" style="-fx-font-weight: bold;" text="Subtotal:">
+      <Label layoutX="976.0" layoutY="505.0" style="-fx-font-weight: bold;" text="Subtotal:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField id="TextSubtotal" fx:id="TextSubtotal" layoutX="1045.0" layoutY="536.0" />
+      <TextField id="TextSubtotal" fx:id="TextSubtotal" layoutX="1045.0" layoutY="503.0" />
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="964.0" layoutY="669.0" mnemonicParsing="false" prefHeight="115.0" prefWidth="135.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
+         <graphic>
+            <ImageView fitHeight="73.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagenes/Mano.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
     </children>
 
 

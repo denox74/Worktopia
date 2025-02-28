@@ -4,9 +4,10 @@ import Clases.Clientes;
 import ConexionDB.ConectionDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,11 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -36,10 +34,6 @@ public class ListaClientes {
     @FXML
     private Button Facturacion;
     @FXML
-    private Button BtnModificar;
-    @FXML
-    private Button BtnEliminar;
-    @FXML
     private TextField DNIbuscar;
     @FXML
     private TextField TextNombre;
@@ -51,6 +45,7 @@ public class ListaClientes {
     private TextField TextEmail;
     @FXML
     private TextField TextTelefono;
+
     private String dni;
     @FXML
     private VBox vboxIconos;
@@ -83,6 +78,23 @@ public class ListaClientes {
 
         ObservableList<Clientes> clientesList = FXCollections.observableArrayList(ConectionDB.getClientes());
         tablaClientes.setItems(clientesList);
+
+        FilteredList<Clientes> filtroClientes = new FilteredList<Clientes>(clientesList,p -> true);
+        DNIbuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtroClientes.setPredicate(Clientes->{
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }else{
+                    return Clientes.getDni().toLowerCase().contains(newValue.toLowerCase());
+                }
+            });
+        });
+
+        SortedList<Clientes> sortedData = new SortedList<>(filtroClientes);
+        sortedData.comparatorProperty().bind(tablaClientes.comparatorProperty());
+        tablaClientes.setItems(sortedData);
+
+
 
         tablaClientes.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -132,6 +144,7 @@ public class ListaClientes {
         vboxIconos.setVisible(false);
     }
 
+
     public void exportarDatos(Clientes clientes) {
         dni = clientes.getDni();
         TextNombre.setText(clientes.getNombre());
@@ -145,7 +158,7 @@ public class ListaClientes {
     public void modificarDatos(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Quiere modificar el Cliente con dni " + dni);
+        alert.setContentText("Quiere modificar el Cliente con dni: " + dni);
 
         ButtonType si = new ButtonType("Sí");
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -178,7 +191,7 @@ public class ListaClientes {
     public void eliminarDatos(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Quiere eliminar el Cliente con dni " + dni);
+        alert.setContentText("Quiere eliminar el Cliente con dni: " + dni);
         ButtonType si = new ButtonType("Sí");
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
 
@@ -199,6 +212,7 @@ public class ListaClientes {
         }
         initialize();
     }
+
 
 
 

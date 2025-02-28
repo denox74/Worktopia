@@ -27,3 +27,18 @@
     -fx-border-color: #000000;
     -fx-border-width: 3px;
 }
+.btnpassword{
+    -fx-background-color: Transparent;
+    -fx-text-fill: orange;
+}
+.btnpassword:hover{
+    -fx-text-fill: #bf7b16;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+}
+.btnpassword:pressed{
+    -fx-text-fill: #efa32d;
+    -fx-scale-y: 1;
+    -fx-scale-x: 1;
+}
+

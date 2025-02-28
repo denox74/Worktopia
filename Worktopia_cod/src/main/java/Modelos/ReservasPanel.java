@@ -1,9 +1,3 @@
-
-
-
-
-
-
 package Modelos;
 
 
@@ -104,7 +98,6 @@ public class ReservasPanel {
 
     private Button BtnSeleccionado;
     private BigDecimal subtotales;
-    private BigDecimal descuentos;
     private double precioTotal;
 
 
@@ -221,7 +214,6 @@ public class ReservasPanel {
     //Expone los datos del espacio mas el horario
     public void datosTextFieldMesa(ActionEvent event) {
         Button BtnSeleccionHora = (Button) event.getSource();
-        descuentos = BigDecimal.valueOf(0.0);
 
         if (BtnSeleccionHora != null) {
             espacio.setText(BtnSeleccionado.getText());
@@ -236,7 +228,7 @@ public class ReservasPanel {
         precio.setText(String.format("%.2f €", precioTotal));
 
 
-        subtotales = BigDecimal.valueOf(precioTotal - (precioTotal * descuentos.doubleValue()));
+        subtotales = BigDecimal.valueOf(precioTotal);
         TextSubtotal.setText(String.format("%.2f", subtotales));
 
     }

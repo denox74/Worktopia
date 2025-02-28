@@ -105,6 +105,14 @@
                 <Font size="15.0" />
             </font>
         </Button>
+        <Button alignment="CENTER" contentDisplay="TOP" layoutX="977.0" layoutY="669.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="93.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
+            <graphic>
+                <ImageView fitHeight="73.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Imagenes/Mano.png" />
+                    </image>
+                </ImageView>
+            </graphic></Button>
     </children>
 
 
