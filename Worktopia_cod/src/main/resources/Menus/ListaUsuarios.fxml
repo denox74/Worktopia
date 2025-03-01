@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ListaUsuarios">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.ListaUsuarios">
     <children>
         <ImageView fx:id="portada" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -22,7 +22,7 @@
         <Line endX="707.0" layoutX="515.0" layoutY="641.0" startX="-452.0" strokeWidth="3.0" />
         <Line endX="137.0" layoutX="403.0" layoutY="130.0" startX="-340.0" strokeWidth="3.0" />
         <Line endX="74.0" layoutX="1145.0" layoutY="133.0" startX="-373.79998779296875" strokeWidth="3.0" />
-        <TextField id="dniBuscar" fx:id="DNIbuscar" alignment="TOP_CENTER" layoutX="524.0" layoutY="148.0" prefHeight="32.0" prefWidth="249.0" promptText="Buscar Nombre" style="-fx-border-color: black; -fx-border-width: 3;">
+        <TextField id="dniBuscar" fx:id="empleado" alignment="TOP_CENTER" layoutX="524.0" layoutY="148.0" prefHeight="32.0" prefWidth="249.0" promptText="Buscar Nombre" style="-fx-border-color: black; -fx-border-width: 3;">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>
@@ -86,20 +86,19 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <TableView fx:id="tablaClientes" layoutX="56.0" layoutY="201.0" prefHeight="428.0" prefWidth="1151.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
+        <TableView fx:id="tablaUsuarios" layoutX="56.0" layoutY="201.0" prefHeight="428.0" prefWidth="1151.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
             <columns>
-                <TableColumn fx:id="colDNI" prefWidth="130.0" text="Nº Empleado" />
-                <TableColumn fx:id="colNombre" prefWidth="161.0" text="Nombre" />
-                <TableColumn fx:id="colPrimerApellido" prefWidth="161.0" text="Primer Apellido" />
-                <TableColumn fx:id="colSegundoApellido" prefWidth="161.0" text="Segundo Apellido" />
-                <TableColumn fx:id="colEmail" prefWidth="178.0" text="Email" />
-                <TableColumn fx:id="colTelefono" prefWidth="318.0" text="Telefono" />
+                <TableColumn fx:id="colEmpleado" prefWidth="151.0" text="Nº Empleado" />
+                <TableColumn fx:id="colNombre" prefWidth="192.0" text="Nombre" />
+                <TableColumn fx:id="colEmail" prefWidth="386.0" text="Email" />
+                <TableColumn fx:id="colPassword" prefWidth="259.0" text="Contraseña" />
+                <TableColumn fx:id="colCategoria" prefWidth="161.0" text="Categoria" />
 
             </columns>
         </TableView>
-        <VBox fx:id="vboxIconos" layoutX="522.0" layoutY="250.0" prefHeight="390.0" prefWidth="279.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
+        <VBox fx:id="vboxUsuarios" layoutX="522.0" layoutY="250.0" prefHeight="290.0" prefWidth="279.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
             <children>
-                <Button fx:id="BtnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="24.0" prefWidth="28.0" styleClass="BtnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
+                <Button fx:id="BtnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="BtnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
                     <VBox.margin>
                         <Insets bottom="-10.0" left="240.0" />
                     </VBox.margin>
@@ -111,7 +110,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="180.0" text="Datos Del Cliente" textAlignment="CENTER">
+                <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="191.0" text="Datos Del Usuario" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="22.0" />
                     </font>
@@ -127,22 +126,6 @@
                     <VBox.margin>
                         <Insets left="20.0" right="20.0" />
                     </VBox.margin></TextField>
-                <Label text="Primer Apellido">
-                    <VBox.margin>
-                        <Insets left="20.0" />
-                    </VBox.margin></Label>
-                <TextField fx:id="TextPrimerApellido" prefHeight="35.0" prefWidth="220.0">
-                    <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
-                    </VBox.margin></TextField>
-                <Label text="Segundo Apellido">
-                    <VBox.margin>
-                        <Insets left="20.0" />
-                    </VBox.margin></Label>
-                <TextField fx:id="TextSegundoApellido" prefHeight="35.0" prefWidth="220.0">
-                    <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
-                    </VBox.margin></TextField>
                 <Label text="Email">
                     <VBox.margin>
                         <Insets left="20.0" />
@@ -151,14 +134,14 @@
                     <VBox.margin>
                         <Insets left="20.0" right="20.0" />
                     </VBox.margin></TextField>
-                <Label text="Telefono">
+                <Label text="Categoria">
                     <VBox.margin>
                         <Insets left="20.0" />
                     </VBox.margin></Label>
-                <TextField fx:id="TextTelefono" prefHeight="35.0" prefWidth="220.0">
-                    <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" />
-                    </VBox.margin></TextField>
+            <ComboBox fx:id="enumCategoria" onAction="#llenarComboBox" prefHeight="40.0" prefWidth="236.0" promptText="........." visibleRowCount="2">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" />
+               </VBox.margin></ComboBox>
                 <GridPane alignment="TOP_CENTER" prefHeight="30.0" prefWidth="243.0">
                     <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -168,7 +151,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
                     </rowConstraints>
                     <children>
-                        <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" prefHeight="36.0" prefWidth="75.0" styleClass="Botones">
+                        <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" onAction="#modificarUsuarios" prefHeight="36.0" prefWidth="75.0" styleClass="Botones">
                             <cursor>
                                 <Cursor fx:constant="DEFAULT" />
                             </cursor>
@@ -187,7 +170,7 @@
                                 <Insets />
                             </GridPane.margin>
                         </Button>
-                        <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="1">
+                        <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarUsuarios" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="1">
                             <graphic>
                                 <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -203,6 +186,16 @@
                 </GridPane>
             </children>
         </VBox>
+      <Button fx:id="ponerUsuario" layoutX="1068.0" layoutY="146.0" mnemonicParsing="false" onAction="#ventanaAgregarUsuarios" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Nuevo Usuario">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagenes/circuloSuma1.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+
     </children>
 
 </AnchorPane>

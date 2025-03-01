@@ -1,6 +1,7 @@
 package Modelos;
 
 
+import Clases.Usuarios;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +19,6 @@ import java.io.IOException;
 public class MenuPrincipal {
 
     @FXML
-    private AnchorPane anchorPane;
-    @FXML
     private Button BtnEntrar;
     @FXML
     private TextField usuario;
@@ -29,6 +28,7 @@ public class MenuPrincipal {
     public MenuPrincipal() {
 
     }
+
 
     @FXML
     public void logeado(ActionEvent event) {

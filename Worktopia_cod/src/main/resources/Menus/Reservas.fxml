@@ -290,7 +290,7 @@
          </font>
       </Label>
       <TextField id="TextSubtotal" fx:id="TextSubtotal" layoutX="1045.0" layoutY="503.0" />
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="964.0" layoutY="669.0" mnemonicParsing="false" prefHeight="115.0" prefWidth="135.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
+      <Button fx:id="BtnUsuarios" alignment="CENTER" contentDisplay="TOP" layoutX="964.0" layoutY="669.0" mnemonicParsing="false" onAction="#ventanaUsuarios" prefHeight="115.0" prefWidth="135.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
          <graphic>
             <ImageView fitHeight="73.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                <image>

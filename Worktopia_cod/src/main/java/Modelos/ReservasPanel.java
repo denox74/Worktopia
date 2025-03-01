@@ -40,6 +40,8 @@ public class ReservasPanel {
     @FXML
     private Button btnConfirmar;
     @FXML
+    private Button BtnUsuarios;
+    @FXML
     private TextField espacio;
     @FXML
     private TextField horaInicio;
@@ -124,6 +126,10 @@ public class ReservasPanel {
     public void ventanaFacturaciones(ActionEvent event) {
         Facturaciones();
         ((Stage) Facturacion.getScene().getWindow()).close();
+    }
+    public void ventanaUsuarios(ActionEvent event) {
+        Usuarios();
+        ((Stage) BtnUsuarios.getScene().getWindow()).close();
     }
 
     public void insertarReserva(ActionEvent event) {
@@ -472,6 +478,17 @@ public class ReservasPanel {
     public void Facturaciones() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Facturacion.fxml"));
+            Parent cargaVentana = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(cargaVentana));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void Usuarios() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaUsuarios.fxml"));
             Parent cargaVentana = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(cargaVentana));

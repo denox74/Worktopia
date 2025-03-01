@@ -2,6 +2,7 @@ package Modelos;
 
 
 import Clases.Reservas;
+import Clases.Usuarios;
 import ConexionDB.ConectionDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,6 +42,8 @@ public class ListaReservas {
     private Button btnModificar;
     @FXML
     private Button btnEliminar;
+    @FXML
+    private Button BtnUsuarios;
     @FXML
     private TextField DNIBuscar;
     @FXML
@@ -156,6 +159,10 @@ public class ListaReservas {
         Facturaciones();
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
+    public void ventanaUsuarios(ActionEvent event) {
+        Usuarios();
+        ((Stage) BtnUsuarios.getScene().getWindow()).close();
+    }
 
     public void salirVbox(ActionEvent event) {
         vboxReservas.setVisible(false);
@@ -267,6 +274,17 @@ public class ListaReservas {
     public void Facturaciones() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Facturacion.fxml"));
+            Parent cargaVentana = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(cargaVentana));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void Usuarios() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaUsuarios.fxml"));
             Parent cargaVentana = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(cargaVentana));

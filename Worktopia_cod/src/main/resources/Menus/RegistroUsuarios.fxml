@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="366.0" prefWidth="216.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.RegistroUsuarios">
+    <VBox fx:id="vboxAgregarUsuario" prefHeight="366.0" prefWidth="279.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css">
+        <children>
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="191.0" text="Añadir Usuario" textAlignment="CENTER">
+                <font>
+                    <Font name="System Bold" size="22.0" />
+                </font>
+                <VBox.margin>
+                    <Insets left="40.0" top="20.0" />
+                </VBox.margin>
+            </Label>
+            <Label text="Nombre">
+                <VBox.margin>
+                    <Insets left="20.0" />
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="TextAgregarNombre" prefHeight="35.0" prefWidth="220.0">
+                <VBox.margin>
+                    <Insets left="20.0" right="20.0" />
+                </VBox.margin>
+            </TextField>
+            <Label text="Email">
+                <VBox.margin>
+                    <Insets left="20.0" />
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="TextAgregarEmail" prefHeight="35.0" prefWidth="220.0">
+                <VBox.margin>
+                    <Insets left="20.0" right="20.0" />
+                </VBox.margin>
+            </TextField>
+            <Label layoutX="32.0" layoutY="119.0" text="Contraseña">
+                <VBox.margin>
+                    <Insets left="20.0" />
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="TextAgregarPassword" layoutX="32.0" layoutY="138.0" prefHeight="35.0" prefWidth="220.0">
+                <VBox.margin>
+                    <Insets left="20.0" right="20.0" />
+                </VBox.margin>
+            </TextField>
+            <Label text="Categoria">
+                <VBox.margin>
+                    <Insets left="20.0" />
+                </VBox.margin>
+            </Label>
+            <ComboBox fx:id="enumAgregarCategoria" onAction="#llenarComboBox" prefHeight="40.0" prefWidth="233.0" promptText="........." visibleRowCount="2">
+                <VBox.margin>
+                    <Insets bottom="20.0" left="20.0" />
+                </VBox.margin>
+            </ComboBox>
+            <Button id="eliminar" fx:id="BtnAgregarUsuario" mnemonicParsing="false" onAction="#agregarUsuario" prefHeight="36.0" prefWidth="151.0" styleClass="Botones" text="Confirmar">
+                <cursor>
+                    <Cursor fx:constant="DEFAULT" />
+                </cursor>
+                <stylesheets>
+                    <URL value="@../Estilos/EstilosListas.css" />
+                    <URL value="@../Estilos/EstiloVboxListas.css" />
+                </stylesheets>
+                <VBox.margin>
+                    <Insets left="60.0" />
+                </VBox.margin>
+            </Button>
+        </children>
+    </VBox>
+
+</AnchorPane>
