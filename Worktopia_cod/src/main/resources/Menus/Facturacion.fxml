@@ -105,7 +105,7 @@
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
         </Button>
-      <TableView fx:id="tablaFacturas" layoutX="54.0" layoutY="202.0" prefHeight="431.0" prefWidth="1155.0">
+      <TableView fx:id="tablaFacturas" layoutX="54.0" layoutY="202.0" prefHeight="431.0" prefWidth="1155.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
         <columns>
           <TableColumn fx:id="colNFactura" prefWidth="164.0" text="Nº Factura" />
           <TableColumn fx:id="colFechaFactura" prefWidth="168.0" text="Fecha Factura" />

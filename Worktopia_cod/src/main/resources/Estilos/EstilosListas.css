@@ -33,11 +33,14 @@
 
 .TablaListas {
     -fx-background-color: #DDDEDE;
+
+}
+.TablaListas .column-header-background{
+    -fx-background-color:  #EADDC8;
 }
 
-.TablaListas .column-header-background {
-    -fx-text-fill: #FFA500FF;
-}
+
+
 
 .btnVbox {
     -fx-background-color: #4DFD73;

@@ -86,13 +86,13 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <TableView fx:id="tablaClientes" layoutX="56.0" layoutY="201.0" prefHeight="428.0" prefWidth="1173.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
+        <TableView fx:id="tablaClientes" layoutX="83.0" layoutY="200.0" prefHeight="430.0" prefWidth="1120.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
             <columns>
                 <TableColumn fx:id="colDNI" prefWidth="130.0" text="DNI" />
                 <TableColumn fx:id="colNombre" prefWidth="161.0" text="Nombre" />
-                <TableColumn fx:id="colPrimerApellido" prefWidth="161.0" text="Primer Apellido" />
-                <TableColumn fx:id="colSegundoApellido" prefWidth="161.0" text="Segundo Apellido" />
-                <TableColumn fx:id="colEmail" prefWidth="309.0" text="Email" />
+                <TableColumn fx:id="colPrimerApellido" prefWidth="177.0" text="Primer Apellido" />
+                <TableColumn fx:id="colSegundoApellido" prefWidth="201.0" text="Segundo Apellido" />
+                <TableColumn fx:id="colEmail" prefWidth="253.0" text="Email" />
                 <TableColumn fx:id="colTelefono" prefWidth="213.0" text="Telefono" />
 
             </columns>
@@ -203,7 +203,7 @@
             </GridPane>
          </children>
       </VBox>
-        <Button fx:id="BtnUsuarios" alignment="CENTER" contentDisplay="TOP" layoutX="974.0" layoutY="667.0" mnemonicParsing="false" onAction="#ventanaUsuarios" prefHeight="111.0" prefWidth="105.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
+        <Button fx:id="BtnUsuarios" alignment="CENTER" contentDisplay="TOP" layoutX="974.0" layoutY="667.0" mnemonicParsing="false" onAction="#ventanaListaUsuarios" prefHeight="111.0" prefWidth="105.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
             <graphic>
                 <ImageView fitHeight="73.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                     <image>

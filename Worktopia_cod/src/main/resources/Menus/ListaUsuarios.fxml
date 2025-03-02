@@ -22,7 +22,7 @@
         <Line endX="707.0" layoutX="515.0" layoutY="641.0" startX="-452.0" strokeWidth="3.0" />
         <Line endX="137.0" layoutX="403.0" layoutY="130.0" startX="-340.0" strokeWidth="3.0" />
         <Line endX="74.0" layoutX="1145.0" layoutY="133.0" startX="-373.79998779296875" strokeWidth="3.0" />
-        <TextField id="dniBuscar" fx:id="empleado" alignment="TOP_CENTER" layoutX="524.0" layoutY="148.0" prefHeight="32.0" prefWidth="249.0" promptText="Buscar Nombre" style="-fx-border-color: black; -fx-border-width: 3;">
+        <TextField id="dniBuscar" fx:id="empleado" alignment="TOP_CENTER" layoutX="518.0" layoutY="149.0" prefHeight="32.0" prefWidth="249.0" promptText="Buscar Nombre" style="-fx-border-color: black; -fx-border-width: 3;">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>
@@ -86,13 +86,13 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <TableView fx:id="tablaUsuarios" layoutX="56.0" layoutY="201.0" prefHeight="428.0" prefWidth="1151.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
+        <TableView fx:id="tablaUsuarios" layoutX="82.0" layoutY="201.0" prefHeight="430.0" prefWidth="1120.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
             <columns>
                 <TableColumn fx:id="colEmpleado" prefWidth="151.0" text="Nº Empleado" />
                 <TableColumn fx:id="colNombre" prefWidth="192.0" text="Nombre" />
                 <TableColumn fx:id="colEmail" prefWidth="386.0" text="Email" />
-                <TableColumn fx:id="colPassword" prefWidth="259.0" text="Contraseña" />
-                <TableColumn fx:id="colCategoria" prefWidth="161.0" text="Categoria" />
+                <TableColumn fx:id="colPassword" prefWidth="244.0" text="Contraseña" />
+                <TableColumn fx:id="colCategoria" prefWidth="146.0" text="Categoria" />
 
             </columns>
         </TableView>
@@ -186,7 +186,7 @@
                 </GridPane>
             </children>
         </VBox>
-      <Button fx:id="ponerUsuario" layoutX="1068.0" layoutY="146.0" mnemonicParsing="false" onAction="#ventanaAgregarUsuarios" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css" text="Nuevo Usuario">
+      <Button fx:id="ponerUsuario" layoutX="1162.0" layoutY="146.0" mnemonicParsing="false" onAction="#ventanaAgregarUsuarios" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                <image>
