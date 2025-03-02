@@ -1,7 +1,9 @@
 package Modelos;
 
+import Aplicaciones.MenuPrincipalApp;
 import Clases.Asientos;
 import Clases.Facturas;
+import Clases.SesionUsuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ConexionDB.ConectionDB;
@@ -20,8 +23,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
-import java.awt.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -90,6 +91,8 @@ public class Facturacion {
 
     @FXML
     public void initialize() {
+        Stage ventanaSecundaria = new Stage();
+        ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
         colNFactura.setCellValueFactory(new PropertyValueFactory<>("id_factura"));
         colFechaFactura.setCellValueFactory(new PropertyValueFactory<>("fecha_hora_emision"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("precio_total"));
@@ -101,6 +104,7 @@ public class Facturacion {
 
         ObservableList<Facturas> facturasList = FXCollections.observableArrayList(ConectionDB.getFacturas());
         tablaFacturas.setItems(facturasList);
+        inicioSesion();
     }
 
     public Facturacion() {
@@ -108,94 +112,21 @@ public class Facturacion {
     }
 
 
-    public void ventanaRegistro(ActionEvent event) {
-        RegistroUsuarios();
-        ((Stage) AgregarClientes.getScene().getWindow()).close();
-    }
+    public void inicioSesion() {
+        String categoria = SesionUsuario.getCategoriaUsuario();
 
-    public void ventanaReservas(ActionEvent event) {
-        Reservas();
-        ((Stage) Reservas.getScene().getWindow()).close();
-    }
-
-    public void ventanaListaClientes(ActionEvent event) {
-        ListaUsuarios();
-        ((Stage) ListaClientes.getScene().getWindow()).close();
-    }
-
-    public void ventanaListaReservas(ActionEvent event) {
-        ListaReservas();
-        ((Stage) ListaReservas.getScene().getWindow()).close();
-    }
-    public void ventanaUsuarios(ActionEvent event) {
-        Usuarios();
-        ((Stage) BtnUsuarios.getScene().getWindow()).close();
+        if (categoria != null && categoria.equals("Admin")) {
+            BtnUsuarios.setVisible(true);
+            BtnUsuarios.setDisable(false);
+        } else {
+            BtnUsuarios.setVisible(false);
+        }
     }
 
     public void btnDescarga(ActionEvent event) {
         contenedorDatos.setVisible(true);
     }
 
-
-    public void RegistroUsuarios() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroClientes.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void Reservas() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Reservas.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void ListaUsuarios() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaClientes.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void ListaReservas() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaReservas.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void Usuarios() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/ListaUsuarios.fxml"));
-            Parent cargaVentana = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(cargaVentana));
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private void generarFacturaExcel(String facturaId) throws SQLException, IOException, ClassNotFoundException {
         String queryFactura = "SELECT * FROM Facturas WHERE id_factura = ?";
@@ -388,6 +319,47 @@ public class Facturacion {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void abrirVentana(String fxmlPath, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle(titulo);
+
+            MenuPrincipalApp.agregarIcono(stage);
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ventanaRegistro(ActionEvent event) {
+        abrirVentana("/Menus/RegistroClientes.fxml", "Agregar Cliente");
+        ((Stage) AgregarClientes.getScene().getWindow()).close();
+    }
+
+    public void ventanaReservas(ActionEvent event) {
+        abrirVentana("/Menus/Reservas.fxml", "Reservas");
+        ((Stage) Reservas.getScene().getWindow()).close();
+    }
+
+    public void ventanaListaClientes(ActionEvent event) {
+        abrirVentana("/Menus/ListaClientes.fxml", "Lista de Cliente");
+        ((Stage) ListaClientes.getScene().getWindow()).close();
+    }
+
+    public void ventanaListaReservas(ActionEvent event) {
+        abrirVentana("/Menus/ListaReservas.fxml", "Listas De Reservas");
+        ((Stage) ListaReservas.getScene().getWindow()).close();
+    }
+    public void ventanaUsuarios(ActionEvent event) {
+        abrirVentana("/Menus/ListaUsuarios.fxml", "Usuarios");
+        ((Stage) BtnUsuarios.getScene().getWindow()).close();
     }
 }
 

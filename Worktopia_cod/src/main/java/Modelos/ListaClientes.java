@@ -1,6 +1,7 @@
 package Modelos;
 
 import Clases.Clientes;
+import Clases.SesionUsuario;
 import ConexionDB.ConectionDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -70,6 +72,8 @@ public class ListaClientes {
 
     @FXML
     public void initialize() {
+        Stage ventanaSecundaria = new Stage();
+        ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
         colDNI.setCellValueFactory(new PropertyValueFactory<>("dni"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colPrimerApellido.setCellValueFactory(new PropertyValueFactory<>("primerApellido"));
@@ -115,6 +119,7 @@ public class ListaClientes {
             vboxIconos.setLayoutX(event.getScreenX() - xOffset);
             vboxIconos.setLayoutY(event.getScreenY() - yOffset);
         });
+        inicioSesion();
     }
 
 
@@ -218,10 +223,16 @@ public class ListaClientes {
         }
         initialize();
     }
+    public void inicioSesion() {
+        String categoria = SesionUsuario.getCategoriaUsuario();
 
-
-
-
+        if (categoria != null && categoria.equals("Admin")) {
+            BtnUsuarios.setVisible(true);
+            BtnUsuarios.setDisable(false);
+        } else {
+            BtnUsuarios.setVisible(false);
+        }
+    }
 
     public void RegistroUsuarios() {
         try {

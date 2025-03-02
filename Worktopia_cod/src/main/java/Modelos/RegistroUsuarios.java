@@ -25,7 +25,6 @@ import java.util.Optional;
 
 public class RegistroUsuarios {
 
-    private ListaUsuarios listaUsuarios;
     @FXML
     public VBox vboxAgregarUsuario;
     @FXML
@@ -42,7 +41,7 @@ public class RegistroUsuarios {
     ObservableList<String> categorias = FXCollections.observableArrayList("Admin", "Empleado");
 
     public RegistroUsuarios() {
-        this.listaUsuarios = new ListaUsuarios();
+
     }
     @FXML
     public void initialize() {
