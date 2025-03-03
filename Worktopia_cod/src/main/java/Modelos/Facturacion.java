@@ -4,6 +4,8 @@ import Aplicaciones.MenuPrincipalApp;
 import Clases.Asientos;
 import Clases.Facturas;
 import Clases.SesionUsuario;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,9 +38,20 @@ import java.util.List;
 import java.util.Map;
 
 public class Facturacion {
-
     @FXML
-    private Button AgregarClientes;
+    private TextField TextDniCliente;
+    @FXML
+    private TextField TextSubtotal;
+    @FXML
+    private TextField TextDescuento;
+    @FXML
+    private TextField TextTotal;
+    @FXML
+    private Button BtnGenerarFactura;
+    @FXML
+    private Button BtnPagarFactura;
+    @FXML
+    private TextField TextFechaFactura;
     @FXML
     private Button Reservas;
     @FXML
@@ -52,10 +65,11 @@ public class Facturacion {
     @FXML
     private TextField facturaBuscar;
     @FXML
-    private VBox contenedorDatos;
+    private VBox vboxFacturas;
+
+    private int idFactura;
     @FXML
     private TableView<Facturas> tablaFacturas;
-
     @FXML
     private TableColumn<Facturas, String> colNFactura;
     @FXML
@@ -105,10 +119,28 @@ public class Facturacion {
         ObservableList<Facturas> facturasList = FXCollections.observableArrayList(ConectionDB.getFacturas());
         tablaFacturas.setItems(facturasList);
         inicioSesion();
+        
+        tablaFacturas.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Facturas factura = tablaFacturas.getSelectionModel().getSelectedItem();
+                if (factura != null) {
+                    exportarFacturas(factura);
+                }
+            }
+        });
+        TextDescuento.textProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                actualizarTotal();
+            }
+        });
+
+
     }
 
     public Facturacion() {
-
+    
     }
 
 
@@ -123,11 +155,48 @@ public class Facturacion {
         }
     }
 
-    public void btnDescarga(ActionEvent event) {
-        contenedorDatos.setVisible(true);
+    
+    public void exportarFacturas(Facturas facturas) {
+        TextFechaFactura.setText(facturas.getFecha_hora_emision());
+        TextSubtotal.setText(facturas.getPrecio_total().toString());
+        TextDniCliente.setText(facturas.getDni());
+        TextDescuento.setText(facturas.getDescuento().toString());
+        double descuento = Double.parseDouble(TextDescuento.getText());
+        double subTotal = Double.parseDouble(TextSubtotal.getText());
+        TextTotal.setText(String.valueOf(descuento(descuento,subTotal)));
+        vboxFacturas.setVisible(true);
+
+    }
+    public double descuento(double descuentoText, double subtotal) {
+        if (descuentoText > 0) {
+            return subtotal - (subtotal * descuentoText / 100);
+        }
+        return subtotal;
+    }
+    private void actualizarTotal() {
+        try {
+            double descuentoValor = validarNumero(TextDescuento.getText(), 0.0);
+            double subtotal = validarNumero(TextSubtotal.getText(), 0.0);
+            double total = descuento(descuentoValor, subtotal);
+
+            TextTotal.setText(String.valueOf(total));
+        } catch (Exception e) {
+            TextTotal.setText("Error");
+        }
     }
 
-
+    private double validarNumero(String texto, double valorPorDefecto) {
+        if (texto == null || texto.trim().isEmpty()) {
+            return valorPorDefecto;
+        }
+        try {
+            return Double.parseDouble(texto);
+        } catch (NumberFormatException e) {
+            return valorPorDefecto;
+        }
+    }
+    
+    
     private void generarFacturaExcel(String facturaId) throws SQLException, IOException, ClassNotFoundException {
         String queryFactura = "SELECT * FROM Facturas WHERE id_factura = ?";
         String queryCliente = "SELECT * FROM Clientes WHERE dni = ?";
@@ -338,10 +407,6 @@ public class Facturacion {
         }
     }
 
-    public void ventanaRegistro(ActionEvent event) {
-        abrirVentana("/Menus/RegistroClientes.fxml", "Agregar Cliente");
-        ((Stage) AgregarClientes.getScene().getWindow()).close();
-    }
 
     public void ventanaReservas(ActionEvent event) {
         abrirVentana("/Menus/Reservas.fxml", "Reservas");
@@ -360,6 +425,9 @@ public class Facturacion {
     public void ventanaUsuarios(ActionEvent event) {
         abrirVentana("/Menus/ListaUsuarios.fxml", "Usuarios");
         ((Stage) BtnUsuarios.getScene().getWindow()).close();
+    }
+    public void salirVbox(ActionEvent event) {
+        vboxFacturas.setVisible(false);
     }
 }
 
