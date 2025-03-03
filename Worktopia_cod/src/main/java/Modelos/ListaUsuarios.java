@@ -56,6 +56,7 @@ public class ListaUsuarios {
     private TextField TextEmail;
     @FXML
     private ComboBox enumCategoria;
+    private MenuPrincipalApp menuPrincipalapp = new MenuPrincipalApp();
 
 
     ObservableList<String> categorias = FXCollections.observableArrayList("Admin", "Empleado");
@@ -225,9 +226,13 @@ public class ListaUsuarios {
 
             } else {
                 alert.setContentText("Login incorrecto");
+                menuPrincipal.cerrarVentana();
+                menuPrincipalapp.start(new Stage());
                 alert.show();
             }
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

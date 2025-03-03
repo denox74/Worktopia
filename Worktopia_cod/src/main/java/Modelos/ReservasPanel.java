@@ -304,52 +304,7 @@ public class ReservasPanel {
         }
     }
 
-/*
-    public int insertarIdFactura(String DNI, double nuevoPrecio) {
-        String selectQuery = "SELECT id_factura, precio_total FROM Facturas WHERE dni = ?";
-        String updateQuery = "UPDATE Facturas SET precio_total = ? WHERE id_factura = ?";
-        String insertQuery = "INSERT INTO Facturas (dni, precio_total, descuento, fecha_hora_emision, estado) VALUES (?, ?, 0.00, NOW(), 'Pendiente')";
 
-        int idFactura;
-        double precioTotal;
-
-        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(selectQuery)) {
-            stmt.setString(1, DNI);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) { // Si la factura existe, actualizamos el precio
-                idFactura = rs.getInt("id_factura");
-                precioTotal = rs.getDouble("precio_total");
-
-                double nuevoTotal = precioTotal + nuevoPrecio; // Sumamos el nuevo precio
-
-                try (PreparedStatement updateStmt = ConectionDB.getConn().prepareStatement(updateQuery)) {
-                    updateStmt.setDouble(1, nuevoTotal);
-                    updateStmt.setInt(2, idFactura);
-                    updateStmt.executeUpdate();
-                }
-                return idFactura;
-
-            } else { // Si la factura no existe, la creamos
-                try (PreparedStatement insertStmt = ConectionDB.getConn().prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
-                    insertStmt.setString(1, DNI);
-                    insertStmt.setDouble(2, nuevoPrecio);
-                    insertStmt.executeUpdate();
-
-                    ResultSet generatedKeys = insertStmt.getGeneratedKeys();
-                    if (generatedKeys.next()) {
-                        return generatedKeys.getInt(1);
-                    }
-                }
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error en la facturación: " + e.getMessage());
-            throw new RuntimeException("Error al gestionar la factura.", e);
-        }
-
-        return -1;
-    }*/
 
 
 
@@ -391,45 +346,7 @@ public class ReservasPanel {
             alert.show();
         }
     }
-    /*
-        // Obtener ID de factura, pasándole el subtotal
-        subTotal = new BigDecimal(TextSubtotal.getText().replace("," ,"."));
 
-
-        int idFactura = insertarIdFactura(dniText, subTotal.doubleValue());
-
-        if (idFactura == -1) {
-            alert.setContentText("No se pudo generar la factura.");
-            alert.show();
-            return;
-        }
-
-
-        // Insertar la reserva
-        String queryReserva = "INSERT INTO Reservas (dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin, subtotal) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement stmtReserva = ConectionDB.getConn().prepareStatement(queryReserva, Statement.RETURN_GENERATED_KEYS)) {
-            stmtReserva.setString(1, dniText);
-            stmtReserva.setInt(2, idAsiento);
-            stmtReserva.setInt(3, idFactura);
-            stmtReserva.setTimestamp(4, Timestamp.valueOf(fechaHoraInicio));
-            stmtReserva.setTimestamp(5, Timestamp.valueOf(fechaHoraFin));
-            stmtReserva.setBigDecimal(6, subTotal);
-
-            int rowsInserted = stmtReserva.executeUpdate();
-            if (rowsInserted == 0) {
-                alert.setContentText("No se pudo crear la reserva.");
-                alert.show();
-            } else {
-                alert.setContentText("Reserva y factura creadas correctamente.");
-                alert.show();
-            }
-
-        } catch (SQLException e) {
-            alert.setContentText("Error en la base de datos: " + e.getMessage());
-            alert.show();
-        }
-    }*/
 
 
     public void abrirVentana(String fxmlPath, String titulo) {

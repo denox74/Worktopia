@@ -186,12 +186,12 @@ public class Facturacion {
                 Sheet sheet = workbook.getSheetAt(0);
 
                 // Rellenar los datos básicos
-                setCellValue(sheet, 14, 1, facturaId);
+                setCellValue(sheet, 9, 1, facturaId);
                 setCellValue(sheet, 15, 1, dniCliente);
                 setCellValue(sheet, 16, 1, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 setCellValue(sheet, 15, 5, nombreCliente);
                 setCellValue(sheet, 16, 5, telefonoCliente);
-                setCellValue(sheet, 16, 7, emailCliente);
+                setCellValue(sheet, 14, 5, emailCliente);
 
                 // Rellenar las reservas y subtotales
                 int rowIndex = 17;
@@ -251,7 +251,7 @@ public class Facturacion {
 
 
 
-
+/*
     private void setCellValue(Sheet sheet, int rowNum, int colNum, Object value, CellStyle cellStyle) {
         Row row = sheet.getRow(rowNum);
         if (row == null) {
@@ -270,7 +270,7 @@ public class Facturacion {
         // Asignar el estilo a la celda
         cell.setCellStyle(cellStyle);
     }
-
+*/
     public BigDecimal calcularSubtotal(int idAsiento, Timestamp fechaInicio, Timestamp fechaFin) {
         BigDecimal tarifaHora = getTarifaHoraId(idAsiento);
         LocalDateTime inicio = fechaInicio.toLocalDateTime();

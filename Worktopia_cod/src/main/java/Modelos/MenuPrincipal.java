@@ -53,5 +53,10 @@ public class MenuPrincipal {
 
     }
 
+    public void cerrarVentana() {
+        ((Stage) BtnEntrar.getScene().getWindow()).close();
+
+    }
+
 
 }
