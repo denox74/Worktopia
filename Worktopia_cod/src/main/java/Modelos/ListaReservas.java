@@ -238,10 +238,6 @@ public class ListaReservas {
         }
     }
 
-    public void ventanaRegistro(ActionEvent event) {
-        abrirVentana("/Menus/RegistroClientes.fxml", "Agregar de Cliente");
-        ((Stage) AgregarClientes.getScene().getWindow()).close();
-    }
 
     public void ventanaReservas(ActionEvent event) {
         abrirVentana("/Menus/Reservas.fxml", "Reservas");
@@ -257,7 +253,7 @@ public class ListaReservas {
         abrirVentana("/Menus/Facturacion.fxml", "Factuacion");
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
-    public void ventanaUsuarios(ActionEvent event) {
+    public void ventanaListaUsuarios(ActionEvent event) {
         abrirVentana("/Menus/ListaUsuarios.fxml", "Usuarios");
         ((Stage) BtnUsuarios.getScene().getWindow()).close();
     }

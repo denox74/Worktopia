@@ -366,11 +366,6 @@ public class ReservasPanel {
         }
     }
 
-    public void ventanaRegistro(ActionEvent event) {
-        abrirVentana("/Menus/RegistroClientes.fxml", "Agregar Cliente");
-        ((Stage) AgregarClientes.getScene().getWindow()).close();
-    }
-
     public void ventanaListaClientes(ActionEvent event) {
         abrirVentana("/Menus/ListaClientes.fxml", "Lista de Cliente");
         ((Stage) ListaClientes.getScene().getWindow()).close();
@@ -380,7 +375,7 @@ public class ReservasPanel {
         abrirVentana("/Menus/Facturacion.fxml", "Factuacion");
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
-    public void ventanaUsuarios(ActionEvent event) {
+    public void ventanaListaUsuarios(ActionEvent event) {
         abrirVentana("/Menus/ListaUsuarios.fxml", "Usuarios");
         ((Stage) BtnUsuarios.getScene().getWindow()).close();
     }

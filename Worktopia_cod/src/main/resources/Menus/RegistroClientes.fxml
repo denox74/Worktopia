@@ -1,118 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.RegistroClientes">
+<AnchorPane prefHeight="436.0" prefWidth="296.0" style="-fx-background-color: #DDDEDE;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.RegistroClientes">
     <children>
-      <ImageView id="portada" fx:id="portada" fitHeight="117.0" fitWidth="119.0" layoutX="591.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Imagenes/bannerTopiaC.png" />
-         </image></ImageView>
-        <Label layoutX="524.0" layoutY="114.0" text="Registrar Nuevo Cliente">
-            <font>
-                <Font name="System Bold" size="22.0" />
-            </font></Label>
-        <Line endX="596.0" layoutX="600.0" layoutY="643.0" startX="-539.0" strokeWidth="3.0" />
-        <Line endX="99.0" layoutX="403.0" layoutY="130.0" startX="-340.0" strokeWidth="3.0" />
-        <Line endX="-13.0" layoutX="1211.0" layoutY="132.0" startX="-418.0" strokeWidth="3.0" />
-        <TextField id="dni" fx:id="dni" alignment="TOP_LEFT" layoutX="452.0" layoutY="180.0" prefHeight="40.0" prefWidth="400.0" promptText="DNI / NIF" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor></TextField>
-      <TextField id="nombre" fx:id="nombre" alignment="TOP_LEFT" layoutX="452.0" layoutY="237.0" prefHeight="40.0" prefWidth="400.0" promptText="Nombre" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" />
-      <TextField id="primerApellido" fx:id="primerApellido" alignment="TOP_LEFT" layoutX="452.0" layoutY="284.0" prefHeight="40.0" prefWidth="400.0" promptText="Primer Apellido" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" />
-      <TextField id="segundoApellido" fx:id="segundoApellido" alignment="TOP_LEFT" layoutX="452.0" layoutY="335.0" prefHeight="40.0" prefWidth="400.0" promptText="Segundo Apellido" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" />
-      <TextField id="eMail" fx:id="eMail" alignment="TOP_LEFT" layoutX="452.0" layoutY="395.0" prefHeight="40.0" prefWidth="400.0" promptText="Email" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" />
-      <TextField id="telefono" fx:id="telefono" alignment="TOP_LEFT" layoutX="452.0" layoutY="458.0" prefHeight="40.0" prefWidth="400.0" promptText="Telefono de contacto" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" />
-        <Button id="btnConfirmar" fx:id="btnConfirmar" alignment="CENTER" layoutX="680.0" layoutY="526.0" onAction="#guardarCliente" prefHeight="39.0" prefWidth="110.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Confirmar" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font>
-            <cursor>
-                <Cursor fx:constant="DEFAULT" />
-            </cursor>
-        </Button>
-      <Button id="btnCancelar" fx:id="btnCancelar" alignment="CENTER" layoutX="504.0" layoutY="526.0" prefHeight="39.0" prefWidth="127.0" styleClass="BtnRegistro" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Limpiar Datos" textAlignment="CENTER" textFill="#fcfcfc" textOverrun="CLIP">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Button>
-        <Button id="reservas" fx:id="Reservas" contentDisplay="TOP" defaultButton="true" layoutX="608.0" layoutY="669.0" mnemonicParsing="false" onAction="#ventanaReservas" prefHeight="111.0" prefWidth="105.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Reservas">
-            <graphic>
-                <ImageView id="reservas" fitHeight="79.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Imagenes/Reservas.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Button>
-        <Button id="facturas" fx:id="Facturacion" contentDisplay="TOP" defaultButton="true" layoutX="862.0" layoutY="666.0" mnemonicParsing="false" onAction="#ventanaFacturaciones" prefHeight="115.0" prefWidth="93.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Facturas">
-            <graphic>
-                <ImageView id="facturas" fitHeight="78.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Imagenes/Facturacion.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Button>
-        <Button id="listaReservas" fx:id="ListaReservas" contentDisplay="TOP" defaultButton="true" layoutX="728.0" layoutY="669.0" mnemonicParsing="false" onAction="#ventanaListaReservas" prefHeight="111.0" prefWidth="119.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Lista Reservas">
-            <graphic>
-                <ImageView id="listaReservas" fitHeight="79.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Imagenes/ListaReservas.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Button>
-        <Button id="usuarios" fx:id="AgregarClientes" contentDisplay="TOP" defaultButton="true" layoutX="340.0" layoutY="669.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="112.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Clientes">
-            <graphic>
-                <ImageView fitHeight="79.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Imagenes/AgregarCLientes.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font>
-        </Button>
-        <Button id="listaClientes" fx:id="ListaClientes" contentDisplay="TOP" defaultButton="true" layoutX="470.0" layoutY="669.0" mnemonicParsing="false" onAction="#ventanaListaClientes" prefHeight="114.0" prefWidth="119.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Lista Clientes">
-            <graphic>
-                <ImageView id="listaClientes" fitHeight="79.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Imagenes/ListaClientes.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Button>
-        <Button fx:id="BtnUsuarios" alignment="CENTER" contentDisplay="TOP" layoutX="977.0" layoutY="669.0" mnemonicParsing="false" onAction="#ventanaUsuarios" prefHeight="78.0" prefWidth="93.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
-            <graphic>
-                <ImageView fitHeight="73.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../Imagenes/Mano.png" />
-                    </image>
-                </ImageView>
-            </graphic></Button>
+      <VBox layoutY="-2.0" prefHeight="442.0" prefWidth="296.0" spacing="3.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloRegistroClientes.css">
+         <children>
+              <Label text="Registrar Nuevo Cliente">
+                  <font>
+                      <Font name="System Bold" size="22.0" />
+                  </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="20.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="DNI / NIF">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+              <TextField id="dni" fx:id="dni" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroClientes.css">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Nombre">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <TextField id="nombre" fx:id="nombre" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroClientes.css">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin></TextField>
+            <Label layoutX="32.0" layoutY="126.0" text="Primer Apellido">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <TextField id="primerApellido" fx:id="primerApellido" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroClientes.css">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin></TextField>
+            <Label text="Segundo Apellido">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <TextField id="segundoApellido" fx:id="segundoApellido" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroClientes.css">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin></TextField>
+            <Label text="Email">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <TextField id="eMail" fx:id="eMail" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroClientes.css">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin></TextField>
+            <Label text="Telefono Contacto">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <TextField id="telefono" fx:id="telefono" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" styleClass="textFieldRegistro" stylesheets="@../Estilos/EstiloRegistroClientes.css">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="20.0" right="20.0" />
+               </VBox.margin></TextField>
+              <Button id="btnConfirmar" fx:id="btnConfirmar" alignment="CENTER" onAction="#guardarCliente" prefHeight="39.0" prefWidth="110.0" styleClass="Botones" stylesheets="@../Estilos/EstiloRegistroClientes.css" text="Confirmar" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+                  <font>
+                      <Font name="System Bold" size="15.0" />
+                  </font>
+                  <cursor>
+                      <Cursor fx:constant="DEFAULT" />
+                  </cursor>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="90.0" />
+               </VBox.margin>
+              </Button>
+            <Button id="btnCancelar" fx:id="btnCancelar" alignment="CENTER" prefHeight="39.0" prefWidth="127.0" styleClass="Botones" stylesheets="@../Estilos/EstiloRegistroClientes.css" text="Limpiar Datos" textAlignment="CENTER" textFill="#fcfcfc" textOverrun="CLIP">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="80.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
     </children>
 
 

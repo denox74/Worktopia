@@ -1,25 +1,20 @@
 package Modelos;
 
-import Aplicaciones.MenuPrincipalApp;
-import Clases.SesionUsuario;
 import ConexionDB.ConectionDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
 public class RegistroClientes {
+
+    private ListaClientes listaClientes = new ListaClientes();
     @FXML
     private TextField dni;
     @FXML
@@ -48,33 +43,17 @@ public class RegistroClientes {
     private Button Facturacion;
 
     @FXML
-    public void initialize(){
-        Stage ventanaSecundaria = new Stage();
-        ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
-        inicioSesion();
+    public void initialize() {
+
     }
 
     public RegistroClientes() {
     }
 
 
-
-
-
-    public void inicioSesion() {
-        String categoria = SesionUsuario.getCategoriaUsuario();
-
-        if (categoria != null && categoria.equals("Admin")) {
-            BtnUsuarios.setVisible(true);
-            BtnUsuarios.setDisable(false);
-        } else {
-            BtnUsuarios.setVisible(false);
-        }
-    }
-
     public void guardarCliente(ActionEvent event) {
-
         agregarCliente();
+
     }
 
 
@@ -104,8 +83,16 @@ public class RegistroClientes {
                     stmt.setString(6, telefono.getText());
 
                     int rowsInserted = stmt.executeUpdate();
-                    alert.setContentText(rowsInserted > 0 ? "Usuario agregado correctamente" : "No se pudo agregar el usuario");
-                    alert.show();
+                        if (rowsInserted > 0) {
+                            alert.setContentText("Usuario agregado correctamente");
+                            alert.show();
+
+                        } else {
+                        alert.setContentText("Usuario no agregado");
+                        alert.show();
+                        }
+
+
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -114,46 +101,8 @@ public class RegistroClientes {
                 throw new RuntimeException(e);
             }
         }
-    }
 
-    public void abrirVentana(String fxmlPath, String titulo) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle(titulo);
-
-            MenuPrincipalApp.agregarIcono(stage);
-
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void ventanaReservas(ActionEvent event) {
-        abrirVentana("/Menus/Reservas.fxml", "Reservas");
-        ((Stage) Reservas.getScene().getWindow()).close();
-    }
-
-    public void ventanaListaClientes(ActionEvent event) {
-        abrirVentana("/Menus/ListaClientes.fxml", "Lista de Cliente");
-        ((Stage) ListaClientes.getScene().getWindow()).close();
-    }
-
-    public void ventanaFacturaciones(ActionEvent event) {
-        abrirVentana("/Menus/Facturacion.fxml", "Factuacion");
-        ((Stage) Facturacion.getScene().getWindow()).close();
-    }
-    public void ventanaUsuarios(ActionEvent event) {
-        abrirVentana("/Menus/ListaUsuarios.fxml", "Usuarios");
-        ((Stage) BtnUsuarios.getScene().getWindow()).close();
-    }
-    public void ventanaListaReservas(ActionEvent event) {
-        abrirVentana("/Menus/ListaReservas.fxml", "Lista de Reservas");
-        ((Stage) BtnUsuarios.getScene().getWindow()).close();
     }
 
 
