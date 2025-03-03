@@ -245,6 +245,7 @@ public class ListaClientes {
         abrirVentana("/Menus/ListaReservas.fxml", "Listas De Reservas");
         ((Stage) ListaReservas.getScene().getWindow()).close();
     }
+
     public void ventanaListaUsuarios(ActionEvent event) {
         abrirVentana("/Menus/ListaUsuarios.fxml", "Lista De Usuarios");
         ((Stage) BtnUsuarios.getScene().getWindow()).close();

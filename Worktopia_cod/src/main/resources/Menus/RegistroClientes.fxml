@@ -93,7 +93,7 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <Button id="listaClientes" fx:id="ListaClientes" contentDisplay="TOP" defaultButton="true" layoutX="470.0" layoutY="669.0" mnemonicParsing="false" onAction="#ventanaListaUsuario" prefHeight="114.0" prefWidth="119.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Lista Clientes">
+        <Button id="listaClientes" fx:id="ListaClientes" contentDisplay="TOP" defaultButton="true" layoutX="470.0" layoutY="669.0" mnemonicParsing="false" onAction="#ventanaListaClientes" prefHeight="114.0" prefWidth="119.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloRegistroUsuario.css" text="Lista Clientes">
             <graphic>
                 <ImageView id="listaClientes" fitHeight="79.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                     <image>

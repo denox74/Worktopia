@@ -186,7 +186,7 @@
                 </GridPane>
             </children>
         </VBox>
-      <Button fx:id="ponerUsuario" layoutX="1162.0" layoutY="146.0" mnemonicParsing="false" onAction="#ventanaAgregarUsuarios" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css">
+      <Button fx:id="ponerUsuario" onAction="#ventanaAgregarUsuarios" layoutX="1162.0" layoutY="146.0" mnemonicParsing="false" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                <image>

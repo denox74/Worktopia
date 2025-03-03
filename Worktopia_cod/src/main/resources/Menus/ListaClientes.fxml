@@ -203,7 +203,7 @@
             </GridPane>
          </children>
       </VBox>
-        <Button fx:id="BtnUsuarios" alignment="CENTER" contentDisplay="TOP" layoutX="974.0" layoutY="667.0" mnemonicParsing="false" onAction="#ventanaListaUsuarios" prefHeight="111.0" prefWidth="105.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
+        <Button fx:id="BtnUsuarios" onAction="#ventanaListaUsuarios" alignment="CENTER" contentDisplay="TOP" layoutX="974.0" layoutY="667.0" mnemonicParsing="false" prefHeight="111.0" prefWidth="105.0" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css" text="Usuarios">
             <graphic>
                 <ImageView fitHeight="73.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                     <image>
