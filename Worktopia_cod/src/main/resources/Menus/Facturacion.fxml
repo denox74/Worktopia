@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
     <children>
         <ImageView id="portada" fx:id="portadaListaReservas" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -22,7 +22,7 @@
         <Line endX="690.0" layoutX="520.0" layoutY="650.0" startX="-452.0" strokeWidth="3.0" />
         <Line endX="155.0" layoutX="403.0" layoutY="130.0" startX="-340.0" strokeWidth="3.0" />
         <Line endX="-5.0" layoutX="1209.0" layoutY="131.0" startX="-470.0" strokeWidth="3.0" />
-        <TextField id="facturaBuscar" fx:id="facturaBuscar" alignment="TOP_CENTER" layoutX="515.0" layoutY="153.0" prefHeight="32.0" prefWidth="249.0" promptText="DNI Usuario" style="-fx-border-color: black; -fx-border-width: 3;">
+        <TextField id="facturaBuscar" fx:id="facturaBuscar" alignment="TOP_CENTER" layoutX="515.0" layoutY="153.0" prefHeight="32.0" prefWidth="249.0" promptText="Nº Factura" style="-fx-border-color: black; -fx-border-width: 3;">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>

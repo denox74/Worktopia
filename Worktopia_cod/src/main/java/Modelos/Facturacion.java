@@ -25,6 +25,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.awt.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -34,6 +35,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.List;
 
 public class Facturacion {
     private double xOffset = 0;
@@ -139,7 +141,10 @@ public class Facturacion {
                 if (factura != null) {
                     exportarFacturas(factura);
                 }
+                facturaBuscar.setText(String.valueOf(factura.getId_factura()));
             }
+
+
         });
         TextDescuento.textProperty().addListener(new ChangeListener<String>() {
 
@@ -157,6 +162,8 @@ public class Facturacion {
             vboxFacturas.setLayoutX(event.getScreenX() - xOffset);
             vboxFacturas.setLayoutY(event.getScreenY() - yOffset);
         });
+
+
 
 
     }
@@ -322,8 +329,7 @@ public class Facturacion {
             initialize();
         }
     }
-    
-    
+
     private void generarFacturaExcel(String facturaId) throws SQLException, IOException, ClassNotFoundException {
         String queryFactura = "SELECT * FROM Facturas WHERE id_factura = ?";
         String queryCliente = "SELECT * FROM Clientes WHERE dni = ?";
@@ -376,6 +382,7 @@ public class Facturacion {
                 subtotales.add(subtotal);
             }
 
+            // Crear el archivo Excel
             try (FileInputStream fis = new FileInputStream("src/main/resources/Docs/Modelo_factura_excel.xlsx");
                  Workbook workbook = new XSSFWorkbook(fis)) {
 
@@ -392,12 +399,11 @@ public class Facturacion {
                 // Rellenar las reservas y subtotales
                 int rowIndex = 17;
                 for (int i = 0; i < reservas.size(); i++) {
-                    Row row = sheet.getRow(rowIndex); // Obtener la fila existente (si ya existe)
-                    if (row == null) {  // Si no existe, crearla
+                    Row row = sheet.getRow(rowIndex);
+                    if (row == null) {
                         row = sheet.createRow(rowIndex);
                     }
 
-                    // Aquí se asegura que las celdas no se sobrescriban y no se cambie el estilo
                     Cell cell0 = row.getCell(0);
                     if (cell0 == null) {
                         cell0 = row.createCell(0);
@@ -419,14 +425,14 @@ public class Facturacion {
                 BigDecimal baseImponible = totalConDescuento.divide(BigDecimal.valueOf(1.07), BigDecimal.ROUND_HALF_UP);
                 BigDecimal impuestos = baseImponible.multiply(BigDecimal.valueOf(0.07));
 
-                // Rellenar el porcentaje de descuento en la celda 45,7 (ya estaba en el modelo)
+                // Rellenar el porcentaje de descuento
                 setCellValue(sheet, 45, 6, descuento.doubleValue()/100);
 
-                // Rellenar el valor del descuento (dinero) en la celda 45,6
+                // Rellenar el valor del descuento
                 BigDecimal valorDescuento = totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100)));
                 setCellValue(sheet, 45, 7, valorDescuento.doubleValue());
 
-                // Rellenar el total con descuento en la celda 46,7
+                // Rellenar el total con descuento
                 setCellValue(sheet, 46, 7, totalConDescuento.doubleValue());
 
                 // Rellenar base imponible, impuestos y total
@@ -434,39 +440,66 @@ public class Facturacion {
                 setCellValue(sheet, 44, 7, impuestos.doubleValue());
                 setCellValue(sheet, 47, 7, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-                // Guardar el archivo Excel con el nuevo nombre
-                try (FileOutputStream fos = new FileOutputStream("src/main/resources/Docs/Factura_" + facturaId + ".xlsx")) {
+                // Guardar el archivo Excel
+                String excelFilePath = "src/main/resources/Docs/Factura_" + facturaId + ".xlsx";
+                try (FileOutputStream fos = new FileOutputStream(excelFilePath)) {
                     workbook.write(fos);
                 }
+
+                // Convertir el archivo Excel a PDF usando LibreOffice
+                convertirApdf(excelFilePath);
             }
         }
         ConectionDB.openConn();
     }
 
+    // Función para convertir el archivo Excel a PDF usando LibreOffice y luego abrirlo
+    private void convertirApdf(String archivoExcel) throws IOException {
+        String libreOfficePath = "C:\\Program Files\\LibreOffice\\program\\soffice.exe";  // Cambia esto a la ruta correcta de LibreOffice en tu sistema
+        String comando = libreOfficePath + " --headless --convert-to pdf " + archivoExcel + " --outdir " + new File(archivoExcel).getParent();
 
+        try {
+            Process process = Runtime.getRuntime().exec(comando);
+            process.waitFor();  // Esperar hasta que el proceso termine
+            System.out.println("Archivo convertido exitosamente a PDF.");
 
+            // Ruta del archivo PDF generado
+            String pdfFilePath = archivoExcel.replace(".xlsx", ".pdf");
 
-
-/*
-    private void setCellValue(Sheet sheet, int rowNum, int colNum, Object value, CellStyle cellStyle) {
-        Row row = sheet.getRow(rowNum);
-        if (row == null) {
-            row = sheet.createRow(rowNum);
+            // Abrir el archivo PDF en el visor predeterminado del sistema
+            File pdfFile = new File(pdfFilePath);
+            if (pdfFile.exists()) {
+                if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                    // Para Windows
+                    Desktop.getDesktop().open(pdfFile);
+                } else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+                    // Para macOS
+                    Runtime.getRuntime().exec("open " + pdfFilePath);
+                } else {
+                    // Para Linux
+                    Runtime.getRuntime().exec("xdg-open " + pdfFilePath);
+                }
+            } else {
+                System.out.println("El archivo PDF no se ha generado correctamente.");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            throw new IOException("Error al convertir el archivo a PDF.");
         }
-        Cell cell = row.createCell(colNum);
-
-        if (value instanceof String) {
-            cell.setCellValue((String) value);
-        } else if (value instanceof Double) {
-            cell.setCellValue((Double) value);
-        } else if (value instanceof BigDecimal) {
-            cell.setCellValue(((BigDecimal) value).doubleValue());
-        }
-
-        // Asignar el estilo a la celda
-        cell.setCellStyle(cellStyle);
     }
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
     public BigDecimal calcularSubtotal(int idAsiento, Timestamp fechaInicio, Timestamp fechaFin) {
         BigDecimal tarifaHora = getTarifaHoraId(idAsiento);
         LocalDateTime inicio = fechaInicio.toLocalDateTime();
