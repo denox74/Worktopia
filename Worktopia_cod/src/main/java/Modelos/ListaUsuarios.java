@@ -56,6 +56,7 @@ public class ListaUsuarios {
     private TextField TextEmail;
     @FXML
     private ComboBox enumCategoria;
+
     private MenuPrincipalApp menuPrincipalapp = new MenuPrincipalApp();
 
 

@@ -6,6 +6,7 @@ import Clases.Reservas;
 import Clases.SesionUsuario;
 import ConexionDB.ConectionDB;
 import Manejadores_Reservas_Facturas.ReservaDAO;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.event.ChangeListener;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -110,9 +112,32 @@ public class ReservasPanel {
         Stage ventanaSecundaria = new Stage();
         ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
         inicioSesion();
+        dniCliente.textProperty().addListener((observableValue, s, t1) -> {
+            buscarDni(dniCliente.getText());
+        });
+
     }
 
     public ReservasPanel() {
+
+    }
+    public void buscarDni(String dni){
+        String query = "SELECT COUNT(dni) FROM Clientes WHERE dni = ?";
+        try {
+            PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query);
+            stmt.setString(1, dni);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                int resultado = rs.getInt(1);
+                if(resultado == 1){
+                    dniCliente.setStyle("-fx-border-color: #00ff00; -fx-border-width: 2");
+                }else {
+                    dniCliente.setStyle("-fx-border-color: #ff0000; -fx-border-width: 2");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -124,6 +149,7 @@ public class ReservasPanel {
         espacio.setText("");
         dniCliente.setText("");
     }
+
     public void inicioSesion() {
         String categoria = SesionUsuario.getCategoriaUsuario();
 
@@ -134,6 +160,8 @@ public class ReservasPanel {
             BtnUsuarios.setVisible(false);
         }
     }
+
+
 
     public double facturaPrecioText(TextField nombreEspacio, TextField horaInicio, TextField horaFin) {
         String consulta = "SELECT tarifa_hora FROM Asientos WHERE nombre = ?";
@@ -346,7 +374,6 @@ public class ReservasPanel {
             alert.show();
         }
     }
-
 
 
     public void abrirVentana(String fxmlPath, String titulo) {

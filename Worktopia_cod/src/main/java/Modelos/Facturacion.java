@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Facturacion {
+    private double xOffset = 0;
+    private double yOffset = 0;
     @FXML
     private TextField TextDniCliente;
     @FXML
@@ -66,6 +68,8 @@ public class Facturacion {
     private TextField facturaBuscar;
     @FXML
     private VBox vboxFacturas;
+    @FXML
+    private ComboBox comboFormaPago;
 
     private int idFactura;
     @FXML
@@ -84,6 +88,8 @@ public class Facturacion {
     private TableColumn<Facturas, String> colEstadoPago;
     @FXML
     private TableColumn<Facturas, String> colFechaPago;
+
+    ObservableList<String> formasPago = FXCollections.observableArrayList("Tarjeta", "Efectivo");
 
 
     @FXML
@@ -136,11 +142,27 @@ public class Facturacion {
             }
         });
 
+        vboxFacturas.setOnMousePressed(event -> {
+            xOffset = event.getSceneX() - vboxFacturas.getLayoutX() + 250;
+            yOffset = event.getSceneY() - vboxFacturas.getLayoutY() + 70;
+        });
+        vboxFacturas.setOnMouseDragged(event -> {
+            vboxFacturas.setLayoutX(event.getScreenX() - xOffset);
+            vboxFacturas.setLayoutY(event.getScreenY() - yOffset);
+        });
+
 
     }
 
     public Facturacion() {
     
+    }
+    public static void rellenarCombo(ComboBox<String> comboBox, ObservableList<String> forma) {
+        comboBox.setItems(forma);
+    }
+
+    public void llenarComboBox(ActionEvent event) {
+        rellenarCombo(comboFormaPago, formasPago);
     }
 
 
@@ -173,10 +195,11 @@ public class Facturacion {
         }
         return subtotal;
     }
+
     private void actualizarTotal() {
         try {
-            double descuentoValor = validarNumero(TextDescuento.getText(), 0.0);
-            double subtotal = validarNumero(TextSubtotal.getText(), 0.0);
+            double descuentoValor = validarNumero(TextDescuento.getText(), 0.00);
+            double subtotal = validarNumero(TextSubtotal.getText(), 0.00);
             double total = descuento(descuentoValor, subtotal);
 
             TextTotal.setText(String.valueOf(total));
