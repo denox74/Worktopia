@@ -30,12 +30,10 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Facturacion {
     private double xOffset = 0;
@@ -69,7 +67,9 @@ public class Facturacion {
     @FXML
     private VBox vboxFacturas;
     @FXML
-    private ComboBox comboFormaPago;
+    private ComboBox<String> comboFormaPago;
+
+    ObservableList<String> formasPago = FXCollections.observableArrayList("Tarjeta", "Efectivo");
 
     private int idFactura;
     @FXML
@@ -88,8 +88,13 @@ public class Facturacion {
     private TableColumn<Facturas, String> colEstadoPago;
     @FXML
     private TableColumn<Facturas, String> colFechaPago;
+    @FXML
+    private TableColumn<Facturas, String> colFormaPago;
+    @FXML
+    private TableColumn<Facturas, String> colSubtotal;
 
-    ObservableList<String> formasPago = FXCollections.observableArrayList("Tarjeta", "Efectivo");
+
+
 
 
     @FXML
@@ -118,8 +123,10 @@ public class Facturacion {
         colTotal.setCellValueFactory(new PropertyValueFactory<>("precio_total"));
         colDni.setCellValueFactory(new PropertyValueFactory<>("dni"));
         colDescuento.setCellValueFactory(new PropertyValueFactory<>("descuento"));
+        colSubtotal.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
         colEstadoPago.setCellValueFactory(new PropertyValueFactory<>("estado"));
         colFechaPago.setCellValueFactory(new PropertyValueFactory<>("fecha_hora_pago"));
+        colFormaPago.setCellValueFactory(new PropertyValueFactory<>("forma_pago"));
 
 
         ObservableList<Facturas> facturasList = FXCollections.observableArrayList(ConectionDB.getFacturas());
@@ -179,10 +186,12 @@ public class Facturacion {
 
     
     public void exportarFacturas(Facturas facturas) {
+        idFactura = facturas.getId_factura();
         TextFechaFactura.setText(facturas.getFecha_hora_emision());
         TextSubtotal.setText(facturas.getPrecio_total().toString());
         TextDniCliente.setText(facturas.getDni());
         TextDescuento.setText(facturas.getDescuento().toString());
+        comboFormaPago.getSelectionModel().select(facturas.getForma_pago());
         double descuento = Double.parseDouble(TextDescuento.getText());
         double subTotal = Double.parseDouble(TextSubtotal.getText());
         TextTotal.setText(String.valueOf(descuento(descuento,subTotal)));
@@ -216,6 +225,101 @@ public class Facturacion {
             return Double.parseDouble(texto);
         } catch (NumberFormatException e) {
             return valorPorDefecto;
+        }
+    }
+
+    public void modificarFactura(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("¿Quiere modificar la factura? :" + idFactura);
+
+        ButtonType si = new ButtonType("Sí");
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(si, no);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == si) {
+            String queryUrl = "UPDATE Facturas SET fecha_hora_emision = ?,descuento = ?, precio_total = ? , subtotal = ? WHERE id_factura = ?";
+            try {
+                PreparedStatement stmt = ConectionDB.getConn().prepareStatement(queryUrl);
+                stmt.setString(1, TextFechaFactura.getText());
+                stmt.setString(2, TextDescuento.getText());
+                stmt.setString(3, TextTotal.getText());
+                stmt.setString(4,TextSubtotal.getText());
+                stmt.setInt(5, idFactura);
+                int confirmacion = stmt.executeUpdate();
+                if (confirmacion == 1) {
+                    showAlert("Modificar Factura","La factura se ha modificado Correctamente");
+                }else {
+                    showAlert("Modificar Factura","No se ha modificado la factura");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            initialize();
+        }
+    }
+    public void eliminarFactura(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("¿Quiere eliminar la factura? :" + idFactura);
+
+        ButtonType si = new ButtonType("Sí");
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(si, no);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == si) {
+            String queryUrl = "DELETE FROM Facturas WHERE id_factura = ?";
+            try {
+                PreparedStatement stmt = ConectionDB.getConn().prepareStatement(queryUrl);
+                stmt.setInt(1, idFactura);
+                int confirmacion = stmt.executeUpdate();
+                if (confirmacion == 1) {
+                    showAlert("Eliminar Factura","La factura se ha eliminado Correctamente");
+                }else {
+                    showAlert("Eliminar Factura","No se ha elimado la factura");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            initialize();
+        }
+    }
+    public void pagarFactura(ActionEvent event) {
+        String estadoPago= "Pagada";
+        LocalDateTime fecha = LocalDateTime.now();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("¿Quiere abonar la factura? :" + idFactura);
+
+        ButtonType si = new ButtonType("Sí");
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(si, no);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == si) {
+            String queryUrl = "UPDATE Facturas SET fecha_hora_emision = ?,descuento = ?, precio_total = ?, fecha_hora_pago = ? ,estado = ? , subtotal = ? , forma_pago = ? WHERE id_factura = ?";
+            try {
+                PreparedStatement stmt = ConectionDB.getConn().prepareStatement(queryUrl);
+                stmt.setString(1, TextFechaFactura.getText());
+                stmt.setString(2, TextDescuento.getText());
+                stmt.setString(3, TextSubtotal.getText());
+                stmt.setString(4,fecha.toString());
+                stmt.setString(5,estadoPago);
+                stmt.setString(6, TextTotal.getText());
+                stmt.setString(7,comboFormaPago.getSelectionModel().getSelectedItem().toString());
+                stmt.setInt(8, idFactura);
+                int confirmacion = stmt.executeUpdate();
+                if (confirmacion == 1) {
+                    showAlert("Pagar Factura","La factura se ha Pagado Correctamente");
+                }else {
+                    showAlert("Pagar Factura","No se ha Pagado la factura");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            initialize();
         }
     }
     

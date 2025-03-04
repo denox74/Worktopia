@@ -166,7 +166,7 @@ public class ConectionDB {
 
     public static List<Facturas> getFacturas() {
         List<Facturas> facturas = new ArrayList<>();
-        String query = "SELECT id_factura, dni, precio_total, descuento, fecha_hora_emision, estado, fecha_hora_pago FROM Facturas";
+        String query = "SELECT id_factura, dni, precio_total, descuento, fecha_hora_emision, estado, fecha_hora_pago, forma_pago , subtotal FROM Facturas";
         try {
             if (conn != null) {
                 ResultSet rs = stmt.executeQuery(query);
@@ -178,7 +178,9 @@ public class ConectionDB {
                             rs.getBigDecimal("descuento"),
                             rs.getString("fecha_hora_emision"),
                             rs.getString("estado"),
-                            rs.getString("fecha_hora_pago")
+                            rs.getString("fecha_hora_pago"),
+                            rs.getString("forma_pago"),
+                            rs.getBigDecimal("subtotal")
                     );
                     facturas.add(factura);
                 }

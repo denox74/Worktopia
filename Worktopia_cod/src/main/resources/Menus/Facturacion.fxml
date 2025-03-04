@@ -100,16 +100,18 @@
       </GridPane>
       <TableView fx:id="tablaFacturas" layoutX="75.0" layoutY="196.0" prefHeight="439.0" prefWidth="1126.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
         <columns>
-          <TableColumn fx:id="colNFactura" prefWidth="164.0" text="Nº Factura" />
-          <TableColumn fx:id="colFechaFactura" prefWidth="168.0" text="Fecha Factura" />
-            <TableColumn fx:id="colDni" prefWidth="219.0" text="DNI Cliente" />
-            <TableColumn fx:id="colDescuento" prefWidth="110.0" text="Descuento" />
-            <TableColumn fx:id="colTotal" prefWidth="126.0" text="Total" />
-            <TableColumn fx:id="colEstadoPago" prefWidth="194.0" text="Estado del pago" />
-            <TableColumn fx:id="colFechaPago" prefWidth="173.0" text="Fecha Pago" />
+          <TableColumn fx:id="colNFactura" prefWidth="87.0" text="Nº Factura" />
+          <TableColumn fx:id="colFechaFactura" prefWidth="187.0" text="Fecha Factura" />
+            <TableColumn fx:id="colDni" prefWidth="166.0" text="DNI Cliente" />
+            <TableColumn fx:id="colTotal" prefWidth="85.0" text="Total" />
+            <TableColumn fx:id="colDescuento" prefWidth="101.0" text="Descuento" />
+            <TableColumn fx:id="colSubtotal" prefWidth="85.0" text="Subtotal" />
+            <TableColumn fx:id="colEstadoPago" prefWidth="123.0" text="Estado del pago" />
+            <TableColumn fx:id="colFechaPago" prefWidth="174.0" text="Fecha Pago" />
+            <TableColumn fx:id="colFormaPago" prefWidth="117.0" text="Forma de pago" />
         </columns>
       </TableView>
-        <VBox fx:id="vboxFacturas" layoutX="522.0" layoutY="208.0" prefHeight="330.0" prefWidth="390.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
+        <VBox fx:id="vboxFacturas" layoutX="440.0" layoutY="229.0" prefHeight="330.0" prefWidth="390.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
             <children>
                 <Button fx:id="BtnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="BtnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
                     <VBox.margin>
@@ -171,7 +173,7 @@
                       <TextField fx:id="TextDescuento" prefHeight="35.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                       <Label text="Descuento" GridPane.rowIndex="1" />
                   <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="84.0" text="Forma de pago" GridPane.columnIndex="2" />
-                  <ComboBox fx:id="comboFormaPago" onAction="#llenarComboBox" prefWidth="150.0" promptText=". . . . . . ." visibleRowCount="2" GridPane.columnIndex="3" />
+                  <ComboBox fx:id="comboFormaPago" onAction="#llenarComboBox" prefHeight="40.0" prefWidth="236.0" promptText=". . . . . . ." visibleRowCount="2" GridPane.columnIndex="3" />
                </children>
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
@@ -188,7 +190,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
                     </rowConstraints>
                     <children>
-                        <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" prefHeight="36.0" prefWidth="75.0" styleClass="Botones">
+                        <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" onAction="#modificarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones">
                             <cursor>
                                 <Cursor fx:constant="DEFAULT" />
                             </cursor>
@@ -207,7 +209,7 @@
                                 <Insets />
                             </GridPane.margin>
                         </Button>
-                        <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="1">
+                        <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="1">
                             <graphic>
                                 <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -216,7 +218,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                  <Button fx:id="BtnPagarFactura" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="2">
+                  <Button fx:id="BtnPagarFactura" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#pagarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="2">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>

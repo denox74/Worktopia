@@ -56,9 +56,10 @@
                   <Font name="System Bold" size="22.0" />
                </font>
                <VBox.margin>
-                  <Insets left="40.0" />
+                  <Insets bottom="-20.0" left="40.0" />
                </VBox.margin>
             </Label>
+            <TextField fx:id="TextDniGhost" visible="false" />
             <Label text="Nombre">
                <VBox.margin>
                   <Insets left="20.0" />
@@ -103,6 +104,7 @@
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
@@ -133,6 +135,15 @@
                                 <image>
                                     <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
                                 </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="BtnGenerarReserva" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#generarReserva" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="2">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/calendario1.png" />
+                           </image>
                         </ImageView>
                      </graphic>
                   </Button>

@@ -33,7 +33,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ReservasPanel {
-
+    private ListaClientes listaClientes = new ListaClientes();
     @FXML
     private Button AgregarClientes;
     @FXML
@@ -115,12 +115,16 @@ public class ReservasPanel {
         dniCliente.textProperty().addListener((observableValue, s, t1) -> {
             buscarDni(dniCliente.getText());
         });
+        dniCliente.textProperty().bind(listaClientes.getSelectSeleccionDni());
 
     }
 
     public ReservasPanel() {
 
     }
+
+
+
     public void buscarDni(String dni){
         String query = "SELECT COUNT(dni) FROM Clientes WHERE dni = ?";
         try {
@@ -331,9 +335,6 @@ public class ReservasPanel {
             }
         }
     }
-
-
-
 
 
     public void insertarDatos() {

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import javafx.scene.image.Image;
+import javafx.stage.StageStyle;
 
 public class MenuPrincipalApp extends Application {
     private static final Image icono = new Image(MenuPrincipalApp.class.getResourceAsStream("/Imagenes/bannerTopiaC.png"));
@@ -16,6 +17,7 @@ public class MenuPrincipalApp extends Application {
         FXMLLoader menuPrincipal = new FXMLLoader(MenuPrincipalApp.class.getResource("/Menus/MenuPrincipal.fxml"));
         menu.getIcons().add(icono);
         menu.setTitle("Menu Principal");
+        //menu.initStyle(StageStyle.UNDECORATED);
         menu.setScene(new Scene(menuPrincipal.load()));
         menu.getMaxHeight();
         menu.setMaxWidth(1300);

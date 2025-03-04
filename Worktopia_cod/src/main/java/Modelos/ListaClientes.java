@@ -4,6 +4,8 @@ import Aplicaciones.MenuPrincipalApp;
 import Clases.Clientes;
 import Clases.SesionUsuario;
 import ConexionDB.ConectionDB;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -18,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -51,9 +54,14 @@ public class ListaClientes {
     @FXML
     private TextField TextTelefono;
 
+
     private String dni;
     @FXML
+    private TextField TextDniGhost;
+    @FXML
     private VBox vboxIconos;
+    @FXML
+    private Button BtnGenerarReserva;
 
     @FXML
     private TableView<Clientes> tablaClientes;
@@ -69,10 +77,12 @@ public class ListaClientes {
     private TableColumn<Clientes, String> colEmail;
     @FXML
     private TableColumn<Clientes, String> colTelefono;
+    private static final StringProperty seleccionDni = new SimpleStringProperty();
 
 
     @FXML
     public void initialize() {
+        TextDniGhost.setText(dni);
         Stage ventanaSecundaria = new Stage();
         ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
         colDNI.setCellValueFactory(new PropertyValueFactory<>("dni"));
@@ -86,12 +96,12 @@ public class ListaClientes {
         ObservableList<Clientes> clientesList = FXCollections.observableArrayList(ConectionDB.getClientes());
         tablaClientes.setItems(clientesList);
 
-        FilteredList<Clientes> filtroClientes = new FilteredList<Clientes>(clientesList,p -> true);
+        FilteredList<Clientes> filtroClientes = new FilteredList<Clientes>(clientesList, p -> true);
         DNIbuscar.textProperty().addListener((observable, oldValue, newValue) -> {
-            filtroClientes.setPredicate(Clientes->{
+            filtroClientes.setPredicate(Clientes -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
-                }else{
+                } else {
                     return Clientes.getDni().toLowerCase().contains(newValue.toLowerCase());
                 }
             });
@@ -100,7 +110,6 @@ public class ListaClientes {
         SortedList<Clientes> sortedData = new SortedList<>(filtroClientes);
         sortedData.comparatorProperty().bind(tablaClientes.comparatorProperty());
         tablaClientes.setItems(sortedData);
-
 
 
         tablaClientes.setOnMouseClicked(event -> {
@@ -121,15 +130,28 @@ public class ListaClientes {
             vboxIconos.setLayoutY(event.getScreenY() - yOffset);
         });
         inicioSesion();
-    }
 
+        tablaClientes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newdni) -> {
+            if (newdni != null) {
+                seleccionDni.set(String.valueOf(newdni));
+            }
+        });
+        TextDniGhost.textProperty().bind(seleccionDni);
+    }
 
     public ListaClientes() {
 
     }
 
+    public static StringProperty getSelectSeleccionDni() {
+        return seleccionDni;
+    }
 
+    public void generarReserva(ActionEvent event) {
+        abrirVentana("/Menus/Reservas.fxml", "Reservas");
+        ((Stage) BtnGenerarReserva.getScene().getWindow()).close();
 
+    }
 
 
     public void exportarDatos(Clientes clientes) {
@@ -168,13 +190,14 @@ public class ListaClientes {
                     alert2.show();
                 }
 
-            } catch(SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
             initialize();
 
         }
     }
+
     public void eliminarDatos(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
@@ -187,7 +210,7 @@ public class ListaClientes {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == si) {
             String query = "DELETE FROM Clientes WHERE dni = ?";
-            try(PreparedStatement delete = ConectionDB.getConn().prepareStatement(query)){
+            try (PreparedStatement delete = ConectionDB.getConn().prepareStatement(query)) {
                 delete.setString(1, dni);
                 int actualizado = delete.executeUpdate();
                 if (actualizado > 0) {
@@ -199,6 +222,7 @@ public class ListaClientes {
         }
         initialize();
     }
+
     public void inicioSesion() {
         String categoria = SesionUsuario.getCategoriaUsuario();
 
@@ -240,6 +264,7 @@ public class ListaClientes {
         abrirVentana("/Menus/Facturacion.fxml", "Factuacion");
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
+
     public void ventanaListaReservas(ActionEvent event) {
         abrirVentana("/Menus/ListaReservas.fxml", "Listas De Reservas");
         ((Stage) ListaReservas.getScene().getWindow()).close();
@@ -249,6 +274,7 @@ public class ListaClientes {
         abrirVentana("/Menus/ListaUsuarios.fxml", "Lista De Usuarios");
         ((Stage) BtnUsuarios.getScene().getWindow()).close();
     }
+
     public void salirVbox(ActionEvent event) {
         vboxIconos.setVisible(false);
     }

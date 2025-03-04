@@ -108,7 +108,7 @@
 
             </columns>
         </TableView>
-        <VBox fx:id="vboxUsuarios" layoutX="522.0" layoutY="250.0" prefHeight="290.0" prefWidth="279.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
+        <VBox fx:id="vboxUsuarios" layoutX="522.0" layoutY="250.0" prefHeight="290.0" prefWidth="279.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css">
             <children>
                 <Button fx:id="BtnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="BtnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
                     <VBox.margin>
