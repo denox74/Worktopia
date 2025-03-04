@@ -238,12 +238,6 @@ public class ListaReservas {
         }
     }
 
-
-    public void ventanaReservas(ActionEvent event) {
-        abrirVentana("/Menus/Reservas.fxml", "Reservas");
-        ((Stage) Reservas.getScene().getWindow()).close();
-    }
-
     public void ventanaListaClientes(ActionEvent event) {
         abrirVentana("/Menus/ListaClientes.fxml", "Lista de Cliente");
         ((Stage) ListaClientes.getScene().getWindow()).close();

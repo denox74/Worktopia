@@ -35,13 +35,8 @@ import java.util.Set;
 public class ReservasPanel {
     private ListaClientes listaClientes = new ListaClientes();
     @FXML
-    private Button AgregarClientes;
-    @FXML
-    private Button ListaReservas;
-    @FXML
-    private Button ListaClientes;
-    @FXML
-    private Button Facturacion;
+    private Button btnSalir;
+
     @FXML
     private Button btnConfirmar;
     @FXML
@@ -111,7 +106,6 @@ public class ReservasPanel {
     public void initialize(){
         Stage ventanaSecundaria = new Stage();
         ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
-        inicioSesion();
         dniCliente.textProperty().addListener((observableValue, s, t1) -> {
             buscarDni(dniCliente.getText());
         });
@@ -153,19 +147,6 @@ public class ReservasPanel {
         espacio.setText("");
         dniCliente.setText("");
     }
-
-    public void inicioSesion() {
-        String categoria = SesionUsuario.getCategoriaUsuario();
-
-        if (categoria != null && categoria.equals("Admin")) {
-            BtnUsuarios.setVisible(true);
-            BtnUsuarios.setDisable(false);
-        } else {
-            BtnUsuarios.setVisible(false);
-        }
-    }
-
-
 
     public double facturaPrecioText(TextField nombreEspacio, TextField horaInicio, TextField horaFin) {
         String consulta = "SELECT tarifa_hora FROM Asientos WHERE nombre = ?";
@@ -394,23 +375,9 @@ public class ReservasPanel {
         }
     }
 
-    public void ventanaListaClientes(ActionEvent event) {
+    public void salir(ActionEvent event) {
         abrirVentana("/Menus/ListaClientes.fxml", "Lista de Cliente");
-        ((Stage) ListaClientes.getScene().getWindow()).close();
+        ((Stage) btnSalir.getScene().getWindow()).close();
     }
-
-    public void ventanaFacturaciones(ActionEvent event) {
-        abrirVentana("/Menus/Facturacion.fxml", "Factuacion");
-        ((Stage) Facturacion.getScene().getWindow()).close();
-    }
-    public void ventanaListaUsuarios(ActionEvent event) {
-        abrirVentana("/Menus/ListaUsuarios.fxml", "Usuarios");
-        ((Stage) BtnUsuarios.getScene().getWindow()).close();
-    }
-    public void ventanaListaReservas(ActionEvent event) {
-        abrirVentana("/Menus/ListaReservas.fxml", "Lista de Reservas");
-        ((Stage) BtnUsuarios.getScene().getWindow()).close();
-    }
-
 
 }

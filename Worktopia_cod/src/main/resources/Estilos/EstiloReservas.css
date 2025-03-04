@@ -3,9 +3,6 @@
 }
 .BtnMenu{
     -fx-background-color: Transparent;
-    -fx-text-fill: rgb(0, 0, 0);
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
 }
 
 .BtnMenu:hover{

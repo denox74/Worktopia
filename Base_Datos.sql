@@ -6,10 +6,15 @@ SET FOREIGN_KEY_CHECKS = 1;
 DROP TABLE IF EXISTS Factura_Reservas;
 DROP TABLE IF EXISTS Espacios;
 
-CREATE DATABASE IF NOT EXISTS worktopiadb;
-USE worktopiadb;
+CREATE DATABASE IF NOT EXISTS Worktopia;
+USE Worktopia;
 
 DROP TABLE IF EXISTS Clientes;
+DROP TABLE IF EXISTS Reservas;
+DROP TABLE IF EXISTS Facturas;
+
+
+
 CREATE TABLE Clientes (
     dni VARCHAR(10) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
@@ -21,7 +26,7 @@ CREATE TABLE Clientes (
 );
 
 
-DROP TABLE IF EXISTS Asientos;
+
 CREATE TABLE Asientos (
     id_asiento INT AUTO_INCREMENT,
     nombre VARCHAR(255) NOT NULL,
@@ -29,25 +34,12 @@ CREATE TABLE Asientos (
     CONSTRAINT pk_id_asiento PRIMARY KEY (id_asiento)
 );
 
- DROP TABLE IF EXISTS Facturas;
- CREATE TABLE Facturas (
-    id_factura INT AUTO_INCREMENT,
-    dni VARCHAR(10) NOT NULL,
-    precio_total DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
-    descuento DECIMAL(5,2) DEFAULT 0.00,
-    fecha_hora_emision DATETIME DEFAULT CURRENT_TIMESTAMP,
-    estado ENUM('Pendiente', 'Pagada') NOT NULL DEFAULT 'Pendiente',
-    fecha_hora_pago DATETIME,
-    CONSTRAINT pk_id_factura PRIMARY KEY (id_factura),
-    CONSTRAINT fk_dni_factura FOREIGN KEY (dni) REFERENCES Clientes(dni)
-);
 
-DROP TABLE IF EXISTS Reservas;
 CREATE TABLE Reservas (
     id_reserva INT AUTO_INCREMENT,
     dni VARCHAR(10) NOT NULL,
     id_asiento INT NOT NULL,
-    id_factura UNT NOT NULL,
+    id_factura INT NOT NULL,
     fecha_hora_inicio DATETIME NOT NULL,
     fecha_hora_fin DATETIME NOT NULL,
     subtotal DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
@@ -58,6 +50,22 @@ CREATE TABLE Reservas (
 );
 
 
+ CREATE TABLE Facturas (
+    id_factura INT NOT NULL,
+    dni VARCHAR(10) NOT NULL,
+    precio_total DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    descuento DECIMAL(5,2) DEFAULT 0.00,
+    subtotal DECIMAL(10,2) NOT NULL,
+    fecha_hora_emision DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('Pendiente', 'Pagada') NOT NULL DEFAULT 'Pendiente',
+    fecha_hora_pago DATETIME,
+    forma_pago VARCHAR(50),
+    CONSTRAINT pk_id_factura PRIMARY KEY (id_factura),
+    CONSTRAINT fk_dni_factura FOREIGN KEY (dni) REFERENCES Clientes(dni)
+);
+
+ALTER TABLE Facturas MODIFY COLUMN forma_pago VARCHAR(50);
+ALTER TABLE Facturas ADD COLUMN subtotal DECIMAL(10,2) NOT NULL;
 
 DROP TABLE IF EXISTS Usuarios;
 CREATE TABLE Usuarios (
@@ -135,12 +143,13 @@ VALUES
 ("Sala de Conferencias 1", 15.00),
 ("Sala de Conferencias 2", 10.00);
 
+
 DELETE FROM Facturas;
 ALTER TABLE Facturas AUTO_INCREMENT = 1;
-INSERT INTO Facturas (dni)
+INSERT INTO Facturas (tiene_descuento, dni)
 VALUES
-("12345678A"),
-("23456789B");
+(FALSE. "12345678A"),
+(FALSE, "23456789B");
 
 -- El calculo de la factura deberá de programarse en el backend de java sumando el total de las horas de la reserva y multiplicando por la tarifa de la hora del asiento.
 

@@ -255,10 +255,6 @@ public class ListaClientes {
         abrirVentana("/Menus/RegistroClientes.fxml", "Agregar Cliente");
     }
 
-    public void ventanaReservas(ActionEvent event) {
-        abrirVentana("/Menus/Reservas.fxml", "Reservas");
-        ((Stage) Reservas.getScene().getWindow()).close();
-    }
 
     public void ventanaFacturaciones(ActionEvent event) {
         abrirVentana("/Menus/Facturacion.fxml", "Factuacion");
