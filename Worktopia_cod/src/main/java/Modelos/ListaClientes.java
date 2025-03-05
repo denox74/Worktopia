@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -53,7 +54,8 @@ public class ListaClientes {
     private TextField TextEmail;
     @FXML
     private TextField TextTelefono;
-
+    @FXML
+    private Button btnSalir;
 
     private String dni;
     @FXML
@@ -82,6 +84,7 @@ public class ListaClientes {
 
     @FXML
     public void initialize() {
+        btnSalir.setStyle(("-fx-background-color: transparent;"));
         TextDniGhost.setText(dni);
         Stage ventanaSecundaria = new Stage();
         ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
@@ -252,7 +255,19 @@ public class ListaClientes {
     }
 
     public void ventanaRegistro(ActionEvent event) {
-        abrirVentana("/Menus/RegistroClientes.fxml", "Agregar Cliente");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroClientes.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Registro Cliente");
+            stage.initStyle(StageStyle.UNDECORATED);
+            MenuPrincipalApp.agregarIcono(stage);
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

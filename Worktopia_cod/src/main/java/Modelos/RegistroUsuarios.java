@@ -26,27 +26,33 @@ import java.util.Optional;
 public class RegistroUsuarios {
 
     @FXML
-    public VBox vboxAgregarUsuario;
+    private VBox vboxAgregarUsuario;
     @FXML
-    public TextField TextAgregarNombre;
+    private TextField TextAgregarNombre;
     @FXML
-    public TextField TextAgregarEmail;
+    private TextField TextAgregarEmail;
     @FXML
-    public TextField TextAgregarPassword;
+    private TextField TextAgregarPassword;
     @FXML
-    public ComboBox<String> enumAgregarCategoria;
+    private ComboBox<String> enumAgregarCategoria;
     @FXML
-    public Button BtnAgregarUsuario;
+    private Button BtnAgregarUsuario;
+    @FXML
+    private Button btnSalir;
 
     ObservableList<String> categorias = FXCollections.observableArrayList("Admin", "Empleado");
+
+    @FXML
+    public void initialize() {
+        enumAgregarCategoria.setItems(categorias);
+        btnSalir.setStyle(("-fx-background-color: transparent;"));
+
+    }
 
     public RegistroUsuarios() {
 
     }
-    @FXML
-    public void initialize() {
-        enumAgregarCategoria.setItems(categorias);
-    }
+
 
     public static void rellenarCombo(ComboBox<String> comboBox, ObservableList<String> categorias) {
         comboBox.setItems(categorias);

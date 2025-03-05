@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -281,7 +282,19 @@ public class ListaUsuarios {
         ((Stage) ListaReservas.getScene().getWindow()).close();
     }
     public void ventanaAgregarUsuarios(ActionEvent event) {
-        abrirVentana("/Menus/RegistroUsuarios.fxml", "Agregar Usuario");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroUsuarios.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Registro Usuarios");
+            stage.initStyle(StageStyle.UNDECORATED);
+            MenuPrincipalApp.agregarIcono(stage);
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void salirVbox(ActionEvent event) {
         vboxUsuarios.setVisible(false);

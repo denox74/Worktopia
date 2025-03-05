@@ -39,11 +39,8 @@
     -fx-background-color:  #EADDC8;
 }
 
-
-
-
 .btnVbox {
-    -fx-background-color: #4DFD73;
+    -fx-background-color: #4CAF50;
     -fx-border-color: #FFA500FF;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 15px;

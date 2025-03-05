@@ -3,24 +3,30 @@
     -fx-border-color: black;
     -fx-border-width: 2;
 }
-.Botones{ /*Botones de Confirmar*/
-    -fx-background-color:  #4DFD73;
+
+.Botones { /*Botones de Confirmar*/
+    -fx-background-color:  #4CAF50;
     -fx-border-color: #FFA500FF;
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
+    -fx-text-fill: transparent;
+    -fx-pref-width: 49px;
 }
-.Botones:hover{
+.Botones:hover {
+    -fx-opacity: 1;
     -fx-background-color: #046107;
-    -fx-scale-x: 1.2;
-    -fx-scale-y: 1.2 ;
+    -fx-pref-width: 120px;
+    -fx-text-fill: white;
 }
 
-.Botones:pressed{
-    -fx-background-color: #047f07;
-    -fx-scale-y: 1;
-    -fx-scale-x: 1;
+.btnSalir{
+    -fx-background-color:trasparent;
 }
-.Salir{
-    -fx-background-color: Trasparent;
+.btnSalir:hover{
+    -fx-background-color:trasparent;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+.btnSalir:pressed{
+    -fx-background-color:trasparent;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
 }

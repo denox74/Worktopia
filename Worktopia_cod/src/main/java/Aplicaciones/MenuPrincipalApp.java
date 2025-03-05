@@ -21,6 +21,11 @@ public class MenuPrincipalApp extends Application {
         menu.setScene(new Scene(menuPrincipal.load()));
         menu.getMaxHeight();
         menu.setMaxWidth(1300);
+        menu.maximizedProperty().addListener((obs, oldVal, isMaximized) -> {
+            if (isMaximized) {
+                menu.setFullScreen(true); // Activar pantalla completa
+            }
+        });
         menu.show();
 
 

@@ -2,12 +2,15 @@ package Modelos;
 
 import Aplicaciones.MenuPrincipalApp;
 import Clases.Asientos;
+import Clases.Clientes;
 import Clases.Facturas;
 import Clases.SesionUsuario;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -134,7 +137,22 @@ public class Facturacion {
         ObservableList<Facturas> facturasList = FXCollections.observableArrayList(ConectionDB.getFacturas());
         tablaFacturas.setItems(facturasList);
         inicioSesion();
-        
+
+        FilteredList<Facturas> filtroFacturas = new FilteredList<Facturas>(facturasList, p -> true);
+        facturaBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtroFacturas.setPredicate(Facturas -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                } else {
+                    return Facturas.getId_factura().toString().contains(newValue.toLowerCase());
+                }
+            });
+        });
+
+        SortedList<Facturas> sortedData = new SortedList<>(filtroFacturas);
+        sortedData.comparatorProperty().bind(tablaFacturas.comparatorProperty());
+        tablaFacturas.setItems(sortedData);
+
         tablaFacturas.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Facturas factura = tablaFacturas.getSelectionModel().getSelectedItem();
@@ -143,8 +161,6 @@ public class Facturacion {
                 }
                 facturaBuscar.setText(String.valueOf(factura.getId_factura()));
             }
-
-
         });
         TextDescuento.textProperty().addListener(new ChangeListener<String>() {
 

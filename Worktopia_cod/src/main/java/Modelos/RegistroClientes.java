@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -41,10 +42,12 @@ public class RegistroClientes {
     private Button ListaClientes;
     @FXML
     private Button Facturacion;
+    @FXML
+    private Button btnSalir;
 
     @FXML
     public void initialize() {
-
+        btnSalir.setStyle(("-fx-background-color: transparent;"));
     }
 
     public RegistroClientes() {
@@ -54,6 +57,9 @@ public class RegistroClientes {
     public void guardarCliente(ActionEvent event) {
         agregarCliente();
 
+    }
+    public void salirVentana(ActionEvent event) {
+        ((Stage) btnSalir.getScene().getWindow()).close();
     }
 
 

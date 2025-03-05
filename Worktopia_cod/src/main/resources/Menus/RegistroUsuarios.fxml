@@ -4,12 +4,25 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="366.0" prefWidth="216.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.RegistroUsuarios">
-    <VBox fx:id="vboxAgregarUsuario" prefHeight="366.0" prefWidth="279.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css">
+    <VBox fx:id="vboxAgregarUsuario" prefHeight="366.0" prefWidth="280.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css">
         <children>
+         <Button fx:id="btnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="btnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
+            <graphic>
+               <ImageView fitHeight="43.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../Imagenes/borrar.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+            <VBox.margin>
+               <Insets left="240.0" top="5.0" />
+            </VBox.margin>
+         </Button>
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="191.0" text="Añadir Usuario" textAlignment="CENTER">
                 <font>
                     <Font name="System Bold" size="22.0" />
@@ -67,7 +80,7 @@
                     <URL value="@../Estilos/EstiloVboxListas.css" />
                 </stylesheets>
                 <VBox.margin>
-                    <Insets left="60.0" />
+                    <Insets bottom="10.0" left="60.0" />
                 </VBox.margin>
             </Button>
         </children>
