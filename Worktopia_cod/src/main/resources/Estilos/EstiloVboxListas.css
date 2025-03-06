@@ -22,8 +22,7 @@
 
 }
 .labels{
-    -fx-font-family: Raleway;
-    -fx-font-weight: bold;
+    -fx-font-family: "Tahoma";
 }
 
 .btnSalir{

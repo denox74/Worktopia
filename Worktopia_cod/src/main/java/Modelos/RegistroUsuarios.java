@@ -105,4 +105,7 @@ public class RegistroUsuarios {
             throw new RuntimeException(e);
         }
     }
+    public void salir(ActionEvent event) {
+        ((Stage) btnSalir.getScene().getWindow()).close();
+    }
 }

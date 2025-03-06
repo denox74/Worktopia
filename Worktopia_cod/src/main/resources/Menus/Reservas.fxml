@@ -223,7 +223,6 @@
       </Label>
       <Line endX="-33.0" layoutX="1249.0" layoutY="197.0" startX="-324.0" strokeWidth="3.0" />
       <TextField fx:id="dniCliente" alignment="CENTER" layoutX="949.0" layoutY="212.0" prefHeight="32.0" prefWidth="251.0" />
-      <TextField id="TextSubtotal" fx:id="TextSubtotal" layoutX="1066.0" layoutY="524.0" visible="false" />
       <Button fx:id="btnSalir" layoutX="1261.0" layoutY="14.0" mnemonicParsing="false" onAction="#salir" styleClass="BtnMenu" stylesheets="@../Estilos/EstiloReservas.css">
          <graphic>
             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

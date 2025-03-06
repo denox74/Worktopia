@@ -95,11 +95,10 @@ public class ReservasPanel {
     private Button BtnOficina2;
     @FXML
     private TextField dniCliente;
-    @FXML
-    private TextField TextSubtotal;
+
+
 
     private Button BtnSeleccionado;
-    private BigDecimal subtotales;
     private double precioTotal;
 
     @FXML
@@ -109,7 +108,7 @@ public class ReservasPanel {
         dniCliente.textProperty().addListener((observableValue, s, t1) -> {
             buscarDni(dniCliente.getText());
         });
-        dniCliente.textProperty().bind(listaClientes.getSelectSeleccionDni());
+        dniCliente.textProperty().bindBidirectional(listaClientes.getSelectSeleccionDni());
 
     }
 
@@ -241,8 +240,6 @@ public class ReservasPanel {
         precio.setText(String.format("%.2f €", precioTotal));
 
 
-        subtotales = BigDecimal.valueOf(precioTotal);
-        TextSubtotal.setText(String.format("%.2f", subtotales));
 
     }
 
@@ -326,6 +323,7 @@ public class ReservasPanel {
         String horaInicioText = horaInicio.getText();
         String horaFinText = horaFin.getText();
         LocalDate fechaReserva = fecha.getValue();
+        BigDecimal subtotal = BigDecimal.valueOf(precioTotal);
         int idAsiento = obtenerIdEspacio(espacioText);
 
         if (dniText.isEmpty() || espacioText.isEmpty() || horaInicioText.isEmpty() || horaFinText.isEmpty()) {
@@ -337,15 +335,13 @@ public class ReservasPanel {
         LocalDateTime fechaHoraInicio = LocalDateTime.of(fechaReserva, LocalTime.parse(horaInicioText));
         LocalDateTime fechaHoraFin = LocalDateTime.of(fechaReserva, LocalTime.parse(horaFinText));
 
-        BigDecimal subTotal = new BigDecimal(TextSubtotal.getText().replace(",", "."));
-
         try {
             int idFactura = ReservaDAO.obtenerFacturaPendiente(dniText);
             if (idFactura == -1) {
-                idFactura = ReservaDAO.crearFactura(dniText, subTotal);
+                idFactura = ReservaDAO.crearFactura(dniText,subtotal);
             }
 
-            Reservas reserva = new Reservas(0, dniText, idAsiento, idFactura, Timestamp.valueOf(fechaHoraInicio), Timestamp.valueOf(fechaHoraFin), subTotal);
+            Reservas reserva = new Reservas(0, dniText, idAsiento, idFactura, Timestamp.valueOf(fechaHoraInicio), Timestamp.valueOf(fechaHoraFin), subtotal);
             int idReserva = ReservaDAO.insertarReserva(reserva);
 
             alert.setContentText("Reserva y factura creadas correctamente. ID Reserva: " + idReserva);

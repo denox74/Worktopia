@@ -99,11 +99,11 @@
 
             </columns>
         </TableView>
-        <VBox fx:id="vboxUsuarios" layoutX="522.0" layoutY="250.0" prefHeight="290.0" prefWidth="279.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
+        <VBox fx:id="vboxUsuarios" layoutX="522.0" layoutY="250.0" prefHeight="237.0" prefWidth="357.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css">
             <children>
-                <Button fx:id="BtnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="BtnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
+                <Button fx:id="btnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="btnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
                     <VBox.margin>
-                        <Insets bottom="-10.0" left="240.0" />
+                        <Insets bottom="-10.0" left="325.0" />
                     </VBox.margin>
                     <graphic>
                         <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
@@ -127,7 +127,7 @@
                     </VBox.margin></Label>
                 <TextField fx:id="TextNombre" prefHeight="35.0" prefWidth="220.0">
                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="20.0" right="140.0" />
                     </VBox.margin></TextField>
                 <Label text="Email">
                     <VBox.margin>
@@ -135,58 +135,47 @@
                     </VBox.margin></Label>
                 <TextField fx:id="TextEmail" prefHeight="35.0" prefWidth="220.0">
                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="20.0" right="140.0" />
                     </VBox.margin></TextField>
                 <Label text="Categoria">
                     <VBox.margin>
                         <Insets left="20.0" />
                     </VBox.margin></Label>
-            <ComboBox fx:id="enumCategoria" onAction="#llenarComboBox" prefHeight="40.0" prefWidth="236.0" promptText="........." visibleRowCount="2">
+            <ComboBox fx:id="enumCategoria" onAction="#llenarComboBox" prefHeight="31.0" prefWidth="194.0" promptText="........." visibleRowCount="2">
                <VBox.margin>
                   <Insets bottom="20.0" left="20.0" />
                </VBox.margin></ComboBox>
-                <GridPane alignment="TOP_CENTER" prefHeight="30.0" prefWidth="243.0">
-                    <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                    </rowConstraints>
-                    <children>
-                        <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" onAction="#modificarUsuarios" prefHeight="36.0" prefWidth="75.0" styleClass="Botones">
-                            <cursor>
-                                <Cursor fx:constant="DEFAULT" />
-                            </cursor>
-                            <graphic>
-                                <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../Imagenes/editar-perfil.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                            <stylesheets>
-                                <URL value="@../Estilos/EstilosListas.css" />
-                                <URL value="@../Estilos/EstiloVboxListas.css" />
-                            </stylesheets>
-                            <GridPane.margin>
-                                <Insets />
-                            </GridPane.margin>
-                        </Button>
-                        <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarUsuarios" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="1">
-                            <graphic>
-                                <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                    </children>
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                </GridPane>
+                  <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" onAction="#modificarUsuarios" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" text="Modificar">
+                      <cursor>
+                          <Cursor fx:constant="DEFAULT" />
+                      </cursor>
+                      <graphic>
+                          <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@../Imagenes/editar-perfil.png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+                      <stylesheets>
+                          <URL value="@../Estilos/EstilosListas.css" />
+                          <URL value="@../Estilos/EstiloVboxListas.css" />
+                      </stylesheets>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="223.0" top="-163.0" />
+               </VBox.margin>
+                  </Button>
+                  <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarUsuarios" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Eliminar">
+                      <graphic>
+                          <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+               <VBox.margin>
+                  <Insets left="223.0" />
+               </VBox.margin>
+                  </Button>
             </children>
         </VBox>
       <Button fx:id="ponerUsuario" layoutX="1162.0" layoutY="146.0" mnemonicParsing="false" onAction="#ventanaAgregarUsuarios" styleClass="BtnAcciones" stylesheets="@../Estilos/EstilosListas.css">

@@ -12,7 +12,7 @@ public class ReservaDAO {
 
     public static List<Reservas> getReservas() throws SQLException {
         List<Reservas> reservas = new ArrayList<>();
-        String query = "SELECT id_reserva, dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin FROM Reservas";
+        String query = "SELECT id_reserva, dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin, subtotal FROM Reservas";
         try (PreparedStatement ps = ConectionDB.getConn().prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
 
@@ -23,7 +23,8 @@ public class ReservaDAO {
                         rs.getInt("id_asiento"),
                         rs.getInt("id_factura"),
                         rs.getTimestamp("fecha_hora_inicio"),
-                        rs.getTimestamp("fecha_hora_fin")
+                        rs.getTimestamp("fecha_hora_fin"),
+                        rs.getBigDecimal("subtotal")
                 );
                 // Calculate the subtotal
                 BigDecimal subtotal = reserva.calcularSubtotal();
@@ -35,13 +36,14 @@ public class ReservaDAO {
     }
 
     public static int insertarReserva(Reservas reserva) throws SQLException {
-        String query = "INSERT INTO Reservas (dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Reservas (dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin, subtotal) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = ConectionDB.getConn().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, reserva.getDni());
             ps.setInt(2, reserva.getId_asiento());
             ps.setInt(3, reserva.getId_factura());
             ps.setTimestamp(4, reserva.getFecha_hora_inicio());
             ps.setTimestamp(5, reserva.getFecha_hora_fin());
+            ps.setBigDecimal(6, reserva.getSubtotal());
 
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted == 0) {

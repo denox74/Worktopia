@@ -137,7 +137,7 @@ public class ConectionDB {
     // Adquirir Reservas
     public static List<Reservas> getReservas() {
         List<Reservas> reservas = new ArrayList<>();
-        String query = "SELECT id_reserva, dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin FROM Reservas";
+        String query = "SELECT id_reserva, dni, id_asiento, id_factura, fecha_hora_inicio, fecha_hora_fin , subtotal FROM Reservas";
         try (PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
 
@@ -148,7 +148,8 @@ public class ConectionDB {
                         rs.getInt("id_asiento"),
                         rs.getInt("id_factura"),
                         rs.getTimestamp("fecha_hora_inicio"),
-                        rs.getTimestamp("fecha_hora_fin")
+                        rs.getTimestamp("fecha_hora_fin"),
+                        rs.getBigDecimal("subtotal")
                 );
                 // Calculate the subtotal
                 BigDecimal subtotal = reserva.calcularSubtotal();

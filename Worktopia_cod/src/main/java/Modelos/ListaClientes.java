@@ -151,8 +151,19 @@ public class ListaClientes {
     }
 
     public void generarReserva(ActionEvent event) {
-        abrirVentana("/Menus/Reservas.fxml", "Reservas");
-        ((Stage) BtnGenerarReserva.getScene().getWindow()).close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/Reservas.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Registro Usuarios");
+            stage.initStyle(StageStyle.UNDECORATED);
+            MenuPrincipalApp.agregarIcono(stage);
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

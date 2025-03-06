@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -9,9 +8,9 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="366.0" prefWidth="216.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.RegistroUsuarios">
-    <VBox fx:id="vboxAgregarUsuario" prefHeight="366.0" prefWidth="280.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css">
+    <VBox fx:id="vboxAgregarUsuario" prefHeight="366.0" prefWidth="280.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloRegistroClientes.css">
         <children>
-         <Button fx:id="btnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="btnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
+         <Button fx:id="btnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salir" styleClass="btnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
             <graphic>
                <ImageView fitHeight="43.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -20,7 +19,7 @@
                </ImageView>
             </graphic>
             <VBox.margin>
-               <Insets left="240.0" top="5.0" />
+               <Insets bottom="-29.0" left="240.0" top="2.0" />
             </VBox.margin>
          </Button>
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="191.0" text="Añadir Usuario" textAlignment="CENTER">
@@ -28,7 +27,7 @@
                     <Font name="System Bold" size="22.0" />
                 </font>
                 <VBox.margin>
-                    <Insets left="40.0" top="20.0" />
+                    <Insets bottom="3.0" left="40.0" top="20.0" />
                 </VBox.margin>
             </Label>
             <Label text="Nombre">
@@ -71,16 +70,12 @@
                     <Insets bottom="20.0" left="20.0" />
                 </VBox.margin>
             </ComboBox>
-            <Button id="eliminar" fx:id="BtnAgregarUsuario" mnemonicParsing="false" onAction="#agregarUsuario" prefHeight="36.0" prefWidth="151.0" styleClass="Botones" text="Confirmar">
+            <Button id="eliminar" fx:id="BtnAgregarUsuario" mnemonicParsing="false" onAction="#agregarUsuario" prefHeight="33.0" prefWidth="109.0" styleClass="Botones" stylesheets="@../Estilos/EstiloRegistroClientes.css" text="Confirmar">
                 <cursor>
                     <Cursor fx:constant="DEFAULT" />
                 </cursor>
-                <stylesheets>
-                    <URL value="@../Estilos/EstilosListas.css" />
-                    <URL value="@../Estilos/EstiloVboxListas.css" />
-                </stylesheets>
                 <VBox.margin>
-                    <Insets bottom="10.0" left="60.0" />
+                    <Insets bottom="10.0" left="83.0" />
                 </VBox.margin>
             </Button>
         </children>

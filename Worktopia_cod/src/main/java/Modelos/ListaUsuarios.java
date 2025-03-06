@@ -44,7 +44,7 @@ public class ListaUsuarios {
     @FXML
     private Button Facturacion;
     @FXML
-    private Button Reservas;
+    private Button btnSalir;
     @FXML
     private Button ponerUsuario;
     @FXML
@@ -77,6 +77,7 @@ public class ListaUsuarios {
 
     @FXML
     public void initialize() {
+        btnSalir.setStyle(("-fx-background-color: transparent;"));
         Stage ventanaSecundaria = new Stage();
         ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
         colEmpleado.setCellValueFactory(new PropertyValueFactory<>("id_usuario"));
