@@ -58,7 +58,7 @@ public class Facturacion {
     @FXML
     private TextField TextFechaFactura;
     @FXML
-    private Button Reservas;
+    private Button btnSalir;
     @FXML
     private Button ListaReservas;
     @FXML
@@ -121,6 +121,7 @@ public class Facturacion {
 
     @FXML
     public void initialize() {
+        btnSalir.setStyle(("-fx-background-color: transparent;"));
         Stage ventanaSecundaria = new Stage();
         ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
         colNFactura.setCellValueFactory(new PropertyValueFactory<>("id_factura"));

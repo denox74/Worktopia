@@ -59,6 +59,8 @@ public class ListaReservas {
     @FXML
     private VBox vboxReservas;
     @FXML
+    private Button btnSalir;
+    @FXML
     private TableView<Clases.Reservas> tablaReservas;
     @FXML
     private TableColumn<Clases.Reservas, Integer> colNReserva;
@@ -78,7 +80,7 @@ public class ListaReservas {
 
     @FXML
     public void initialize() {
-
+        btnSalir.setStyle(("-fx-background-color: transparent;"));
         colNReserva.setCellValueFactory(new PropertyValueFactory<>("id_reserva"));
         colDNI.setCellValueFactory(new PropertyValueFactory<>("dni"));
         colAsiento.setCellValueFactory(new PropertyValueFactory<>("id_asiento"));

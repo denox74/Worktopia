@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
     <children>
         <ImageView id="portada" fx:id="portadaListaReservas" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -102,9 +102,9 @@
             <TableColumn fx:id="colFormaPago" prefWidth="117.0" text="Forma de pago" />
         </columns>
       </TableView>
-        <VBox fx:id="vboxFacturas" layoutX="440.0" layoutY="229.0" prefHeight="330.0" prefWidth="390.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
+        <VBox fx:id="vboxFacturas" layoutX="440.0" layoutY="229.0" prefHeight="300.0" prefWidth="417.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
             <children>
-                <Button fx:id="BtnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="BtnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
+                <Button fx:id="btnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="btnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
                     <VBox.margin>
                         <Insets bottom="-10.0" left="380.0" />
                     </VBox.margin>
@@ -116,125 +116,125 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="188.0" text="Datos De Factura" textAlignment="CENTER">
+                <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="340.0" text="Datos De Factura" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="22.0" />
                     </font>
                     <VBox.margin>
-                        <Insets left="40.0" />
+                        <Insets bottom="10.0" left="40.0" />
                     </VBox.margin>
                 </Label>
-                <Label text="Fecha Factura">
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Fecha Factura">
                     <VBox.margin>
                         <Insets left="20.0" />
                     </VBox.margin></Label>
                 <TextField fx:id="TextFechaFactura" prefHeight="35.0" prefWidth="220.0">
                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="20.0" right="150.0" />
                     </VBox.margin></TextField>
-                <Label text="Dni Cliente">
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Dni Cliente">
                     <VBox.margin>
                         <Insets left="20.0" />
                     </VBox.margin></Label>
                 <TextField fx:id="TextDniCliente" prefHeight="35.0" prefWidth="220.0">
                     <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" />
+                        <Insets left="20.0" right="150.0" />
                     </VBox.margin></TextField>
-            <GridPane alignment="CENTER" prefHeight="90.0" prefWidth="213.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="262.0" minWidth="10.0" prefWidth="67.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="460.0" minWidth="10.0" prefWidth="92.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="460.0" minWidth="10.0" prefWidth="90.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="460.0" minWidth="10.0" prefWidth="118.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label text="Total" GridPane.rowIndex="2" />
-                  <TextField fx:id="TextTotal" prefHeight="30.0" prefWidth="277.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                      <TextField fx:id="TextSubtotal" prefHeight="35.0" prefWidth="220.0" GridPane.columnIndex="1">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </TextField>
-                      <Label alignment="CENTER" text="Subtotal" />
-                      <TextField fx:id="TextDescuento" prefHeight="35.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                      <Label text="Descuento" GridPane.rowIndex="1" />
-                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="84.0" text="Forma de pago" GridPane.columnIndex="2" />
-                  <ComboBox fx:id="comboFormaPago" onAction="#llenarComboBox" prefHeight="40.0" prefWidth="236.0" promptText=". . . . . . ." visibleRowCount="2" GridPane.columnIndex="3" />
-               </children>
+                <Label alignment="CENTER" styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Subtotal">
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
+                  <Insets left="20.0" />
                </VBox.margin>
-            </GridPane>
-                <GridPane alignment="TOP_CENTER" prefHeight="57.0" prefWidth="225.0" vgap="20.0">
-                    <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="131.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="144.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="144.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="144.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                    </rowConstraints>
-                    <children>
-                        <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" onAction="#modificarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones">
-                            <cursor>
-                                <Cursor fx:constant="DEFAULT" />
-                            </cursor>
-                            <graphic>
-                                <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../Imagenes/editar-perfil.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                            <stylesheets>
-                                <URL value="@../Estilos/EstilosListas.css" />
-                                <URL value="@../Estilos/EstiloVboxListas.css" />
-                            </stylesheets>
-                            <GridPane.margin>
-                                <Insets />
-                            </GridPane.margin>
-                        </Button>
-                        <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="1">
-                            <graphic>
-                                <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                  <Button fx:id="BtnPagarFactura" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#pagarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="2">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/dolar1.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="BtnGenerarFactura" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#generarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="3">
-                     <graphic>
-                        <ImageView fitHeight="51.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/factura1.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                    </children>
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
+            </Label>
+            <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Total">
                <VBox.margin>
-                  <Insets left="30.0" right="30.0" />
+                  <Insets left="145.0" top="-17.0" />
                </VBox.margin>
-                </GridPane>
+            </Label>
+            <TextField fx:id="TextTotal" prefHeight="30.0" prefWidth="277.0">
+               <VBox.margin>
+                  <Insets left="140.0" right="150.0" />
+               </VBox.margin>
+            </TextField>
+                <TextField fx:id="TextSubtotal" prefHeight="30.0" prefWidth="100.0">
+               <VBox.margin>
+                  <Insets left="20.0" right="280.0" top="-32.0" />
+               </VBox.margin>
+            </TextField>
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Descuento">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="84.0" styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Forma de pago">
+               <VBox.margin>
+                  <Insets left="145.0" top="-16.0" />
+               </VBox.margin>
+            </Label>
+            <ComboBox fx:id="comboFormaPago" onAction="#llenarComboBox" prefHeight="30.0" prefWidth="113.0" promptText=". . . . . . ." visibleRowCount="2">
+               <VBox.margin>
+                  <Insets left="140.0" right="150.0" top="-3.0" />
+               </VBox.margin>
+            </ComboBox>
+                <TextField fx:id="TextDescuento" prefHeight="30.0" prefWidth="122.0">
+               <VBox.margin>
+                  <Insets left="19.0" right="280.0" top="-30.0" />
+               </VBox.margin>
+            </TextField>
+                  <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" onAction="#modificarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" text="Modificar">
+                      <cursor>
+                          <Cursor fx:constant="DEFAULT" />
+                      </cursor>
+                      <graphic>
+                          <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@../Imagenes/editar-perfil.png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+                      <stylesheets>
+                          <URL value="@../Estilos/EstilosListas.css" />
+                          <URL value="@../Estilos/EstiloVboxListas.css" />
+                      </stylesheets>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="280.0" top="-196.0" />
+               </VBox.margin>
+                  </Button>
+                  <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Eliminar">
+                      <graphic>
+                          <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="280.0" />
+               </VBox.margin>
+                  </Button>
+            <Button fx:id="BtnPagarFactura" mnemonicParsing="false" onAction="#pagarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Pagar">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/dolar1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="281.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="BtnGenerarFactura" mnemonicParsing="false" onAction="#generarFactura" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Generar PDF">
+               <graphic>
+                  <ImageView fitHeight="51.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/factura1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets left="280.0" />
+               </VBox.margin>
+            </Button>
             </children>
         </VBox>
     </children>

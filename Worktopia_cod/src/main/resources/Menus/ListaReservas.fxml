@@ -26,7 +26,7 @@
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>
-        <TableView fx:id="tablaReservas" layoutX="80.0" layoutY="200.0" prefHeight="430.0" prefWidth="1120.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
+        <TableView fx:id="tablaReservas" layoutX="108.0" layoutY="187.0" prefHeight="430.0" prefWidth="1120.0" styleClass="TablaListas" stylesheets="@../Estilos/EstilosListas.css">
             <columns>
                 <TableColumn fx:id="colNReserva" prefWidth="114.0" text="Nº Reserva" />
                 <TableColumn fx:id="colFechaInicio" prefWidth="241.0" text="Inicio Servicio" />
@@ -37,11 +37,11 @@
                 <TableColumn fx:id="colSubtotal" maxWidth="418.0" prefWidth="107.0" text="Subtotal" />
             </columns>
       </TableView>
-        <VBox fx:id="vboxReservas" layoutX="522.0" layoutY="250.0" prefHeight="350.0" prefWidth="279.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
+        <VBox fx:id="vboxReservas" layoutX="522.0" layoutY="250.0" prefHeight="294.0" prefWidth="340.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css">
             <children>
-                <Button fx:id="BtnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="BtnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
+                <Button fx:id="btnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="btnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
                     <VBox.margin>
-                        <Insets bottom="-10.0" left="240.0" />
+                        <Insets bottom="-10.0" left="302.0" />
                     </VBox.margin>
                     <graphic>
                         <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
@@ -51,7 +51,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="188.0" text="Datos De Reserva" textAlignment="CENTER">
+                <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="269.0" text="Datos De Reserva" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="22.0" />
                     </font>
@@ -59,80 +59,69 @@
                         <Insets left="40.0" />
                     </VBox.margin>
                 </Label>
-                <Label text="Inicio Servicio">
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Inicio Servicio">
                     <VBox.margin>
                         <Insets left="20.0" />
                     </VBox.margin></Label>
                 <TextField fx:id="TextInicio" prefHeight="35.0" prefWidth="220.0">
                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="20.0" right="140.0" />
                     </VBox.margin></TextField>
-                <Label text="Fin Servicio">
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Fin Servicio">
                     <VBox.margin>
                         <Insets left="20.0" />
                     </VBox.margin></Label>
                 <TextField fx:id="TextFin" prefHeight="35.0" prefWidth="220.0">
                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="20.0" right="140.0" />
                     </VBox.margin></TextField>
-                <Label text="Dni Cliente">
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Dni Cliente">
                     <VBox.margin>
                         <Insets left="20.0" />
                     </VBox.margin></Label>
                 <TextField fx:id="TextDni" prefHeight="35.0" prefWidth="220.0">
                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="20.0" right="140.0" />
                     </VBox.margin></TextField>
-                <Label text="Asiento Reservado">
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Asiento Reservado">
                     <VBox.margin>
                         <Insets left="20.0" />
                     </VBox.margin></Label>
                 <TextField fx:id="TextAsiento" prefHeight="35.0" prefWidth="220.0">
                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="140.0" />
                     </VBox.margin></TextField>
-                <GridPane alignment="TOP_CENTER" prefHeight="30.0" prefWidth="243.0">
-                    <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                    </rowConstraints>
-                    <children>
-                        <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" onAction="#modificarReservas" prefHeight="36.0" prefWidth="75.0" styleClass="Botones">
-                            <cursor>
-                                <Cursor fx:constant="DEFAULT" />
-                            </cursor>
-                            <graphic>
-                                <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../Imagenes/editar-perfil.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                            <stylesheets>
-                                <URL value="@../Estilos/EstilosListas.css" />
-                                <URL value="@../Estilos/EstiloVboxListas.css" />
-                            </stylesheets>
-                            <GridPane.margin>
-                                <Insets />
-                            </GridPane.margin>
-                        </Button>
-                        <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarReservas" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" GridPane.columnIndex="1">
-                            <graphic>
-                                <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                    </children>
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                </GridPane>
+                  <Button id="eliminar" fx:id="BtnModificar" mnemonicParsing="false" onAction="#modificarReservas" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" text="Modificar">
+                      <cursor>
+                          <Cursor fx:constant="DEFAULT" />
+                      </cursor>
+                      <graphic>
+                          <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@../Imagenes/editar-perfil.png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+                      <stylesheets>
+                          <URL value="@../Estilos/EstilosListas.css" />
+                          <URL value="@../Estilos/EstiloVboxListas.css" />
+                      </stylesheets>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="210.0" top="-225.0" />
+               </VBox.margin>
+                  </Button>
+                  <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarReservas" prefHeight="36.0" prefWidth="75.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Eliminar">
+                      <graphic>
+                          <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+               <VBox.margin>
+                  <Insets left="210.0" />
+               </VBox.margin>
+                  </Button>
             </children>
         </VBox>
       <VBox layoutX="487.0" layoutY="652.0" prefHeight="178.0" prefWidth="164.0" style="-fx-background-color: #F4A261;" />

@@ -1,6 +1,7 @@
+
 .vboxDatos{
     -fx-background-color: #DDDEDE;
-    -fx-border-color: black;
+    -fx-border-color: #FFA500FF;
     -fx-border-width: 2;
 }
 
@@ -8,13 +9,21 @@
     -fx-background-color:  #4CAF50;
     -fx-border-color: #FFA500FF;
     -fx-text-fill: transparent;
-    -fx-pref-width: 49px;
+    -fx-pref-width: 60px;
+    -fx-transition: -fx-pref-width 0.3s ease-in-out, -fx-text-fill 0.3s ease-in-out;
 }
 .Botones:hover {
     -fx-opacity: 1;
     -fx-background-color: #046107;
     -fx-pref-width: 120px;
-    -fx-text-fill: white;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+
+}
+.labels{
+    -fx-font-family: Raleway;
+    -fx-font-weight: bold;
 }
 
 .btnSalir{
