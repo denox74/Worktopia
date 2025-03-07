@@ -17,13 +17,12 @@ public class MenuPrincipalApp extends Application {
         FXMLLoader menuPrincipal = new FXMLLoader(MenuPrincipalApp.class.getResource("/Menus/MenuPrincipal.fxml"));
         menu.getIcons().add(icono);
         menu.setTitle("Menu Principal");
-        //menu.initStyle(StageStyle.UNDECORATED);
         menu.setScene(new Scene(menuPrincipal.load()));
         menu.getMaxHeight();
         menu.setMaxWidth(1300);
         menu.maximizedProperty().addListener((obs, oldVal, isMaximized) -> {
             if (isMaximized) {
-                menu.setFullScreen(true); // Activar pantalla completa
+                menu.setFullScreen(true);
             }
         });
         menu.show();

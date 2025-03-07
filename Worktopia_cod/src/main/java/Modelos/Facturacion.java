@@ -1,10 +1,7 @@
 package Modelos;
 
 import Aplicaciones.MenuPrincipalApp;
-import Clases.Asientos;
-import Clases.Clientes;
-import Clases.Facturas;
-import Clases.SesionUsuario;
+import Clases.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,11 +31,11 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
+
 
 public class Facturacion {
     private double xOffset = 0;
@@ -97,9 +94,8 @@ public class Facturacion {
     private TableColumn<Facturas, String> colFormaPago;
     @FXML
     private TableColumn<Facturas, String> colSubtotal;
-
-
-
+    @FXML
+    private ListView<String> listaReservas;
 
 
     @FXML
@@ -181,13 +177,21 @@ public class Facturacion {
         });
 
 
-
-
     }
+
+    @FXML
+    public void salirVbox() {
+        System.out.println("Limpiando facturaBuscar");
+        facturaBuscar.clear();
+        vboxFacturas.setVisible(false);
+    }
+
+
 
     public Facturacion() {
-    
+
     }
+
     public static void rellenarCombo(ComboBox<String> comboBox, ObservableList<String> forma) {
         comboBox.setItems(forma);
     }
@@ -208,7 +212,7 @@ public class Facturacion {
         }
     }
 
-    
+
     public void exportarFacturas(Facturas facturas) {
         idFactura = facturas.getId_factura();
         TextFechaFactura.setText(facturas.getFecha_hora_emision());
@@ -218,10 +222,16 @@ public class Facturacion {
         comboFormaPago.getSelectionModel().select(facturas.getForma_pago());
         double descuento = Double.parseDouble(TextDescuento.getText());
         double subTotal = Double.parseDouble(TextSubtotal.getText());
-        TextTotal.setText(String.valueOf(descuento(descuento,subTotal)));
+        TextTotal.setText(String.valueOf(descuento(descuento, subTotal)));
         vboxFacturas.setVisible(true);
+        try {
+            cargarReservasEnFactura(idFactura);
+        } catch (SQLException | ClassNotFoundException e) {
+            showAlert("Error", "No se pudieron cargar las reservas: " + e.getMessage());
+        }
 
     }
+
     public double descuento(double descuentoText, double subtotal) {
         if (descuentoText > 0) {
             return subtotal - (subtotal * descuentoText / 100);
@@ -252,6 +262,39 @@ public class Facturacion {
         }
     }
 
+    public void cargarReservasEnFactura(int idFactura) throws SQLException, ClassNotFoundException {
+        List<Reservas> reservas = new ArrayList<>();
+        String queryReservas = "SELECT * FROM Reservas WHERE id_factura = ?";
+
+        try (Connection conn = ConectionDB.getConn();
+             PreparedStatement ps = conn.prepareStatement(queryReservas)) {
+            ps.setInt(1, idFactura); // Establecemos el idFactura en el PreparedStatement
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Reservas reserva = new Reservas(
+                            rs.getInt("id_reserva"),
+                            rs.getString("dni"),
+                            rs.getInt("id_asiento"),
+                            rs.getInt("id_factura"),
+                            rs.getTimestamp("fecha_hora_inicio"),
+                            rs.getTimestamp("fecha_hora_fin"),
+                            rs.getBigDecimal("subtotal")
+                    );
+                    reservas.add(reserva);
+                }
+            }
+        }
+
+        ObservableList<String> reservasList = FXCollections.observableArrayList();
+        for (Reservas r : reservas) {
+            reservasList.add("ID: " + r.getId_reserva() + " PRECIO: " + r.getSubtotal());
+        }
+
+        listaReservas.setItems(reservasList);
+        ConectionDB.openConn();
+    }
+
     public void modificarFactura(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("¿Quiere modificar la factura? :" + idFactura);
@@ -269,13 +312,13 @@ public class Facturacion {
                 stmt.setString(1, TextFechaFactura.getText());
                 stmt.setString(2, TextDescuento.getText());
                 stmt.setString(3, TextTotal.getText());
-                stmt.setString(4,TextSubtotal.getText());
+                stmt.setString(4, TextSubtotal.getText());
                 stmt.setInt(5, idFactura);
                 int confirmacion = stmt.executeUpdate();
                 if (confirmacion == 1) {
-                    showAlert("Modificar Factura","La factura se ha modificado Correctamente");
-                }else {
-                    showAlert("Modificar Factura","No se ha modificado la factura");
+                    showAlert("Modificar Factura", "La factura se ha modificado Correctamente");
+                } else {
+                    showAlert("Modificar Factura", "No se ha modificado la factura");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -283,6 +326,7 @@ public class Facturacion {
             initialize();
         }
     }
+
     public void eliminarFactura(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("¿Quiere eliminar la factura? :" + idFactura);
@@ -300,9 +344,9 @@ public class Facturacion {
                 stmt.setInt(1, idFactura);
                 int confirmacion = stmt.executeUpdate();
                 if (confirmacion == 1) {
-                    showAlert("Eliminar Factura","La factura se ha eliminado Correctamente");
-                }else {
-                    showAlert("Eliminar Factura","No se ha elimado la factura");
+                    showAlert("Eliminar Factura", "La factura se ha eliminado Correctamente");
+                } else {
+                    showAlert("Eliminar Factura", "No se ha elimado la factura");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -310,8 +354,9 @@ public class Facturacion {
             initialize();
         }
     }
+
     public void pagarFactura(ActionEvent event) {
-        String estadoPago= "Pagada";
+        String estadoPago = "Pagada";
         LocalDateTime fecha = LocalDateTime.now();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("¿Quiere abonar la factura? :" + idFactura);
@@ -329,16 +374,16 @@ public class Facturacion {
                 stmt.setString(1, TextFechaFactura.getText());
                 stmt.setString(2, TextDescuento.getText());
                 stmt.setString(3, TextSubtotal.getText());
-                stmt.setString(4,fecha.toString());
-                stmt.setString(5,estadoPago);
+                stmt.setString(4, fecha.toString());
+                stmt.setString(5, estadoPago);
                 stmt.setString(6, TextTotal.getText());
-                stmt.setString(7,comboFormaPago.getSelectionModel().getSelectedItem().toString());
+                stmt.setString(7, comboFormaPago.getSelectionModel().getSelectedItem().toString());
                 stmt.setInt(8, idFactura);
                 int confirmacion = stmt.executeUpdate();
                 if (confirmacion == 1) {
-                    showAlert("Pagar Factura","La factura se ha Pagado Correctamente");
-                }else {
-                    showAlert("Pagar Factura","No se ha Pagado la factura");
+                    showAlert("Pagar Factura", "La factura se ha Pagado Correctamente");
+                } else {
+                    showAlert("Pagar Factura", "No se ha Pagado la factura");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -443,7 +488,7 @@ public class Facturacion {
                 BigDecimal impuestos = baseImponible.multiply(BigDecimal.valueOf(0.07));
 
                 // Rellenar el porcentaje de descuento
-                setCellValue(sheet, 45, 6, descuento.doubleValue()/100);
+                setCellValue(sheet, 45, 6, descuento.doubleValue() / 100);
 
                 // Rellenar el valor del descuento
                 BigDecimal valorDescuento = totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100)));
@@ -506,17 +551,6 @@ public class Facturacion {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     public BigDecimal calcularSubtotal(int idAsiento, Timestamp fechaInicio, Timestamp fechaFin) {
         BigDecimal tarifaHora = getTarifaHoraId(idAsiento);
         LocalDateTime inicio = fechaInicio.toLocalDateTime();
@@ -559,7 +593,7 @@ public class Facturacion {
     }
 
 
-        private void showAlert(String title, String message) {
+    private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -593,10 +627,12 @@ public class Facturacion {
         abrirVentana("/Menus/ListaReservas.fxml", "Listas De Reservas");
         ((Stage) ListaReservas.getScene().getWindow()).close();
     }
+
     public void ventanaUsuarios(ActionEvent event) {
         abrirVentana("/Menus/ListaUsuarios.fxml", "Usuarios");
         ((Stage) BtnUsuarios.getScene().getWindow()).close();
     }
+
     public void salirVbox(ActionEvent event) {
         vboxFacturas.setVisible(false);
     }
