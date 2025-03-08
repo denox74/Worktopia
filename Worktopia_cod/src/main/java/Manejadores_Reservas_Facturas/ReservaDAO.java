@@ -73,11 +73,12 @@ public class ReservaDAO {
 
     public static int crearFactura(String dni, BigDecimal precioTotal) throws SQLException {
         int nuevoIdFactura = obtenerMaxIdFactura() + 1;
-        String query = "INSERT INTO Facturas (id_factura, dni, precio_total, descuento, fecha_hora_emision, estado) VALUES (?, ?, ?, 0.00, NOW(), 'Pendiente')";
+        String query = "INSERT INTO Facturas (id_factura, dni, precio_total, descuento, fecha_hora_emision, estado, subtotal) VALUES (?, ?, ?, 0.00, NOW(), 'Pendiente',?)";
         try (PreparedStatement ps = ConectionDB.getConn().prepareStatement(query)) {
             ps.setInt(1, nuevoIdFactura);
             ps.setString(2, dni);
             ps.setBigDecimal(3, precioTotal);
+            ps.setBigDecimal(4,precioTotal);
             ps.executeUpdate();
             return nuevoIdFactura;
         }

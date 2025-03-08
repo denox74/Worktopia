@@ -96,10 +96,9 @@ public class ReservasPanel {
     @FXML
     private TextField dniCliente;
 
-
-
     private Button BtnSeleccionado;
     private double precioTotal;
+    private BigDecimal subtotal;
 
     @FXML
     public void initialize(){
@@ -238,6 +237,7 @@ public class ReservasPanel {
         }
         precioTotal = facturaPrecioText(espacio, horaInicio, horaFin);
         precio.setText(String.format("%.2f €", precioTotal));
+        subtotal = BigDecimal.valueOf(precioTotal);
 
 
 
@@ -323,7 +323,7 @@ public class ReservasPanel {
         String horaInicioText = horaInicio.getText();
         String horaFinText = horaFin.getText();
         LocalDate fechaReserva = fecha.getValue();
-        BigDecimal subtotal = BigDecimal.valueOf(precioTotal);
+        BigDecimal subTotal = subtotal;
         int idAsiento = obtenerIdEspacio(espacioText);
 
         if (dniText.isEmpty() || espacioText.isEmpty() || horaInicioText.isEmpty() || horaFinText.isEmpty()) {
@@ -338,10 +338,10 @@ public class ReservasPanel {
         try {
             int idFactura = ReservaDAO.obtenerFacturaPendiente(dniText);
             if (idFactura == -1) {
-                idFactura = ReservaDAO.crearFactura(dniText,subtotal);
+                idFactura = ReservaDAO.crearFactura(dniText,subTotal);
             }
 
-            Reservas reserva = new Reservas(0, dniText, idAsiento, idFactura, Timestamp.valueOf(fechaHoraInicio), Timestamp.valueOf(fechaHoraFin), subtotal);
+            Reservas reserva = new Reservas(0, dniText, idAsiento, idFactura, Timestamp.valueOf(fechaHoraInicio), Timestamp.valueOf(fechaHoraFin), subTotal);
             int idReserva = ReservaDAO.insertarReserva(reserva);
 
             alert.setContentText("Reserva y factura creadas correctamente. ID Reserva: " + idReserva);
@@ -354,25 +354,7 @@ public class ReservasPanel {
     }
 
 
-    public void abrirVentana(String fxmlPath, String titulo) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle(titulo);
-
-            MenuPrincipalApp.agregarIcono(stage);
-
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void salir(ActionEvent event) {
-        abrirVentana("/Menus/ListaClientes.fxml", "Lista de Cliente");
         ((Stage) btnSalir.getScene().getWindow()).close();
     }
 

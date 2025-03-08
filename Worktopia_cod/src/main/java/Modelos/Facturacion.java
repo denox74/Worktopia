@@ -40,6 +40,7 @@ import java.util.List;
 public class Facturacion {
     private double xOffset = 0;
     private double yOffset = 0;
+    private Reservas reservas;
     @FXML
     private TextField TextDniCliente;
     @FXML
@@ -156,7 +157,6 @@ public class Facturacion {
                 if (factura != null) {
                     exportarFacturas(factura);
                 }
-                facturaBuscar.setText(String.valueOf(factura.getId_factura()));
             }
         });
         TextDescuento.textProperty().addListener(new ChangeListener<String>() {
@@ -185,7 +185,6 @@ public class Facturacion {
         facturaBuscar.clear();
         vboxFacturas.setVisible(false);
     }
-
 
 
     public Facturacion() {
@@ -288,7 +287,7 @@ public class Facturacion {
 
         ObservableList<String> reservasList = FXCollections.observableArrayList();
         for (Reservas r : reservas) {
-            reservasList.add("ID: " + r.getId_reserva() + " PRECIO: " + r.getSubtotal());
+            reservasList.add("Nº Reserva: " + r.getId_reserva() + " Precio: " + r.getSubtotal());
         }
 
         listaReservas.setItems(reservasList);
@@ -339,15 +338,23 @@ public class Facturacion {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == si) {
             String queryUrl = "DELETE FROM Facturas WHERE id_factura = ?";
+            String subquery = "DELETE FROM Reservas WHERE id_factura = ?";
             try {
-                PreparedStatement stmt = ConectionDB.getConn().prepareStatement(queryUrl);
+                //Eliminamos la reserva
+                PreparedStatement stmt = ConectionDB.getConn().prepareStatement(subquery);
                 stmt.setInt(1, idFactura);
-                int confirmacion = stmt.executeUpdate();
-                if (confirmacion == 1) {
+                stmt.executeUpdate();
+                //Eliminamos la factura
+                PreparedStatement stmt2 = ConectionDB.getConn().prepareStatement(queryUrl);
+                stmt2.setInt(1, idFactura);
+
+                int confirmacion2 = stmt2.executeUpdate();
+                if (confirmacion2 == 1) {
                     showAlert("Eliminar Factura", "La factura se ha eliminado Correctamente");
                 } else {
                     showAlert("Eliminar Factura", "No se ha elimado la factura");
                 }
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
