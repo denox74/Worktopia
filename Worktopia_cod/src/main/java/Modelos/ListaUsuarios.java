@@ -4,6 +4,7 @@ import Aplicaciones.MenuPrincipalApp;
 import Clases.SesionUsuario;
 import Clases.Usuarios;
 import ConexionDB.ConectionDB;
+import Controlador.ControladorUsuarios;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -32,7 +33,7 @@ import java.util.Optional;
 public class ListaUsuarios {
     private double xOffset = 0;
     private double yOffset = 0;
-
+    private ControladorUsuarios controladorUsuarios = new ControladorUsuarios();
     private MenuPrincipal menuPrincipal;
     private int idusuario;
     @FXML
@@ -151,62 +152,17 @@ public class ListaUsuarios {
 
     }
 
+
     public void modificarUsuarios(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Quiere modificar El Usuario :" + idusuario);
+        controladorUsuarios.modificarUsuario(TextNombre,TextEmail,enumCategoria,idusuario);
+        initialize();
 
-        ButtonType si = new ButtonType("Sí");
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(si, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == si) {
-            String query = "UPDATE Usuarios SET nombre = ?, email = ?, categoria = ? WHERE id_usuario = ?";
-            try (PreparedStatement update = ConectionDB.getConn().prepareStatement(query)) {
-                update.setString(1, TextNombre.getText());
-                update.setString(2, TextEmail.getText());
-                update.setString(3, enumCategoria.getSelectionModel().getSelectedItem().toString());
-                update.setInt(4, idusuario);
-                int actualizado = update.executeUpdate();
-                if (actualizado > 0) {
-                    alert2.setContentText("Datos actualizados correctamente");
-                    alert2.show();
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            initialize();
-
-        }
     }
 
     public void eliminarUsuarios(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Quiere eliminar el usuario :" + idusuario);
-        ButtonType si = new ButtonType("Sí");
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(si, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == si) {
-            String query = "DELETE FROM Usuarios WHERE id_usuario = ?";
-            try (PreparedStatement delete = ConectionDB.getConn().prepareStatement(query)) {
-                delete.setInt(1, idusuario);
-                int actualizado = delete.executeUpdate();
-                if (actualizado > 0) {
-                    alert2.setContentText("Datos Eliminados correctamente");
-                    alert2.show();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        controladorUsuarios.eliminarUsuario(idusuario);
         initialize();
+
     }
     public void loginUsuarios(String usuario, String pass) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
