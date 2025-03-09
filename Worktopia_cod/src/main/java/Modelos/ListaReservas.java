@@ -5,6 +5,7 @@ import Aplicaciones.MenuPrincipalApp;
 import Clases.Reservas;
 import Clases.SesionUsuario;
 import ConexionDB.ConectionDB;
+import Controlador.ControladorReservas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -28,7 +29,7 @@ import java.util.Optional;
 
 
 public class ListaReservas {
-
+    private ControladorReservas controladorReservas = new ControladorReservas();
     private double xOffset = 0;
     private double yOffset = 0;
     private int idReserva;
@@ -90,7 +91,6 @@ public class ListaReservas {
         colSubtotal.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
 
 
-
         tablaReservas.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Reservas reserva = tablaReservas.getSelectionModel().getSelectedItem();
@@ -115,7 +115,7 @@ public class ListaReservas {
                  ClassNotFoundException e) {
             e.printStackTrace();
         }
-       inicioSesion();
+        inicioSesion();
     }
 
 
@@ -167,62 +167,17 @@ public class ListaReservas {
         TextAsiento.setText(String.valueOf(reservas.getId_asiento()));
         vboxReservas.setVisible(true);
     }
+
     public void modificarReservas(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Quiere modificar el Cliente con dni: " + TextDni.getText());
-
-        ButtonType si = new ButtonType("Sí");
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(si, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == si) {
-            String query = "UPDATE Reservas SET dni = ?, fecha_hora_inicio = ?, fecha_hora_fin = ?,id_asiento = ? WHERE id_reserva = ?";
-            try (PreparedStatement update = ConectionDB.getConn().prepareStatement(query)) {
-                update.setString(1, TextDni.getText());
-                update.setString(2, TextInicio.getText());
-                update.setString(3, TextFin.getText());
-                update.setString(4, TextAsiento.getText());
-                update.setInt(5, idReserva);
-                int actualizado = update.executeUpdate();
-                if (actualizado > 0) {
-                    alert2.setContentText("Datos actualizados correctamente");
-                    alert2.show();
-                }
-
-            } catch(SQLException e){
-                throw new RuntimeException(e);
-            }
-            initialize();
-
-        }
-    }
-    public void eliminarReservas(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Quiere eliminar el Cliente con dni: " + TextDni.getText());
-        ButtonType si = new ButtonType("Sí");
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(si, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == si) {
-            String query = "DELETE FROM Reservas WHERE id_reserva = ?";
-            try(PreparedStatement delete = ConectionDB.getConn().prepareStatement(query)){
-                delete.setInt(1, idReserva);
-                int actualizado = delete.executeUpdate();
-                if (actualizado > 0) {
-                    alert2.setContentText("Datos Eliminados correctamente");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        controladorReservas.modificarReservas(TextDni, TextInicio, TextFin, TextAsiento, idReserva);
         initialize();
     }
+
+    public void eliminarReservas(ActionEvent event) {
+        controladorReservas.eliminarReservas(TextDni,idReserva);
+        initialize();
+    }
+
     public void abrirVentana(String fxmlPath, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -249,6 +204,7 @@ public class ListaReservas {
         abrirVentana("/Menus/Facturacion.fxml", "Factuacion");
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
+
     public void ventanaListaUsuarios(ActionEvent event) {
         abrirVentana("/Menus/ListaUsuarios.fxml", "Usuarios");
         ((Stage) BtnUsuarios.getScene().getWindow()).close();
