@@ -15,6 +15,7 @@ module org.example.worktopia_cod {
     requires com.fasterxml.jackson.databind;
     requires java.sql;
     requires java.desktop;
+    requires org.apache.logging.log4j.core;
 
 
     opens Modelos to javafx.fxml;

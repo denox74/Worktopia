@@ -4,6 +4,7 @@ import Aplicaciones.MenuPrincipalApp;
 import Clases.Clientes;
 import Clases.SesionUsuario;
 import ConexionDB.ConectionDB;
+import Controlador.ControladorClientes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -28,7 +29,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class ListaClientes {
-
+    private ControladorClientes controladorClientes = new ControladorClientes();
     @FXML
     private double xOffset = 0;
     private double yOffset = 0;
@@ -179,61 +180,13 @@ public class ListaClientes {
     }
 
     public void modificarDatos(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Quiere modificar el Cliente con dni: " + dni);
-
-        ButtonType si = new ButtonType("Sí");
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(si, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == si) {
-            String query = "UPDATE Clientes SET nombre = ?, primerApellido = ?, segundoApellido = ?, email = ?, telefono = ? WHERE dni = ?";
-            try (PreparedStatement update = ConectionDB.getConn().prepareStatement(query)) {
-                update.setString(1, TextNombre.getText());
-                update.setString(2, TextPrimerApellido.getText());
-                update.setString(3, TextSegundoApellido.getText());
-                update.setString(4, TextEmail.getText());
-                update.setString(5, TextTelefono.getText());
-                update.setString(6, dni);
-                int actualizado = update.executeUpdate();
-                if (actualizado > 0) {
-                    alert2.setContentText("Datos actualizados correctamente");
-                    alert2.show();
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        controladorClientes.modificarClientes(TextNombre,TextPrimerApellido,TextSegundoApellido,TextEmail,TextTelefono,dni);
             initialize();
 
-        }
     }
 
     public void eliminarDatos(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Quiere eliminar el Cliente con dni: " + dni);
-        ButtonType si = new ButtonType("Sí");
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(si, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == si) {
-            String query = "DELETE FROM Clientes WHERE dni = ?";
-            try (PreparedStatement delete = ConectionDB.getConn().prepareStatement(query)) {
-                delete.setString(1, dni);
-                int actualizado = delete.executeUpdate();
-                if (actualizado > 0) {
-                    alert2.setContentText("Datos Eliminados correctamente");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+       controladorClientes.eliminarClientes(dni);
         initialize();
     }
 
