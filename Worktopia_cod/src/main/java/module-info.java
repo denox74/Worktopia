@@ -16,6 +16,8 @@ module org.example.worktopia_cod {
     requires java.sql;
     requires java.desktop;
     requires org.apache.logging.log4j.core;
+    requires org.junit.jupiter.api;
+    requires org.testng;
 
 
     opens Modelos to javafx.fxml;

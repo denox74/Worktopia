@@ -101,14 +101,13 @@ public class Facturacion {
 
     @FXML
     public void generarFactura(ActionEvent event) {
-        String facturaId = facturaBuscar.getText();
-        if (facturaId.isEmpty()) {
-            showAlert("Error", "Debe ingresar un número de factura.");
+        if (idFactura == 0) {
+            showAlert("Error", "Debe seleccionar una factura.");
             return;
         }
 
         try {
-            generarFacturaExcel(facturaId);
+            generarFacturaExcel();
             showAlert("Éxito", "Factura generada correctamente.");
         } catch (Exception e) {
             showAlert("Error", "Error al generar la factura: " + e.getMessage());
@@ -131,12 +130,41 @@ public class Facturacion {
         colFechaPago.setCellValueFactory(new PropertyValueFactory<>("fecha_hora_pago"));
         colFormaPago.setCellValueFactory(new PropertyValueFactory<>("forma_pago"));
 
+        ObservableList<Facturas> facturasList = FXCollections.observableArrayList();
+        try (Connection conn = ConectionDB.getConn()) {
+            String queryFacturas = "SELECT * FROM Facturas";
+            try (PreparedStatement psFacturas = conn.prepareStatement(queryFacturas);
+                 ResultSet rsFacturas = psFacturas.executeQuery()) {
+                while (rsFacturas.next()) {
+                    int idFactura = rsFacturas.getInt("id_factura");
+                    BigDecimal descuento = rsFacturas.getBigDecimal("descuento");
 
-        ObservableList<Facturas> facturasList = FXCollections.observableArrayList(ConectionDB.getFacturas());
+                    BigDecimal totalSubtotales = cargarReservasEnFactura(conn, idFactura);
+                    BigDecimal totalConDescuento = totalSubtotales.subtract(totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100))));
+                    totalConDescuento = totalConDescuento.setScale(2, BigDecimal.ROUND_HALF_UP);
+
+                    Facturas factura = new Facturas(
+                            idFactura,
+                            rsFacturas.getString("fecha_hora_emision"),
+                            totalConDescuento,
+                            rsFacturas.getString("dni"),
+                            descuento,
+                            totalSubtotales,
+                            rsFacturas.getString("estado"),
+                            rsFacturas.getString("fecha_hora_pago"),
+                            rsFacturas.getString("forma_pago")
+                    );
+                    facturasList.add(factura);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            showAlert("Error", "No se pudieron cargar las facturas: " + e.getMessage());
+        }
+
         tablaFacturas.setItems(facturasList);
         inicioSesion();
 
-        FilteredList<Facturas> filtroFacturas = new FilteredList<Facturas>(facturasList, p -> true);
+        FilteredList<Facturas> filtroFacturas = new FilteredList<>(facturasList, p -> true);
         facturaBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
             filtroFacturas.setPredicate(Facturas -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -155,17 +183,16 @@ public class Facturacion {
             if (event.getClickCount() == 2) {
                 Facturas factura = tablaFacturas.getSelectionModel().getSelectedItem();
                 if (factura != null) {
-                    exportarFacturas(factura);
+                    try {
+                        exportarFacturas(factura);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
-        TextDescuento.textProperty().addListener(new ChangeListener<String>() {
 
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                actualizarTotal();
-            }
-        });
+        TextDescuento.textProperty().addListener((observableValue, s, t1) -> actualizarTotal());
 
         vboxFacturas.setOnMousePressed(event -> {
             xOffset = event.getSceneX() - vboxFacturas.getLayoutX() + 250;
@@ -176,7 +203,61 @@ public class Facturacion {
             vboxFacturas.setLayoutY(event.getScreenY() - yOffset);
         });
 
+        tablaFacturas.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Facturas factura = tablaFacturas.getSelectionModel().getSelectedItem();
+                if (factura != null) {
+                    idFactura = factura.getId_factura(); // Almacena la ID de la factura
+                    try {
+                        exportarFacturas(factura);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+    }
 
+    public BigDecimal cargarReservasEnFactura(Connection conn, int idFactura) throws SQLException, ClassNotFoundException {
+        List<Reservas> reservas = new ArrayList<>();
+        String queryReservas = "SELECT * FROM Reservas WHERE id_factura = ?";
+        BigDecimal totalSubtotales = BigDecimal.ZERO;
+
+        try (PreparedStatement ps = conn.prepareStatement(queryReservas)) {
+            ps.setInt(1, idFactura); // Establecemos el idFactura en el PreparedStatement
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int idReserva = rs.getInt("id_reserva");
+                    String dni = rs.getString("dni");
+                    int idAsiento = rs.getInt("id_asiento");
+                    Timestamp fechaInicio = rs.getTimestamp("fecha_hora_inicio");
+                    Timestamp fechaFin = rs.getTimestamp("fecha_hora_fin");
+
+                    BigDecimal subtotal = calcularSubtotal(idAsiento, fechaInicio, fechaFin);
+                    totalSubtotales = totalSubtotales.add(subtotal);
+
+                    Reservas reserva = new Reservas(
+                            idReserva,
+                            dni,
+                            idAsiento,
+                            idFactura,
+                            fechaInicio,
+                            fechaFin,
+                            subtotal
+                    );
+                    reservas.add(reserva);
+                }
+            }
+        }
+
+        ObservableList<String> reservasList = FXCollections.observableArrayList();
+        for (Reservas r : reservas) {
+            reservasList.add("Nº Reserva: " + r.getId_reserva() + " Precio: " + r.getSubtotal());
+        }
+
+        listaReservas.setItems(reservasList);
+        return totalSubtotales;
     }
 
     @FXML
@@ -212,23 +293,25 @@ public class Facturacion {
     }
 
 
-    public void exportarFacturas(Facturas facturas) {
+    public void exportarFacturas(Facturas facturas) throws ClassNotFoundException {
+        ConectionDB.openConn();
         idFactura = facturas.getId_factura();
         TextFechaFactura.setText(facturas.getFecha_hora_emision());
-        TextSubtotal.setText(facturas.getPrecio_total().toString());
         TextDniCliente.setText(facturas.getDni());
         TextDescuento.setText(facturas.getDescuento().toString());
         comboFormaPago.getSelectionModel().select(facturas.getForma_pago());
-        double descuento = Double.parseDouble(TextDescuento.getText());
-        double subTotal = Double.parseDouble(TextSubtotal.getText());
-        TextTotal.setText(String.valueOf(descuento(descuento, subTotal)));
-        vboxFacturas.setVisible(true);
+
         try {
-            cargarReservasEnFactura(idFactura);
+            BigDecimal totalSubtotales = cargarReservasEnFactura(idFactura);
+            TextSubtotal.setText(totalSubtotales.toString());
+            double descuento = Double.parseDouble(TextDescuento.getText());
+            double subTotal = totalSubtotales.doubleValue();
+            TextTotal.setText(String.valueOf(descuento(descuento, subTotal)));
         } catch (SQLException | ClassNotFoundException e) {
             showAlert("Error", "No se pudieron cargar las reservas: " + e.getMessage());
         }
 
+        vboxFacturas.setVisible(true);
     }
 
     public double descuento(double descuentoText, double subtotal) {
@@ -261,9 +344,10 @@ public class Facturacion {
         }
     }
 
-    public void cargarReservasEnFactura(int idFactura) throws SQLException, ClassNotFoundException {
+    public BigDecimal cargarReservasEnFactura(int idFactura) throws SQLException, ClassNotFoundException {
         List<Reservas> reservas = new ArrayList<>();
         String queryReservas = "SELECT * FROM Reservas WHERE id_factura = ?";
+        BigDecimal totalSubtotales = BigDecimal.ZERO;
 
         try (Connection conn = ConectionDB.getConn();
              PreparedStatement ps = conn.prepareStatement(queryReservas)) {
@@ -271,18 +355,28 @@ public class Facturacion {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
+                    int idReserva = rs.getInt("id_reserva");
+                    String dni = rs.getString("dni");
+                    int idAsiento = rs.getInt("id_asiento");
+                    Timestamp fechaInicio = rs.getTimestamp("fecha_hora_inicio");
+                    Timestamp fechaFin = rs.getTimestamp("fecha_hora_fin");
+
+                    BigDecimal subtotal = calcularSubtotal(idAsiento, fechaInicio, fechaFin);
+                    totalSubtotales = totalSubtotales.add(subtotal);
+
                     Reservas reserva = new Reservas(
-                            rs.getInt("id_reserva"),
-                            rs.getString("dni"),
-                            rs.getInt("id_asiento"),
-                            rs.getInt("id_factura"),
-                            rs.getTimestamp("fecha_hora_inicio"),
-                            rs.getTimestamp("fecha_hora_fin"),
-                            rs.getBigDecimal("subtotal")
+                            idReserva,
+                            dni,
+                            idAsiento,
+                            idFactura,
+                            fechaInicio,
+                            fechaFin,
+                            subtotal
                     );
                     reservas.add(reserva);
                 }
             }
+            ConectionDB.openConn();
         }
 
         ObservableList<String> reservasList = FXCollections.observableArrayList();
@@ -291,10 +385,10 @@ public class Facturacion {
         }
 
         listaReservas.setItems(reservasList);
-        ConectionDB.openConn();
+        return totalSubtotales;
     }
 
-    public void modificarFactura(ActionEvent event) {
+    public void modificarFactura(ActionEvent event) throws ClassNotFoundException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("¿Quiere modificar la factura? :" + idFactura);
 
@@ -324,9 +418,10 @@ public class Facturacion {
             }
             initialize();
         }
+        ConectionDB.openConn();
     }
 
-    public void eliminarFactura(ActionEvent event) {
+    public void eliminarFactura(ActionEvent event) throws ClassNotFoundException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("¿Quiere eliminar la factura? :" + idFactura);
 
@@ -360,9 +455,10 @@ public class Facturacion {
             }
             initialize();
         }
+        ConectionDB.openConn();
     }
 
-    public void pagarFactura(ActionEvent event) {
+    public void pagarFactura(ActionEvent event) throws ClassNotFoundException {
         String estadoPago = "Pagada";
         LocalDateTime fecha = LocalDateTime.now();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -397,9 +493,14 @@ public class Facturacion {
             }
             initialize();
         }
+        ConectionDB.openConn();
+
     }
 
-    private void generarFacturaExcel(String facturaId) throws SQLException, IOException, ClassNotFoundException {
+
+
+
+    private void generarFacturaExcel() throws SQLException, IOException, ClassNotFoundException {
         String queryFactura = "SELECT * FROM Facturas WHERE id_factura = ?";
         String queryCliente = "SELECT * FROM Clientes WHERE dni = ?";
         String queryReservas = "SELECT * FROM Reservas WHERE id_factura = ?";
@@ -409,7 +510,7 @@ public class Facturacion {
              PreparedStatement psCliente = conn.prepareStatement(queryCliente);
              PreparedStatement psReservas = conn.prepareStatement(queryReservas)) {
 
-            psFactura.setString(1, facturaId);
+            psFactura.setInt(1, idFactura); // Utiliza la ID de la factura almacenada
             ResultSet rsFactura = psFactura.executeQuery();
             if (!rsFactura.next()) {
                 throw new SQLException("Factura no encontrada.");
@@ -430,7 +531,7 @@ public class Facturacion {
             String telefonoCliente = rsCliente.getString("telefono");
             String emailCliente = rsCliente.getString("email");
 
-            psReservas.setString(1, facturaId);
+            psReservas.setInt(1, idFactura); // Utiliza la ID de la factura almacenada
             ResultSet rsReservas = psReservas.executeQuery();
             List<String> reservas = new ArrayList<>();
             List<BigDecimal> subtotales = new ArrayList<>();
@@ -441,7 +542,6 @@ public class Facturacion {
                 Timestamp inicio = rsReservas.getTimestamp("fecha_hora_inicio");
                 Timestamp fin = rsReservas.getTimestamp("fecha_hora_fin");
 
-                // Calcula el subtotal
                 BigDecimal subtotal = calcularSubtotal(idAsiento, inicio, fin);
                 totalSubtotales = totalSubtotales.add(subtotal);
 
@@ -451,21 +551,18 @@ public class Facturacion {
                 subtotales.add(subtotal);
             }
 
-            // Crear el archivo Excel
             try (FileInputStream fis = new FileInputStream("src/main/resources/Docs/Modelo_factura_excel.xlsx");
                  Workbook workbook = new XSSFWorkbook(fis)) {
 
                 Sheet sheet = workbook.getSheetAt(0);
 
-                // Rellenar los datos básicos
-                setCellValue(sheet, 9, 1, facturaId);
+                setCellValue(sheet, 9, 1, String.valueOf(idFactura));
                 setCellValue(sheet, 15, 1, dniCliente);
                 setCellValue(sheet, 16, 1, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 setCellValue(sheet, 15, 5, nombreCliente);
                 setCellValue(sheet, 16, 5, telefonoCliente);
                 setCellValue(sheet, 14, 5, emailCliente);
 
-                // Rellenar las reservas y subtotales
                 int rowIndex = 17;
                 for (int i = 0; i < reservas.size(); i++) {
                     Row row = sheet.getRow(rowIndex);
@@ -485,37 +582,26 @@ public class Facturacion {
                     }
                     cell8.setCellValue(subtotales.get(i).doubleValue());
 
-                    // Avanzar a la siguiente fila
                     rowIndex++;
                 }
 
-                // Calcular el total con descuento
                 BigDecimal totalConDescuento = totalSubtotales.subtract(totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100))));
                 BigDecimal baseImponible = totalConDescuento.divide(BigDecimal.valueOf(1.07), BigDecimal.ROUND_HALF_UP);
                 BigDecimal impuestos = baseImponible.multiply(BigDecimal.valueOf(0.07));
 
-                // Rellenar el porcentaje de descuento
                 setCellValue(sheet, 45, 6, descuento.doubleValue() / 100);
-
-                // Rellenar el valor del descuento
                 BigDecimal valorDescuento = totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100)));
                 setCellValue(sheet, 45, 7, valorDescuento.doubleValue());
-
-                // Rellenar el total con descuento
                 setCellValue(sheet, 46, 7, totalConDescuento.doubleValue());
-
-                // Rellenar base imponible, impuestos y total
                 setCellValue(sheet, 43, 7, baseImponible.doubleValue());
                 setCellValue(sheet, 44, 7, impuestos.doubleValue());
                 setCellValue(sheet, 47, 7, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-                // Guardar el archivo Excel
-                String excelFilePath = "src/main/resources/Docs/Factura_" + facturaId + ".xlsx";
+                String excelFilePath = "src/main/resources/Docs/Factura_" + idFactura + ".xlsx";
                 try (FileOutputStream fos = new FileOutputStream(excelFilePath)) {
                     workbook.write(fos);
                 }
 
-                // Convertir el archivo Excel a PDF usando LibreOffice
                 convertirApdf(excelFilePath);
             }
         }

@@ -26,6 +26,18 @@ public class Facturas {
 
     }
 
+    public Facturas(int idFactura, String fechaHoraEmision, BigDecimal totalConDescuento, String dni, BigDecimal descuento, BigDecimal totalSubtotales, String estado, String fechaHoraPago, String formaPago) {
+        this.id_factura = idFactura;
+        this.fecha_hora_emision = fechaHoraEmision;
+        this.precio_total = totalConDescuento;
+        this.dni = dni;
+        this.descuento = descuento;
+        this.subtotal = totalSubtotales;
+        this.estado = estado;
+        this.fecha_hora_pago = fechaHoraPago;
+        this.forma_pago = formaPago;
+    }
+
     public Integer getId_factura() {
         return id_factura;
     }
@@ -118,4 +130,14 @@ public class Facturas {
                 ", fecha_pago='" + fecha_hora_pago + '\'' +
                 '}';
     }
+
+    public BigDecimal calcularTotalConDescuento(BigDecimal subtotal, BigDecimal descuento) {
+        if (subtotal == null || descuento == null) {
+            throw new IllegalArgumentException("Subtotal and discount must not be null");
+        }
+        BigDecimal discountAmount = subtotal.multiply(descuento).divide(BigDecimal.valueOf(100));
+        BigDecimal totalConDescuento = subtotal.subtract(discountAmount);
+        return totalConDescuento.setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
 }

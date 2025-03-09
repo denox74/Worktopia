@@ -212,7 +212,7 @@
                                         <VBox spacing="5.0">
                                             <children>
                                                 <Label alignment="CENTER" styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Subtotal" />
-                                                <TextField fx:id="TextSubtotal" prefHeight="30.0" prefWidth="100.0" />
+                                                <TextField fx:id="TextSubtotal" prefHeight="30.0" prefWidth="100.0" editable="false" />
                                             </children>
                                         </VBox>
                                         <VBox spacing="5.0">
@@ -232,7 +232,7 @@
                               <Insets left="10.0" />
                            </VBox.margin>
                         </Label>
-                                    <TextField fx:id="TextTotal" prefHeight="30.0" prefWidth="165.0">
+                                    <TextField fx:id="TextTotal" prefHeight="30.0" prefWidth="165.0" editable="false">
                            <VBox.margin>
                               <Insets left="10.0" right="100.0" />
                            </VBox.margin>

@@ -23,7 +23,7 @@
 
 
   <dependencies>
-    <dependency>
+       <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
       <version>2.20.0</version> <!-- Asegúrate de que sea una versión compatible -->
@@ -119,8 +119,7 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
+</dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
@@ -132,6 +131,12 @@
           <artifactId>poi-ooxml</artifactId>
           <version>5.2.3</version>
       </dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>RELEASE</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <build>
