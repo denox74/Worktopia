@@ -6,6 +6,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -64,5 +65,35 @@ public class ControladorReservas {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public String obtenerEmailCliente(String dni) {
+        String email = null;
+        String query = "SELECT email FROM Clientes WHERE dni = ?";
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)) {
+            stmt.setString(1, dni);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                email = rs.getString("email");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return email;
+    }
+
+    public String obtenerNombreCliente(String dni) {
+        String nombre = null;
+        String query = "SELECT nombre FROM Clientes WHERE dni = ?";
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)) {
+            stmt.setString(1, dni);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                nombre = rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nombre;
     }
 }

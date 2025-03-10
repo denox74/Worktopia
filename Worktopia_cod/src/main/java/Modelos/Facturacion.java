@@ -2,6 +2,7 @@ package Modelos;
 
 import Aplicaciones.MenuPrincipalApp;
 import Clases.*;
+import Controlador.ControladorFacturas;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -40,6 +41,7 @@ import java.util.List;
 public class Facturacion {
     private double xOffset = 0;
     private double yOffset = 0;
+    private ControladorFacturas controladorFacturas = new ControladorFacturas();
     private Reservas reservas;
     @FXML
     private TextField TextDniCliente;
@@ -389,6 +391,9 @@ public class Facturacion {
     }
 
     public void modificarFactura(ActionEvent event) throws ClassNotFoundException {
+        controladorFacturas.modificarFactura(TextFechaFactura,TextDescuento,TextTotal,TextSubtotal,idFactura);
+        initialize();
+        /**
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("¿Quiere modificar la factura? :" + idFactura);
 
@@ -418,10 +423,15 @@ public class Facturacion {
             }
             initialize();
         }
+         **/
+
         ConectionDB.openConn();
     }
 
     public void eliminarFactura(ActionEvent event) throws ClassNotFoundException {
+        controladorFacturas.eliminarFactura(idFactura);
+        initialize();
+        /**
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("¿Quiere eliminar la factura? :" + idFactura);
 
@@ -455,10 +465,15 @@ public class Facturacion {
             }
             initialize();
         }
+         **/
+
         ConectionDB.openConn();
     }
 
     public void pagarFactura(ActionEvent event) throws ClassNotFoundException {
+        controladorFacturas.abonarFactura(TextFechaFactura,TextDescuento,TextTotal,TextSubtotal,comboFormaPago,idFactura);
+        initialize();
+        /**
         String estadoPago = "Pagada";
         LocalDateTime fecha = LocalDateTime.now();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -493,6 +508,7 @@ public class Facturacion {
             }
             initialize();
         }
+         **/
         ConectionDB.openConn();
 
     }

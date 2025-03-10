@@ -5,6 +5,8 @@ import Aplicaciones.MenuPrincipalApp;
 import Clases.Reservas;
 import Clases.SesionUsuario;
 import ConexionDB.ConectionDB;
+import Controlador.ControladorEmail;
+import Controlador.ControladorReservas;
 import Manejadores_Reservas_Facturas.ReservaDAO;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,7 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.swing.event.ChangeListener;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -33,6 +34,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ReservasPanel {
+    private ControladorReservas controladorReservas = new ControladorReservas();
+    private ControladorEmail controladorEmail = new ControladorEmail();
     private ListaClientes listaClientes = new ListaClientes();
     @FXML
     private Button btnSalir;
@@ -144,6 +147,23 @@ public class ReservasPanel {
         horaFin.setText("");
         espacio.setText("");
         dniCliente.setText("");
+
+        String emailCliente = controladorReservas.obtenerEmailCliente(dniCliente.getText());
+        String nombreCliente = controladorReservas.obtenerNombreCliente(dniCliente.getText());
+
+        if(emailCliente != null && !emailCliente.isEmpty()){
+            String htmlPlantilla = "src/main/resources/html/reservasHTML.html";
+            String mensaje = controladorEmail.cargarPlantilla(
+                    htmlPlantilla,
+                    nombreCliente,
+                    horaInicio.toString(),
+                    horaFin.toString(),
+                    espacio.toString(),
+                    subtotal.toString()
+            );
+            controladorEmail.enviarCorreo(emailCliente,"Confirmación de reserva",mensaje);
+        }
+
     }
 
     public double facturaPrecioText(TextField nombreEspacio, TextField horaInicio, TextField horaFin) {

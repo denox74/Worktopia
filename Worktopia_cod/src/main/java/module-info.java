@@ -13,11 +13,16 @@ module org.example.worktopia_cod {
     requires com.almasb.fxgl.all;
     requires org.apache.poi.ooxml;
     requires com.fasterxml.jackson.databind;
-    requires java.sql;
-    requires java.desktop;
     requires org.apache.logging.log4j.core;
     requires org.junit.jupiter.api;
     requires org.testng;
+    requires mysql.connector.java;
+    requires com.google.protobuf;
+    requires org.apache.logging.log4j;
+    requires jdk.httpserver;
+    requires jakarta.mail;
+    requires java.sql;
+    requires java.desktop;
 
 
     opens Modelos to javafx.fxml;
