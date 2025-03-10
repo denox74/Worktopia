@@ -390,130 +390,26 @@ public class Facturacion {
         return totalSubtotales;
     }
 
-    public void modificarFactura(ActionEvent event){
-        controladorFacturas.modificarFactura(TextFechaFactura,TextDescuento,TextTotal,TextSubtotal,idFactura);
+    public void modificarFactura(ActionEvent event) {
+        controladorFacturas.modificarFactura(TextFechaFactura, TextDescuento, TextTotal, TextSubtotal, idFactura);
         initialize();
-        /**
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("¿Quiere modificar la factura? :" + idFactura);
 
-        ButtonType si = new ButtonType("Sí");
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(si, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == si) {
-            String queryUrl = "UPDATE Facturas SET fecha_hora_emision = ?,descuento = ?, precio_total = ? , subtotal = ? WHERE id_factura = ?";
-            try {
-                PreparedStatement stmt = ConectionDB.getConn().prepareStatement(queryUrl);
-                stmt.setString(1, TextFechaFactura.getText());
-                stmt.setString(2, TextDescuento.getText());
-                stmt.setString(3, TextTotal.getText());
-                stmt.setString(4, TextSubtotal.getText());
-                stmt.setInt(5, idFactura);
-                int confirmacion = stmt.executeUpdate();
-                if (confirmacion == 1) {
-                    showAlert("Modificar Factura", "La factura se ha modificado Correctamente");
-                } else {
-                    showAlert("Modificar Factura", "No se ha modificado la factura");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            initialize();
-        }
-         **/
-
-        //ConectionDB.openConn();
     }
 
-    public void eliminarFactura(ActionEvent event){
+    public void eliminarFactura(ActionEvent event) throws ClassNotFoundException {
         controladorFacturas.eliminarFactura(idFactura);
         initialize();
-        /**
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("¿Quiere eliminar la factura? :" + idFactura);
+        ConectionDB.openConn();
 
-        ButtonType si = new ButtonType("Sí");
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        alert.getButtonTypes().setAll(si, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == si) {
-            String queryUrl = "DELETE FROM Facturas WHERE id_factura = ?";
-            String subquery = "DELETE FROM Reservas WHERE id_factura = ?";
-            try {
-                //Eliminamos la reserva
-                PreparedStatement stmt = ConectionDB.getConn().prepareStatement(subquery);
-                stmt.setInt(1, idFactura);
-                stmt.executeUpdate();
-                //Eliminamos la factura
-                PreparedStatement stmt2 = ConectionDB.getConn().prepareStatement(queryUrl);
-                stmt2.setInt(1, idFactura);
-
-                int confirmacion2 = stmt2.executeUpdate();
-                if (confirmacion2 == 1) {
-                    showAlert("Eliminar Factura", "La factura se ha eliminado Correctamente");
-                } else {
-                    showAlert("Eliminar Factura", "No se ha elimado la factura");
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            initialize();
-        }
-         **/
-
-        //ConectionDB.openConn();
     }
 
     public void pagarFactura(ActionEvent event) throws ClassNotFoundException {
-        controladorFacturas.abonarFactura(TextFechaFactura,TextDescuento,TextTotal,TextSubtotal,comboFormaPago,idFactura);
+        controladorFacturas.abonarFactura(TextFechaFactura, TextDescuento, TextTotal, TextSubtotal, comboFormaPago, idFactura);
         initialize();
-        /**
-        String estadoPago = "Pagada";
-        LocalDateTime fecha = LocalDateTime.now();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("¿Quiere abonar la factura? :" + idFactura);
-
-        ButtonType si = new ButtonType("Sí");
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(si, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == si) {
-            String queryUrl = "UPDATE Facturas SET fecha_hora_emision = ?,descuento = ?, precio_total = ?, fecha_hora_pago = ? ,estado = ? , subtotal = ? , forma_pago = ? WHERE id_factura = ?";
-            try {
-                PreparedStatement stmt = ConectionDB.getConn().prepareStatement(queryUrl);
-                stmt.setString(1, TextFechaFactura.getText());
-                stmt.setString(2, TextDescuento.getText());
-                stmt.setString(3, TextSubtotal.getText());
-                stmt.setString(4, fecha.toString());
-                stmt.setString(5, estadoPago);
-                stmt.setString(6, TextTotal.getText());
-                stmt.setString(7, comboFormaPago.getSelectionModel().getSelectedItem().toString());
-                stmt.setInt(8, idFactura);
-                int confirmacion = stmt.executeUpdate();
-                if (confirmacion == 1) {
-                    showAlert("Pagar Factura", "La factura se ha Pagado Correctamente");
-                } else {
-                    showAlert("Pagar Factura", "No se ha Pagado la factura");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            initialize();
-        }
-         **/
         ConectionDB.openConn();
 
     }
-
-
 
 
     private void generarFacturaExcel() throws SQLException, IOException, ClassNotFoundException {

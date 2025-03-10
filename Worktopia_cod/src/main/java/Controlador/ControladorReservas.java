@@ -42,6 +42,7 @@ public class ControladorReservas {
             }
 
         }
+
     }
     public void eliminarReservas(TextField dni, int idReserva) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -76,6 +77,7 @@ public class ControladorReservas {
             if (rs.next()) {
                 email = rs.getString("email");
             }
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,6 +93,7 @@ public class ControladorReservas {
             if (rs.next()) {
                nombre = rs.getString("nombre");
             }
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -106,6 +109,7 @@ public class ControladorReservas {
                 if (rs.next()) {
                     idReserva = rs.getInt("id_reserva");
                 }
+                rs.close();
             } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }

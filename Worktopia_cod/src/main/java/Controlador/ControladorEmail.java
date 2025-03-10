@@ -55,6 +55,7 @@ public class ControladorEmail {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(correo, contrasena);
             }
+
         });
         try {
             Message email = new MimeMessage(session);
