@@ -141,13 +141,7 @@ public class ReservasPanel {
     }
 
     public void insertarReserva(ActionEvent event) {
-        insertarDatos();
-        fecha.setValue(null);
-        horaInicio.setText("");
-        horaFin.setText("");
-        espacio.setText("");
-        dniCliente.setText("");
-
+        int idReserva = controladorReservas.obtenerIdReserva(dniCliente.getText());
         String emailCliente = controladorReservas.obtenerEmailCliente(dniCliente.getText());
         String nombreCliente = controladorReservas.obtenerNombreCliente(dniCliente.getText());
 
@@ -156,13 +150,17 @@ public class ReservasPanel {
             String mensaje = controladorEmail.cargarPlantilla(
                     htmlPlantilla,
                     nombreCliente,
-                    horaInicio.toString(),
-                    horaFin.toString(),
-                    espacio.toString(),
-                    subtotal.toString()
+                    horaInicio.getText().toString(),
+                    horaFin.getText().toString(),
+                    espacio.getText().toString(),
+                    subtotal.toString(),
+                    idReserva
+
             );
             controladorEmail.enviarCorreo(emailCliente,"Confirmación de reserva",mensaje);
         }
+
+        insertarDatos();
 
     }
 

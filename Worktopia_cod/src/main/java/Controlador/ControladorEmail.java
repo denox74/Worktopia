@@ -8,23 +8,15 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Authenticator;
 
-
-
-import java.io.*;
-import java.util.Properties;
-import javax.mail.*;
-import javax.mail.internet.*;
-
 public class ControladorEmail {
 
-    private static final String correo = System.getenv("woktopiacoworking@gmail.com"); // Obtiene de variable de entorno
-    private static final String contrasena = System.getenv("zywz ibuv kyhq zmvk"); // Obtiene de variable de entorno
+    private static final String correo = "woktopiacoworking@gmail.com"; // Obtiene de variable de entorno
+    private static final String contrasena = "zywzibuvkyhqzmvk"; // Obtiene de variable de entorno
 
-    public String cargarPlantilla(String ruta, String cliente, String horaInicio, String horaFin, String espacio, String subtotal) {
+    public String cargarPlantilla(String ruta, String cliente, String horaInicio, String horaFin, String espacio, String subtotal,int idReserva) {
         StringBuilder contenido = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String linea;
@@ -42,20 +34,21 @@ public class ControladorEmail {
                 .replace("{{HORA_INICIO}}", horaInicio)
                 .replace("{{HORA_FIN}}", horaFin)
                 .replace("{{ESPACIO}}", espacio)
-                .replace("{{SUBTOTAL}}", subtotal);
+                .replace("{{SUBTOTAL}}", subtotal)
+                .replace("{{IDRESERVA}}", String.valueOf(idReserva));
     }
 
     public void enviarCorreo(String destinatario, String asunto, String mensajeHtml) {
-        if (correo == null || contrasena == null) {
-            System.out.println("Error: Credenciales de email no configuradas correctamente.");
-            return;
-        }
 
         Properties propiedades = new Properties();
-        propiedades.put("mail.smtp.auth", "true");
-        propiedades.put("mail.smtp.starttls.enable", "true");
+        propiedades.setProperty("mail.mime.adress.strict", "false");
         propiedades.put("mail.smtp.host", "smtp.gmail.com");
-        propiedades.put("mail.smtp.port", "587");
+        propiedades.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        propiedades.put("mail.smtp.charset", "utf-8");
+        propiedades.setProperty("mail.smtp.auth", "true");
+        propiedades.setProperty("mail.smtp.starttls.enable", "true");
+        propiedades.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+        propiedades.setProperty("mail.smtp.port", "587");
 
         Session session = Session.getInstance(propiedades, new Authenticator() {
             @Override
@@ -63,20 +56,31 @@ public class ControladorEmail {
                 return new PasswordAuthentication(correo, contrasena);
             }
         });
-
         try {
             Message email = new MimeMessage(session);
             email.setFrom(new InternetAddress(correo));
             email.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
             email.setSubject(asunto);
-            email.setContent(mensajeHtml, "text/html");
+            email.setContent(mensajeHtml, "text/html; charset=utf-8");
 
-            Transport.send(email);
-            System.out.println("Se ha enviado el email correctamente.");
-
+            new Thread(() -> { // se queda la aplicacion abierto y no se bloquea cuando mande el correo
+                try {
+                    Transport transport =  session.getTransport("smtp");
+                    transport.connect("smtp.gmail.com", correo, contrasena);
+                    transport.sendMessage(email, email.getAllRecipients());
+                    transport.close();
+                    System.out.println("Se ha enviado el email correctamente.");
+                } catch (NoSuchProviderException e) {
+                    throw new RuntimeException(e);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                    System.out.println("Error al enviar el email correctamente.");
+                }
+            }).start();
+        } catch (AddressException e) {
+            throw new RuntimeException(e);
         } catch (MessagingException e) {
-            e.printStackTrace();
-            System.out.println("Error al enviar el correo.");
+            throw new RuntimeException(e);
         }
     }
 }

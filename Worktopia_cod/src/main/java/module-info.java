@@ -20,7 +20,7 @@ module org.example.worktopia_cod {
     requires com.google.protobuf;
     requires org.apache.logging.log4j;
     requires jdk.httpserver;
-    requires jakarta.mail;
+    requires java.mail;
     requires java.sql;
     requires java.desktop;
 

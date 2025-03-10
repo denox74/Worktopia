@@ -68,7 +68,7 @@ public class ControladorReservas {
     }
 
     public String obtenerEmailCliente(String dni) {
-        String email = null;
+        String email = "";
         String query = "SELECT email FROM Clientes WHERE dni = ?";
         try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)) {
             stmt.setString(1, dni);
@@ -83,17 +83,32 @@ public class ControladorReservas {
     }
 
     public String obtenerNombreCliente(String dni) {
-        String nombre = null;
+        String nombre = "";
         String query = "SELECT nombre FROM Clientes WHERE dni = ?";
         try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)) {
             stmt.setString(1, dni);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                nombre = rs.getString("nombre");
+               nombre = rs.getString("nombre");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return nombre;
+    }
+
+    public int obtenerIdReserva(String dni) {
+        int idReserva = 0;
+        String query = "SELECT id_reserva FROM Reservas WHERE dni = ?";
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)){
+                stmt.setString(1, dni);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    idReserva = rs.getInt("id_reserva");
+                }
+            } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return idReserva;
     }
 }

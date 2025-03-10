@@ -390,7 +390,7 @@ public class Facturacion {
         return totalSubtotales;
     }
 
-    public void modificarFactura(ActionEvent event) throws ClassNotFoundException {
+    public void modificarFactura(ActionEvent event){
         controladorFacturas.modificarFactura(TextFechaFactura,TextDescuento,TextTotal,TextSubtotal,idFactura);
         initialize();
         /**
@@ -425,10 +425,10 @@ public class Facturacion {
         }
          **/
 
-        ConectionDB.openConn();
+        //ConectionDB.openConn();
     }
 
-    public void eliminarFactura(ActionEvent event) throws ClassNotFoundException {
+    public void eliminarFactura(ActionEvent event){
         controladorFacturas.eliminarFactura(idFactura);
         initialize();
         /**
@@ -467,7 +467,7 @@ public class Facturacion {
         }
          **/
 
-        ConectionDB.openConn();
+        //ConectionDB.openConn();
     }
 
     public void pagarFactura(ActionEvent event) throws ClassNotFoundException {

@@ -80,6 +80,7 @@ public class ListaClientes {
     private TableColumn<Clientes, String> colEmail;
     @FXML
     private TableColumn<Clientes, String> colTelefono;
+
     private static final StringProperty seleccionDni = new SimpleStringProperty();
 
 
