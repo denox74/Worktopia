@@ -100,7 +100,7 @@ public class ConectionDB {
                     );
                     clientes.add(cliente);
                 }
-                rs.close();
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -214,7 +214,6 @@ public class ConectionDB {
                     );
                     usuarios.add(usuario);
                 }
-                rs.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();

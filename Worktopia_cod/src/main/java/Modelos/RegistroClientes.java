@@ -51,6 +51,7 @@ public class RegistroClientes {
     }
 
     public RegistroClientes() {
+
     }
 
 

@@ -182,7 +182,7 @@ public class ListaClientes {
 
     public void modificarDatos(ActionEvent event) {
         controladorClientes.modificarClientes(TextNombre,TextPrimerApellido,TextSegundoApellido,TextEmail,TextTelefono,dni);
-            initialize();
+        initialize();
 
     }
 
@@ -228,7 +228,6 @@ public class ListaClientes {
             stage.setTitle("Registro Cliente");
             stage.initStyle(StageStyle.UNDECORATED);
             MenuPrincipalApp.agregarIcono(stage);
-
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

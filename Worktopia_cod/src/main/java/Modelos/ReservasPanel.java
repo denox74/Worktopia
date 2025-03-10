@@ -141,7 +141,7 @@ public class ReservasPanel {
     }
 
     public void insertarReserva(ActionEvent event) {
-        int idReserva = controladorReservas.obtenerIdReserva(dniCliente.getText());
+        String fecha = controladorReservas.obtenerIdReserva(dniCliente.getText());
         String emailCliente = controladorReservas.obtenerEmailCliente(dniCliente.getText());
         String nombreCliente = controladorReservas.obtenerNombreCliente(dniCliente.getText());
 
@@ -150,15 +150,15 @@ public class ReservasPanel {
             String mensaje = controladorEmail.cargarPlantilla(
                     htmlPlantilla,
                     nombreCliente,
+                    fecha,
                     horaInicio.getText().toString(),
                     horaFin.getText().toString(),
                     espacio.getText().toString(),
-                    subtotal.toString(),
-                    idReserva
-
+                    subtotal.toString()
             );
             controladorEmail.enviarCorreo(emailCliente,"Confirmación de reserva",mensaje);
         }
+        System.out.println("idreserva" + fecha);
 
         insertarDatos();
 
@@ -177,10 +177,12 @@ public class ReservasPanel {
             if (rs.next()) {
                 tarifa = rs.getInt("tarifa_hora");
             }
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
         }
+
 
         try {
             LocalTime inicio = LocalTime.parse(inicioTexto);
@@ -192,6 +194,7 @@ public class ReservasPanel {
         } catch (Exception e) {
             return 0;
         }
+
     }
 
     // configuracion de ventana de apertura de los horarios

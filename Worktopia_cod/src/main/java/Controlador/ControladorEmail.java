@@ -11,12 +11,79 @@ import javax.mail.Session;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Authenticator;
 
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javax.mail.*;
+import javax.mail.internet.*;
+
 public class ControladorEmail {
+    private static final String correo = "woktopiacoworking@gmail.com";
+    private static final String contrasena = "zywzibuvkyhqzmvk";
 
-    private static final String correo = "woktopiacoworking@gmail.com"; // Obtiene de variable de entorno
-    private static final String contrasena = "zywzibuvkyhqzmvk"; // Obtiene de variable de entorno
+    private static final ExecutorService executor = Executors.newFixedThreadPool(3); // Para enviar múltiples correos sin bloquear
+    private static final Session session;
+    private static Transport transport;
 
-    public String cargarPlantilla(String ruta, String cliente, String horaInicio, String horaFin, String espacio, String subtotal,int idReserva) {
+    static {
+        // Configuración de propiedades SMTP
+        Properties propiedades = new Properties();
+        propiedades.put("mail.smtp.host", "smtp.gmail.com");
+        propiedades.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        propiedades.put("mail.smtp.charset", "utf-8");
+        propiedades.put("mail.smtp.auth", "true");
+        propiedades.put("mail.smtp.starttls.enable", "true");
+        propiedades.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        propiedades.put("mail.smtp.port", "587");
+
+        session = Session.getInstance(propiedades, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(correo, contrasena);
+            }
+        });
+
+        try {
+            // Mantener la conexión SMTP abierta para múltiples envíos
+            transport = session.getTransport("smtp");
+            transport.connect("smtp.gmail.com", correo, contrasena);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void enviarCorreo(String destinatario, String asunto, String mensajeHtml) {
+        executor.submit(() -> { // Se ejecuta en segundo plano sin bloquear la app
+            try {
+                Message email = new MimeMessage(session);
+                email.setFrom(new InternetAddress(correo));
+                email.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+                email.setSubject(asunto);
+                email.setContent(mensajeHtml, "text/html; charset=utf-8");
+
+                synchronized (transport) { // Evita colisiones si varios hilos envían correos simultáneamente
+                    transport.sendMessage(email, email.getAllRecipients());
+                }
+
+                System.out.println("Correo enviado correctamente");
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                System.out.println("Error al enviar el correo.");
+            }
+        });
+    }
+
+    public static void cerrarConexion() {
+        try {
+            if (transport != null) {
+                transport.close();
+                executor.shutdown();
+            }
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+    public String cargarPlantilla(String ruta, String cliente, String fecha, String horaInicio, String horaFin, String espacio, String subtotal) {
         StringBuilder contenido = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String linea;
@@ -28,62 +95,29 @@ public class ControladorEmail {
             return "Error cargando la plantilla";
         }
 
-        // Reemplazar los valores dinámicos
+        // Reemplazar los valores del html
         return contenido.toString()
+
                 .replace("{{CLIENTE}}", cliente)
+                .replace("{{FECHA}}", fecha)
                 .replace("{{HORA_INICIO}}", horaInicio)
                 .replace("{{HORA_FIN}}", horaFin)
                 .replace("{{ESPACIO}}", espacio)
-                .replace("{{SUBTOTAL}}", subtotal)
-                .replace("{{IDRESERVA}}", String.valueOf(idReserva));
+                .replace("{{SUBTOTAL}}", subtotal);
     }
 
-    public void enviarCorreo(String destinatario, String asunto, String mensajeHtml) {
 
-        Properties propiedades = new Properties();
-        propiedades.setProperty("mail.mime.adress.strict", "false");
-        propiedades.put("mail.smtp.host", "smtp.gmail.com");
-        propiedades.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        propiedades.put("mail.smtp.charset", "utf-8");
-        propiedades.setProperty("mail.smtp.auth", "true");
-        propiedades.setProperty("mail.smtp.starttls.enable", "true");
-        propiedades.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
-        propiedades.setProperty("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(propiedades, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(correo, contrasena);
-            }
-
-        });
+    public static void main(String[] args) {
+        // Esperar unos segundos antes de cerrar la conexión
         try {
-            Message email = new MimeMessage(session);
-            email.setFrom(new InternetAddress(correo));
-            email.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
-            email.setSubject(asunto);
-            email.setContent(mensajeHtml, "text/html; charset=utf-8");
-
-            new Thread(() -> { // se queda la aplicacion abierto y no se bloquea cuando mande el correo
-                try {
-                    Transport transport =  session.getTransport("smtp");
-                    transport.connect("smtp.gmail.com", correo, contrasena);
-                    transport.sendMessage(email, email.getAllRecipients());
-                    transport.close();
-                    System.out.println("Se ha enviado el email correctamente.");
-                } catch (NoSuchProviderException e) {
-                    throw new RuntimeException(e);
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                    System.out.println("Error al enviar el email correctamente.");
-                }
-            }).start();
-        } catch (AddressException e) {
-            throw new RuntimeException(e);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+        cerrarConexion();
     }
 }
+
 
 
