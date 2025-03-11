@@ -11,11 +11,9 @@ import javax.mail.Session;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Authenticator;
 
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.mail.*;
-import javax.mail.internet.*;
+
 
 public class ControladorEmail {
     private static final String correo = "woktopiacoworking@gmail.com";

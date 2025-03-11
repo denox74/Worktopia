@@ -62,112 +62,112 @@
         <TextField id="horario" fx:id="horaInicio" layoutX="1065.0" layoutY="417.0" />
         <TextField id="precio" fx:id="precio" layoutX="1066.0" layoutY="488.0" />
         <DatePicker id="Fecha" fx:id="fecha" layoutX="960.0" layoutY="311.0" promptText="Fechas" styleClass="fechas" stylesheets="@../Estilos/EstiloReservas.css" />
-        <Button fx:id="BtnOficina1" alignment="TOP_CENTER" layoutX="521.0" layoutY="528.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="218.0" prefWidth="193.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Oficina 1">
+        <Button fx:id="BtnOficina1" alignment="TOP_CENTER" layoutX="521.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="218.0" prefWidth="193.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Oficina 1">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Button>
-        <Button id="oficina2" fx:id="BtnOficina2" alignment="TOP_CENTER" layoutX="715.0" layoutY="528.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="218.0" prefWidth="182.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Oficina 2">
+        <Button id="oficina2" fx:id="BtnOficina2" alignment="TOP_CENTER" layoutX="715.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="218.0" prefWidth="182.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Oficina 2">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Button>
-        <Button id="BtnConferencias1" fx:id="BtnConferencias1" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" layoutX="62.0" layoutY="149.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="324.0" prefWidth="182.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Sala de Conferencias 1" textAlignment="CENTER">
+        <Button id="BtnConferencias1" fx:id="BtnConferencias1" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" layoutX="62.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="324.0" prefWidth="182.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Sala de Conferencias 1" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="13.0" />
             </font>
         </Button>
-        <Button fx:id="BtnConferencias2" alignment="BOTTOM_CENTER" layoutX="365.0" layoutY="150.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="210.0" prefWidth="203.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Sala de Conferencias 2">
+        <Button fx:id="BtnConferencias2" alignment="BOTTOM_CENTER" layoutX="365.0" layoutY="150.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="210.0" prefWidth="203.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="Sala de Conferencias 2">
             <font>
                 <Font name="System Bold" size="13.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa1" layoutX="108.0" layoutY="548.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A1">
+        <Button fx:id="Mesa1" layoutX="108.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A1">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa2" layoutX="143.0" layoutY="548.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="39.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A2">
+        <Button fx:id="Mesa2" layoutX="143.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="39.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A2">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa3" layoutX="108.0" layoutY="618.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A3">
+        <Button fx:id="Mesa3" layoutX="108.0" layoutY="618.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A3">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa4" layoutX="143.0" layoutY="618.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="39.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A4">
+        <Button fx:id="Mesa4" layoutX="143.0" layoutY="618.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="39.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A4">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa5" layoutX="108.0" layoutY="673.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A5">
+        <Button fx:id="Mesa5" layoutX="108.0" layoutY="673.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A5">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa6" layoutX="143.0" layoutY="673.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="39.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A6">
+        <Button fx:id="Mesa6" layoutX="143.0" layoutY="673.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="39.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A6">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa7" layoutX="234.0" layoutY="548.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A7">
+        <Button fx:id="Mesa7" layoutX="234.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A7">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa8" layoutX="269.0" layoutY="548.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="39.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A8">
+        <Button fx:id="Mesa8" layoutX="269.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="39.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A8">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa9" layoutX="234.0" layoutY="618.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A9">
+        <Button fx:id="Mesa9" layoutX="234.0" layoutY="618.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A9">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa10" layoutX="266.0" layoutY="618.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A10">
+        <Button fx:id="Mesa10" layoutX="266.0" layoutY="618.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A10">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa11" layoutX="234.0" layoutY="673.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A11">
+        <Button fx:id="Mesa11" layoutX="234.0" layoutY="673.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A11">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa12" layoutX="273.0" layoutY="673.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A12">
+        <Button fx:id="Mesa12" layoutX="273.0" layoutY="673.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A12">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa13" layoutX="361.0" layoutY="548.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A13">
+        <Button fx:id="Mesa13" layoutX="361.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A13">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa14" layoutX="396.0" layoutY="548.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A14">
+        <Button fx:id="Mesa14" layoutX="396.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A14">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa15" layoutX="361.0" layoutY="618.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A15">
+        <Button fx:id="Mesa15" layoutX="361.0" layoutY="618.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A15">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa16" layoutX="396.0" layoutY="618.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A16">
+        <Button fx:id="Mesa16" layoutX="396.0" layoutY="618.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A16">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa17" layoutX="361.0" layoutY="673.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A17">
+        <Button fx:id="Mesa17" layoutX="361.0" layoutY="673.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A17">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="Mesa18" layoutX="396.0" layoutY="673.0" mnemonicParsing="false" onAction="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A18">
+        <Button fx:id="Mesa18" layoutX="396.0" layoutY="673.0" mnemonicParsing="false" onMouseClicked="#ventanaHorarios" prefHeight="39.0" prefWidth="45.0" styleClass="BtnOficina" stylesheets="@../Estilos/EstiloReservas.css" text="A18">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>

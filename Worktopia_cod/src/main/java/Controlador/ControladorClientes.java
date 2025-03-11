@@ -1,10 +1,9 @@
 package Controlador;
 
 import ConexionDB.ConectionDB;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 import java.sql.PreparedStatement;

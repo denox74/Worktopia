@@ -2,6 +2,7 @@ package Modelos;
 
 import Clases.Usuarios;
 import ConexionDB.ConectionDB;
+import Controlador.ControladorClientes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -26,8 +27,6 @@ import java.util.Optional;
 public class RegistroUsuarios {
 
     @FXML
-    private VBox vboxAgregarUsuario;
-    @FXML
     private TextField TextAgregarNombre;
     @FXML
     private TextField TextAgregarEmail;
@@ -48,10 +47,7 @@ public class RegistroUsuarios {
         btnSalir.setStyle(("-fx-background-color: transparent;"));
 
     }
-
-    public RegistroUsuarios() {
-
-    }
+    public RegistroUsuarios(){}
 
 
     public static void rellenarCombo(ComboBox<String> comboBox, ObservableList<String> categorias) {

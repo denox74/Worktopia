@@ -122,6 +122,7 @@ public class ListaReservas {
         inicioSesion();
 
     }
+    public ListaReservas() {}
 
 
     private void loadReservasFromDatabase() throws SQLException, ClassNotFoundException {
@@ -146,12 +147,6 @@ public class ListaReservas {
 
 
     }
-
-
-    public ListaReservas() {
-
-    }
-
 
     public void inicioSesion() {
         String categoria = SesionUsuario.getCategoriaUsuario();

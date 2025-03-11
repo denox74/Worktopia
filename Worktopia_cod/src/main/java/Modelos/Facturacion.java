@@ -3,8 +3,6 @@ package Modelos;
 import Aplicaciones.MenuPrincipalApp;
 import Clases.*;
 import Controlador.ControladorFacturas;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -52,10 +50,6 @@ public class Facturacion {
     @FXML
     private TextField TextTotal;
     @FXML
-    private Button BtnGenerarFactura;
-    @FXML
-    private Button BtnPagarFactura;
-    @FXML
     private TextField TextFechaFactura;
     @FXML
     private Button btnSalir;
@@ -63,8 +57,6 @@ public class Facturacion {
     private Button ListaReservas;
     @FXML
     private Button ListaClientes;
-    @FXML
-    private Button btnGenerar;
     @FXML
     private Button BtnUsuarios;
     @FXML
@@ -119,6 +111,7 @@ public class Facturacion {
 
     @FXML
     public void initialize() {
+        llenarComboBoxInicio();
         btnSalir.setStyle(("-fx-background-color: transparent;"));
         Stage ventanaSecundaria = new Stage();
         ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
@@ -227,6 +220,9 @@ public class Facturacion {
         });
     }
 
+    public Facturacion() {
+    }
+
     public BigDecimal cargarReservasEnFactura(Connection conn, int idFactura) throws SQLException, ClassNotFoundException {
         List<Reservas> reservas = new ArrayList<>();
         String queryReservas = "SELECT * FROM Reservas WHERE id_factura = ?";
@@ -277,15 +273,14 @@ public class Facturacion {
     }
 
 
-    public Facturacion() {
-
-    }
-
     public static void rellenarCombo(ComboBox<String> comboBox, ObservableList<String> forma) {
         comboBox.setItems(forma);
     }
 
     public void llenarComboBox(ActionEvent event) {
+        rellenarCombo(comboFormaPago, formasPago);
+    }
+    public void llenarComboBoxInicio() {
         rellenarCombo(comboFormaPago, formasPago);
     }
 
@@ -357,9 +352,9 @@ public class Facturacion {
         String queryReservas = "SELECT * FROM Reservas WHERE id_factura = ?";
         BigDecimal totalSubtotales = BigDecimal.ZERO;
 
-        Connection conn = ConectionDB.getConn(); // Obtén la conexión sin cerrarla
+        Connection conn = ConectionDB.getConn();
         try (PreparedStatement ps = conn.prepareStatement(queryReservas)) {
-            ps.setInt(1, idFactura); // Establecemos el idFactura en el PreparedStatement
+            ps.setInt(1, idFactura);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -406,7 +401,7 @@ public class Facturacion {
         initialize();
     }
 
-    public void eliminarFactura(ActionEvent event) throws ClassNotFoundException {
+    public void eliminarFactura(ActionEvent event){
         String forma = controladorFacturas.obtenerForma(idFactura).toLowerCase();
         if (forma.equals("pendiente")) {
             controladorFacturas.eliminarFactura(idFactura);
@@ -419,7 +414,7 @@ public class Facturacion {
 
     }
 
-    public void pagarFactura(ActionEvent event) throws ClassNotFoundException {
+    public void pagarFactura(ActionEvent event){
         controladorFacturas.abonarFactura(TextFechaFactura, TextDescuento, TextTotal, TextSubtotal, comboFormaPago, idFactura);
         initialize();
 

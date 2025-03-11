@@ -147,7 +147,6 @@ public class ListaClientes {
     }
 
     public ListaClientes() {
-
     }
 
     public static StringProperty getSelectSeleccionDni() {
@@ -183,13 +182,13 @@ public class ListaClientes {
     }
 
     public void modificarDatos(ActionEvent event) {
-        controladorClientes.modificarClientes(TextNombre,TextPrimerApellido,TextSegundoApellido,TextEmail,TextTelefono,dni);
+        controladorClientes.modificarClientes(TextNombre, TextPrimerApellido, TextSegundoApellido, TextEmail, TextTelefono, dni);
         initialize();
 
     }
 
     public void eliminarDatos(ActionEvent event) {
-       controladorClientes.eliminarClientes(dni);
+        controladorClientes.eliminarClientes(dni);
         initialize();
     }
 

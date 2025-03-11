@@ -51,14 +51,13 @@ public class RegistroClientes {
     }
 
     public RegistroClientes() {
-
     }
-
 
     public void guardarCliente(ActionEvent event) {
         agregarCliente();
 
     }
+
     public void salirVentana(ActionEvent event) {
         ((Stage) btnSalir.getScene().getWindow()).close();
     }
@@ -90,14 +89,14 @@ public class RegistroClientes {
                     stmt.setString(6, telefono.getText());
 
                     int rowsInserted = stmt.executeUpdate();
-                        if (rowsInserted > 0) {
-                            alert.setContentText("Usuario agregado correctamente");
-                            alert.show();
+                    if (rowsInserted > 0) {
+                        alert.setContentText("Usuario agregado correctamente");
+                        alert.show();
 
-                        } else {
+                    } else {
                         alert.setContentText("Usuario no agregado");
                         alert.show();
-                        }
+                    }
 
 
                 } catch (SQLException e) {

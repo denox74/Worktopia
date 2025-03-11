@@ -115,10 +115,6 @@ public class ListaUsuarios {
         }
     }
 
-    public ListaUsuarios() {
-
-    }
-
 
     private void loadUsuariosFromDatabase() throws SQLException, ClassNotFoundException {
         List<Usuarios> usuarios = ConectionDB.getUsuarios();
@@ -149,11 +145,14 @@ public class ListaUsuarios {
         vboxUsuarios.setVisible(true);
     }
 
+    public ListaUsuarios() {
+
+    }
     public ListaUsuarios(MenuPrincipal menuPrincipal) {
         this.menuPrincipal = menuPrincipal;
 
-
     }
+
 
 
     public void modificarUsuarios(ActionEvent event) {

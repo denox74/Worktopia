@@ -1,7 +1,6 @@
 package Controlador;
 
 import ConexionDB.ConectionDB;
-import com.almasb.fxgl.scene3d.Cone;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -10,9 +9,12 @@ import javafx.scene.control.TextField;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class ControladorReservas {
 
@@ -165,6 +167,47 @@ public class ControladorReservas {
             e.printStackTrace();
         }
         return idEspacio;
+    }
+
+    public void buscarDni(String dni , TextField dniCliente){
+        String query = "SELECT COUNT(dni) FROM Clientes WHERE dni = ?";
+        try {
+            PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query);
+            stmt.setString(1, dni);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                int resultado = rs.getInt(1);
+                if(resultado == 1){
+                    dniCliente.setStyle("-fx-border-color: #00ff00; -fx-border-width: 2");
+                }else {
+                    dniCliente.setStyle("-fx-border-color: #ff0000; -fx-border-width: 2");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public Set<String> obtenerHorariosReservados(int asiento, LocalDate fecha) {
+        Set<String> horariosOcupados = new HashSet<>();
+        String consulta = "SELECT TIME(fecha_hora_inicio),TIME(fecha_hora_fin) FROM Reservas WHERE id_asiento = ? AND DATE(fecha_hora_inicio) = ?";
+
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(consulta)) {
+            stmt.setInt(1, asiento);
+            stmt.setString(2, fecha.toString());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                LocalTime inicio = rs.getTime(1).toLocalTime();
+                LocalTime fin = rs.getTime(2).toLocalTime();
+                while (!inicio.isAfter(fin)) {
+                    horariosOcupados.add(inicio.toString());
+                    inicio = inicio.plusMinutes(30);
+                }
+            }
+        } catch (SQLException e) {
+        }
+        return horariosOcupados;
     }
 
 
