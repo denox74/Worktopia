@@ -110,9 +110,12 @@ public class ListaUsuarios {
         } catch (SQLException |
                  ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+
         }
     }
-    public ListaUsuarios(){
+
+    public ListaUsuarios() {
 
     }
 
@@ -154,7 +157,7 @@ public class ListaUsuarios {
 
 
     public void modificarUsuarios(ActionEvent event) {
-        controladorUsuarios.modificarUsuario(TextNombre,TextEmail,enumCategoria,idusuario);
+        controladorUsuarios.modificarUsuario(TextNombre, TextEmail, enumCategoria, idusuario);
         initialize();
 
     }
@@ -164,6 +167,7 @@ public class ListaUsuarios {
         initialize();
 
     }
+
     public void loginUsuarios(String usuario, String pass) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         String query = "SELECT nombre, contrasenia, categoria FROM Usuarios WHERE nombre = ? AND contrasenia = ?";
@@ -177,7 +181,8 @@ public class ListaUsuarios {
                 String categoria = rs.getString("categoria");
                 String user = rs.getString("nombre");
                 String password = rs.getString("contrasenia");
-                if (user.equals(usuario) && password.equals(pass)) {}
+                if (user.equals(usuario) && password.equals(pass)) {
+                }
                 SesionUsuario.setCategoriaUsuario(categoria); // Guardamos la categoría en la sesión
                 alert.setContentText("Login correcto");
                 alert.showAndWait();
@@ -197,7 +202,6 @@ public class ListaUsuarios {
     }
 
 
-
     public static void rellenarCombo(ComboBox<String> comboBox, ObservableList<String> categorias) {
         comboBox.setItems(categorias);
     }
@@ -210,19 +214,17 @@ public class ListaUsuarios {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle(titulo);
-
+            stage.setResizable(false);
+            stage.setMaximized(false);
             MenuPrincipalApp.agregarIcono(stage);
-
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
 
     public void ventanaListaClientes(ActionEvent event) {
@@ -234,10 +236,12 @@ public class ListaUsuarios {
         abrirVentana("/Menus/Facturacion.fxml", "Factuacion");
         ((Stage) Facturacion.getScene().getWindow()).close();
     }
+
     public void ventanaListaReservas(ActionEvent event) {
         abrirVentana("/Menus/ListaReservas.fxml", "Listas De Reservas");
         ((Stage) ListaReservas.getScene().getWindow()).close();
     }
+
     public void ventanaAgregarUsuarios(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroUsuarios.fxml"));
@@ -253,6 +257,7 @@ public class ListaUsuarios {
             e.printStackTrace();
         }
     }
+
     public void salirVbox(ActionEvent event) {
         vboxUsuarios.setVisible(false);
     }

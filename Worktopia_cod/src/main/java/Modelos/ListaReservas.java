@@ -20,10 +20,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -114,8 +116,11 @@ public class ListaReservas {
         } catch (SQLException |
                  ClassNotFoundException e) {
             e.printStackTrace();
+        }finally{
+
         }
         inicioSesion();
+
     }
 
 
@@ -169,30 +174,68 @@ public class ListaReservas {
     }
 
     public void modificarReservas(ActionEvent event) {
-        controladorReservas.modificarReservas(TextDni, TextInicio, TextFin, TextAsiento, idReserva);
+        String forma = controladorReservas.obtenerForma(TextDni.getText());
+        if (forma.equals("Pendiente")) {
+            controladorReservas.modificarReservas(TextDni, TextInicio, TextFin, TextAsiento, idReserva);
+        }else{
+            showAlert("Aviso","La reserva esta pagada");
+
+        }
+        System.out.println("forma" + forma);
+
         initialize();
     }
 
+    /**
+     * Metodo para eliminar reservas
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * @throws IOException
+     * @throws RuntimeException
+     * @throws IllegalArgumentException
+     * @throws NullPointerException
+     * @throws IllegalStateException
+     * @throws UnsupportedOperationException
+     * @throws IndexOutOfBoundsException
+     * @throws ClassCastException
+     *
+     */
+
     public void eliminarReservas(ActionEvent event) {
-        controladorReservas.eliminarReservas(TextDni,idReserva);
+        String forma = controladorReservas.obtenerForma(TextDni.getText());
+        if (forma.equals("Pendiente")) {
+            controladorReservas.eliminarReservas(TextDni, idReserva);
+        }else {
+            showAlert("Aviso","La reserva esta pagada");
+        }
+        System.out.println("forma" + forma);
         initialize();
+
     }
 
     public void abrirVentana(String fxmlPath, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle(titulo);
-
+            stage.setResizable(false);
+            stage.setMaximized(false);
             MenuPrincipalApp.agregarIcono(stage);
-
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public void ventanaListaClientes(ActionEvent event) {

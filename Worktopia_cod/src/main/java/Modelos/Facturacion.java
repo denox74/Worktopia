@@ -133,10 +133,15 @@ public class Facturacion {
         colFormaPago.setCellValueFactory(new PropertyValueFactory<>("forma_pago"));
 
         ObservableList<Facturas> facturasList = FXCollections.observableArrayList();
-        try (Connection conn = ConectionDB.getConn()) {
+
+        Connection conn = null;
+        try {
+            conn = ConectionDB.getConn();
             String queryFacturas = "SELECT * FROM Facturas";
+
             try (PreparedStatement psFacturas = conn.prepareStatement(queryFacturas);
                  ResultSet rsFacturas = psFacturas.executeQuery()) {
+
                 while (rsFacturas.next()) {
                     int idFactura = rsFacturas.getInt("id_factura");
                     BigDecimal descuento = rsFacturas.getBigDecimal("descuento");
@@ -161,6 +166,8 @@ public class Facturacion {
             }
         } catch (SQLException | ClassNotFoundException e) {
             showAlert("Error", "No se pudieron cargar las facturas: " + e.getMessage());
+        } finally {
+
         }
 
         tablaFacturas.setItems(facturasList);
@@ -296,7 +303,6 @@ public class Facturacion {
 
 
     public void exportarFacturas(Facturas facturas) throws ClassNotFoundException {
-        ConectionDB.openConn();
         idFactura = facturas.getId_factura();
         TextFechaFactura.setText(facturas.getFecha_hora_emision());
         TextDniCliente.setText(facturas.getDni());
@@ -351,8 +357,8 @@ public class Facturacion {
         String queryReservas = "SELECT * FROM Reservas WHERE id_factura = ?";
         BigDecimal totalSubtotales = BigDecimal.ZERO;
 
-        try (Connection conn = ConectionDB.getConn();
-             PreparedStatement ps = conn.prepareStatement(queryReservas)) {
+        Connection conn = ConectionDB.getConn(); // Obtén la conexión sin cerrarla
+        try (PreparedStatement ps = conn.prepareStatement(queryReservas)) {
             ps.setInt(1, idFactura); // Establecemos el idFactura en el PreparedStatement
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -378,7 +384,6 @@ public class Facturacion {
                     reservas.add(reserva);
                 }
             }
-            ConectionDB.openConn();
         }
 
         ObservableList<String> reservasList = FXCollections.observableArrayList();
@@ -391,15 +396,25 @@ public class Facturacion {
     }
 
     public void modificarFactura(ActionEvent event) {
-        controladorFacturas.modificarFactura(TextFechaFactura, TextDescuento, TextTotal, TextSubtotal, idFactura);
+        String forma = controladorFacturas.obtenerForma(idFactura).toLowerCase();
+        if (forma.equals("pendiente")) {
+            controladorFacturas.modificarFactura(TextFechaFactura, TextDescuento, TextTotal, TextSubtotal, idFactura);
+        } else {
+            showAlert("aviso", "La factura se encuentra pagada");
+        }
+        System.out.println("forma" + forma);
         initialize();
-
     }
 
     public void eliminarFactura(ActionEvent event) throws ClassNotFoundException {
-        controladorFacturas.eliminarFactura(idFactura);
+        String forma = controladorFacturas.obtenerForma(idFactura).toLowerCase();
+        if (forma.equals("pendiente")) {
+            controladorFacturas.eliminarFactura(idFactura);
+        } else {
+            showAlert("aviso", "La factura se encuentra pagada");
+        }
+        System.out.println("forma" + forma);
         initialize();
-        ConectionDB.openConn();
 
 
     }
@@ -407,7 +422,7 @@ public class Facturacion {
     public void pagarFactura(ActionEvent event) throws ClassNotFoundException {
         controladorFacturas.abonarFactura(TextFechaFactura, TextDescuento, TextTotal, TextSubtotal, comboFormaPago, idFactura);
         initialize();
-        ConectionDB.openConn();
+
 
     }
 
@@ -417,133 +432,132 @@ public class Facturacion {
         String queryCliente = "SELECT * FROM Clientes WHERE dni = ?";
         String queryReservas = "SELECT * FROM Reservas WHERE id_factura = ?";
 
-        try (Connection conn = ConectionDB.getConn();
-             PreparedStatement psFactura = conn.prepareStatement(queryFactura);
+        Connection conn = ConectionDB.getConn(); // Obtén la conexión sin cerrarla
+        try (PreparedStatement psFactura = conn.prepareStatement(queryFactura);
              PreparedStatement psCliente = conn.prepareStatement(queryCliente);
              PreparedStatement psReservas = conn.prepareStatement(queryReservas)) {
 
-            psFactura.setInt(1, idFactura); // Utiliza la ID de la factura almacenada
-            ResultSet rsFactura = psFactura.executeQuery();
-            if (!rsFactura.next()) {
-                throw new SQLException("Factura no encontrada.");
-            }
-
-            String dniCliente = rsFactura.getString("dni");
-            LocalDateTime fechaEmision = rsFactura.getTimestamp("fecha_hora_emision").toLocalDateTime();
-            BigDecimal totalFactura = rsFactura.getBigDecimal("precio_total");
-            BigDecimal descuento = rsFactura.getBigDecimal("descuento");
-
-            psCliente.setString(1, dniCliente);
-            ResultSet rsCliente = psCliente.executeQuery();
-            if (!rsCliente.next()) {
-                throw new SQLException("Cliente no encontrado.");
-            }
-
-            String nombreCliente = rsCliente.getString("nombre");
-            String telefonoCliente = rsCliente.getString("telefono");
-            String emailCliente = rsCliente.getString("email");
-
-            psReservas.setInt(1, idFactura); // Utiliza la ID de la factura almacenada
-            ResultSet rsReservas = psReservas.executeQuery();
-            List<String> reservas = new ArrayList<>();
-            List<BigDecimal> subtotales = new ArrayList<>();
-            BigDecimal totalSubtotales = BigDecimal.ZERO;
-            while (rsReservas.next()) {
-                int idReserva = rsReservas.getInt("id_reserva");
-                int idAsiento = rsReservas.getInt("id_asiento");
-                Timestamp inicio = rsReservas.getTimestamp("fecha_hora_inicio");
-                Timestamp fin = rsReservas.getTimestamp("fecha_hora_fin");
-
-                BigDecimal subtotal = calcularSubtotal(idAsiento, inicio, fin);
-                totalSubtotales = totalSubtotales.add(subtotal);
-
-                String reserva = String.format("Reserva ID: %d Asiento ID: %d fecha y hora de inicio %s y fin %s",
-                        idReserva, idAsiento, inicio.toLocalDateTime(), fin.toLocalDateTime());
-                reservas.add(reserva);
-                subtotales.add(subtotal);
-            }
-
-            try (FileInputStream fis = new FileInputStream("src/main/resources/Docs/Modelo_factura_excel.xlsx");
-                 Workbook workbook = new XSSFWorkbook(fis)) {
-
-                Sheet sheet = workbook.getSheetAt(0);
-
-                setCellValue(sheet, 9, 1, String.valueOf(idFactura));
-                setCellValue(sheet, 15, 1, dniCliente);
-                setCellValue(sheet, 16, 1, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-                setCellValue(sheet, 15, 5, nombreCliente);
-                setCellValue(sheet, 16, 5, telefonoCliente);
-                setCellValue(sheet, 14, 5, emailCliente);
-
-                int rowIndex = 17;
-                for (int i = 0; i < reservas.size(); i++) {
-                    Row row = sheet.getRow(rowIndex);
-                    if (row == null) {
-                        row = sheet.createRow(rowIndex);
-                    }
-
-                    Cell cell0 = row.getCell(0);
-                    if (cell0 == null) {
-                        cell0 = row.createCell(0);
-                    }
-                    cell0.setCellValue(reservas.get(i));
-
-                    Cell cell8 = row.getCell(8);
-                    if (cell8 == null) {
-                        cell8 = row.createCell(8);
-                    }
-                    cell8.setCellValue(subtotales.get(i).doubleValue());
-
-                    rowIndex++;
+            psFactura.setInt(1, idFactura);
+            try (ResultSet rsFactura = psFactura.executeQuery()) {
+                if (!rsFactura.next()) {
+                    throw new SQLException("Factura no encontrada.");
                 }
 
-                BigDecimal totalConDescuento = totalSubtotales.subtract(totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100))));
-                BigDecimal baseImponible = totalConDescuento.divide(BigDecimal.valueOf(1.07), BigDecimal.ROUND_HALF_UP);
-                BigDecimal impuestos = baseImponible.multiply(BigDecimal.valueOf(0.07));
+                String dniCliente = rsFactura.getString("dni");
+                LocalDateTime fechaEmision = rsFactura.getTimestamp("fecha_hora_emision").toLocalDateTime();
+                BigDecimal totalFactura = rsFactura.getBigDecimal("precio_total");
+                BigDecimal descuento = rsFactura.getBigDecimal("descuento");
 
-                setCellValue(sheet, 45, 6, descuento.doubleValue() / 100);
-                BigDecimal valorDescuento = totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100)));
-                setCellValue(sheet, 45, 7, valorDescuento.doubleValue());
-                setCellValue(sheet, 46, 7, totalConDescuento.doubleValue());
-                setCellValue(sheet, 43, 7, baseImponible.doubleValue());
-                setCellValue(sheet, 44, 7, impuestos.doubleValue());
-                setCellValue(sheet, 47, 7, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                psCliente.setString(1, dniCliente);
+                try (ResultSet rsCliente = psCliente.executeQuery()) {
+                    if (!rsCliente.next()) {
+                        throw new SQLException("Cliente no encontrado.");
+                    }
 
-                String excelFilePath = "src/main/resources/Docs/Factura_" + idFactura + ".xlsx";
-                try (FileOutputStream fos = new FileOutputStream(excelFilePath)) {
-                    workbook.write(fos);
+                    String nombreCliente = rsCliente.getString("nombre");
+                    String telefonoCliente = rsCliente.getString("telefono");
+                    String emailCliente = rsCliente.getString("email");
+
+                    psReservas.setInt(1, idFactura);
+                    try (ResultSet rsReservas = psReservas.executeQuery()) {
+                        List<String> reservas = new ArrayList<>();
+                        List<BigDecimal> subtotales = new ArrayList<>();
+                        BigDecimal totalSubtotales = BigDecimal.ZERO;
+
+                        while (rsReservas.next()) {
+                            int idReserva = rsReservas.getInt("id_reserva");
+                            int idAsiento = rsReservas.getInt("id_asiento");
+                            Timestamp inicio = rsReservas.getTimestamp("fecha_hora_inicio");
+                            Timestamp fin = rsReservas.getTimestamp("fecha_hora_fin");
+
+                            BigDecimal subtotal = calcularSubtotal(idAsiento, inicio, fin);
+                            totalSubtotales = totalSubtotales.add(subtotal);
+
+                            String reserva = String.format(
+                                    "Reserva ID: %d Asiento ID: %d fecha y hora de inicio %s y fin %s",
+                                    idReserva, idAsiento, inicio.toLocalDateTime(), fin.toLocalDateTime()
+                            );
+                            reservas.add(reserva);
+                            subtotales.add(subtotal);
+                        }
+
+                        try (FileInputStream fis = new FileInputStream("src/main/resources/Docs/Modelo_factura_excel.xlsx");
+                             Workbook workbook = new XSSFWorkbook(fis)) {
+
+                            Sheet sheet = workbook.getSheetAt(0);
+
+                            setCellValue(sheet, 9, 1, String.valueOf(idFactura));
+                            setCellValue(sheet, 15, 1, dniCliente);
+                            setCellValue(sheet, 16, 1, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                            setCellValue(sheet, 15, 5, nombreCliente);
+                            setCellValue(sheet, 16, 5, telefonoCliente);
+                            setCellValue(sheet, 14, 5, emailCliente);
+
+                            int rowIndex = 17;
+                            for (int i = 0; i < reservas.size(); i++) {
+                                Row row = sheet.getRow(rowIndex);
+                                if (row == null) {
+                                    row = sheet.createRow(rowIndex);
+                                }
+
+                                Cell cell0 = row.getCell(0);
+                                if (cell0 == null) {
+                                    cell0 = row.createCell(0);
+                                }
+                                cell0.setCellValue(reservas.get(i));
+
+                                Cell cell8 = row.getCell(8);
+                                if (cell8 == null) {
+                                    cell8 = row.createCell(8);
+                                }
+                                cell8.setCellValue(subtotales.get(i).doubleValue());
+
+                                rowIndex++;
+                            }
+
+                            BigDecimal totalConDescuento = totalSubtotales.subtract(totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100))));
+                            BigDecimal baseImponible = totalConDescuento.divide(BigDecimal.valueOf(1.07), BigDecimal.ROUND_HALF_UP);
+                            BigDecimal impuestos = baseImponible.multiply(BigDecimal.valueOf(0.07));
+
+                            setCellValue(sheet, 45, 6, descuento.doubleValue() / 100);
+                            BigDecimal valorDescuento = totalSubtotales.multiply(descuento.divide(BigDecimal.valueOf(100)));
+                            setCellValue(sheet, 45, 7, valorDescuento.doubleValue());
+                            setCellValue(sheet, 46, 7, totalConDescuento.doubleValue());
+                            setCellValue(sheet, 43, 7, baseImponible.doubleValue());
+                            setCellValue(sheet, 44, 7, impuestos.doubleValue());
+                            setCellValue(sheet, 47, 7, fechaEmision.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
+                            String excelFilePath = "src/main/resources/Docs/Factura_" + idFactura + ".xlsx";
+                            try (FileOutputStream fos = new FileOutputStream(excelFilePath)) {
+                                workbook.write(fos);
+                            }
+
+                            convertirApdf(excelFilePath);
+                        }
+                    }
                 }
-
-                convertirApdf(excelFilePath);
             }
         }
-        ConectionDB.openConn();
     }
 
-    // Función para convertir el archivo Excel a PDF usando LibreOffice y luego abrirlo
     private void convertirApdf(String archivoExcel) throws IOException {
-        String libreOfficePath = "C:\\Program Files\\LibreOffice\\program\\soffice.exe";  // Cambia esto a la ruta correcta de LibreOffice en tu sistema
+        String libreOfficePath = "C:\\Program Files\\LibreOffice\\program\\soffice.exe";
         String comando = libreOfficePath + " --headless --convert-to pdf " + archivoExcel + " --outdir " + new File(archivoExcel).getParent();
 
         try {
             Process process = Runtime.getRuntime().exec(comando);
-            process.waitFor();  // Esperar hasta que el proceso termine
+            process.waitFor();
             System.out.println("Archivo convertido exitosamente a PDF.");
 
-            // Ruta del archivo PDF generado
             String pdfFilePath = archivoExcel.replace(".xlsx", ".pdf");
 
-            // Abrir el archivo PDF en el visor predeterminado del sistema
             File pdfFile = new File(pdfFilePath);
             if (pdfFile.exists()) {
                 if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                    // Para Windows
                     Desktop.getDesktop().open(pdfFile);
                 } else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-                    // Para macOS
                     Runtime.getRuntime().exec("open " + pdfFilePath);
                 } else {
-                    // Para Linux
                     Runtime.getRuntime().exec("xdg-open " + pdfFilePath);
                 }
             } else {
@@ -610,13 +624,12 @@ public class Facturacion {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle(titulo);
-
+            stage.setResizable(false);
+            stage.setMaximized(false);
             MenuPrincipalApp.agregarIcono(stage);
-
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

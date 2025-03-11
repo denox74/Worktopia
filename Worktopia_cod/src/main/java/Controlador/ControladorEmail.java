@@ -73,16 +73,6 @@ public class ControladorEmail {
         });
     }
 
-    public static void cerrarConexion() {
-        try {
-            if (transport != null) {
-                transport.close();
-                executor.shutdown();
-            }
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
     public String cargarPlantilla(String ruta, String cliente, String fecha, String horaInicio, String horaFin, String espacio, String subtotal) {
         StringBuilder contenido = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
@@ -107,16 +97,6 @@ public class ControladorEmail {
     }
 
 
-    public static void main(String[] args) {
-        // Esperar unos segundos antes de cerrar la conexión
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        cerrarConexion();
-    }
 }
 
 

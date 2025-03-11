@@ -46,6 +46,8 @@ public class MenuPrincipal {
             Parent cargaVentana = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(cargaVentana));
+            stage.setResizable(false);
+            stage.setMaximized(false);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

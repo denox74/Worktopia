@@ -4,13 +4,14 @@ import ConexionDB.ConectionDB;
 import javafx.scene.control.*;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class ControladorFacturas {
 
-    public void modificarFactura(TextField fechaFactura,TextField descuento,TextField total,TextField subtotal,int idFactura){
+    public void modificarFactura(TextField fechaFactura, TextField descuento, TextField total, TextField subtotal, int idFactura) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("¿Quiere modificar la factura? :" + idFactura);
 
@@ -40,6 +41,7 @@ public class ControladorFacturas {
             }
         }
     }
+
     public void eliminarFactura(int idFactura) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("¿Quiere eliminar la factura? :" + idFactura);
@@ -74,6 +76,7 @@ public class ControladorFacturas {
             }
         }
     }
+
     public void abonarFactura(TextField fechaFactura, TextField descuento, TextField total, TextField subtotal, ComboBox formaPago, int idFactura) {
         String estadoPago = "Pagada";
         LocalDateTime fecha = LocalDateTime.now();
@@ -109,6 +112,22 @@ public class ControladorFacturas {
             }
         }
     }
+
+    public String obtenerForma(int idFactura) {
+        String estado = "";
+        String query = "SELECT estado FROM Facturas WHERE id_factura = ?";
+        try (PreparedStatement ps = ConectionDB.getConn().prepareStatement(query)) {
+            ps.setInt(1, idFactura);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                estado = rs.getString("estado");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return estado;
+    }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

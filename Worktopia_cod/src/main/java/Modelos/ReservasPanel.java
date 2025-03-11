@@ -29,7 +29,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -108,18 +110,42 @@ public class ReservasPanel {
         Stage ventanaSecundaria = new Stage();
         ventanaSecundaria.getIcons().add(new Image(getClass().getResourceAsStream("/Imagenes/bannerTopiaC.png")));
         dniCliente.textProperty().addListener((observableValue, s, t1) -> {
-            buscarDni(dniCliente.getText());
+           buscarDni(dniCliente.getText());
         });
         dniCliente.textProperty().bindBidirectional(listaClientes.getSelectSeleccionDni());
 
     }
 
-    public ReservasPanel() {
+   public ReservasPanel(){
+
+   }
+    public void insertarReserva(ActionEvent event) {
+
+        String emailCliente = controladorReservas.obtenerEmailCliente(dniCliente.getText());
+        String nombreCliente = controladorReservas.obtenerNombreCliente(dniCliente.getText());
+        //Formateo de la fecha a fecha europea
+        LocalDate fechas = fecha.getValue();
+        DateTimeFormatter formateo = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaFormateada = fechas.format(formateo);
+
+        if(emailCliente != null && !emailCliente.isEmpty()){
+            String htmlPlantilla = "src/main/resources/html/reservasHTML.html";
+            String mensaje = controladorEmail.cargarPlantilla(
+                    htmlPlantilla,
+                    nombreCliente,
+                    fechaFormateada,
+                    horaInicio.getText().toString(),
+                    horaFin.getText().toString(),
+                    espacio.getText().toString(),
+                    subtotal.toString()
+            );
+            controladorEmail.enviarCorreo(emailCliente,"Confirmación de reserva",mensaje);
+        }
+        System.out.println("idreserva" + fecha);
+
+        insertarDatos();
 
     }
-
-
-
     public void buscarDni(String dni){
         String query = "SELECT COUNT(dni) FROM Clientes WHERE dni = ?";
         try {
@@ -140,62 +166,7 @@ public class ReservasPanel {
 
     }
 
-    public void insertarReserva(ActionEvent event) {
-        String fecha = controladorReservas.obtenerIdReserva(dniCliente.getText());
-        String emailCliente = controladorReservas.obtenerEmailCliente(dniCliente.getText());
-        String nombreCliente = controladorReservas.obtenerNombreCliente(dniCliente.getText());
 
-        if(emailCliente != null && !emailCliente.isEmpty()){
-            String htmlPlantilla = "src/main/resources/html/reservasHTML.html";
-            String mensaje = controladorEmail.cargarPlantilla(
-                    htmlPlantilla,
-                    nombreCliente,
-                    fecha,
-                    horaInicio.getText().toString(),
-                    horaFin.getText().toString(),
-                    espacio.getText().toString(),
-                    subtotal.toString()
-            );
-            controladorEmail.enviarCorreo(emailCliente,"Confirmación de reserva",mensaje);
-        }
-        System.out.println("idreserva" + fecha);
-
-        insertarDatos();
-
-    }
-
-    public double facturaPrecioText(TextField nombreEspacio, TextField horaInicio, TextField horaFin) {
-        String consulta = "SELECT tarifa_hora FROM Asientos WHERE nombre = ?";
-
-        String inicioTexto = horaInicio.getText();
-        String finTexto = horaFin.getText();
-
-        double tarifa = 0;
-        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(consulta)) {
-            stmt.setString(1, nombreEspacio.getText());
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                tarifa = rs.getInt("tarifa_hora");
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
-
-
-        try {
-            LocalTime inicio = LocalTime.parse(inicioTexto);
-            LocalTime fin = LocalTime.parse(finTexto);
-
-            double horasPasadas = (double) ChronoUnit.HOURS.between(inicio, fin);
-            return horasPasadas * tarifa;
-
-        } catch (Exception e) {
-            return 0;
-        }
-
-    }
 
     // configuracion de ventana de apertura de los horarios
     public void ventanaHorarios(ActionEvent event) {
@@ -212,7 +183,7 @@ public class ReservasPanel {
         horaFin.setText("");
         precio.setText("");
         contenedorHorarios.setVisible(true);
-        int espacioId = obtenerIdEspacio(BtnSeleccionado.getText());
+        int espacioId = controladorReservas.obtenerIdEspacio(BtnSeleccionado.getText());
         actualizarColoresHorarios(espacioId);
         Bounds bounds = BtnSeleccionado.localToScreen(BtnSeleccionado.getBoundsInLocal());
         contenedorHorarios.setLayoutX(bounds.getMinX() - 140);
@@ -256,7 +227,7 @@ public class ReservasPanel {
                 cierreVentanaHorarios();
             }
         }
-        precioTotal = facturaPrecioText(espacio, horaInicio, horaFin);
+        precioTotal = controladorReservas.facturaPrecioText(espacio, horaInicio, horaFin);
         precio.setText(String.format("%.2f €", precioTotal));
         subtotal = BigDecimal.valueOf(precioTotal);
 
@@ -264,20 +235,7 @@ public class ReservasPanel {
 
     }
 
-    public int obtenerIdEspacio(String nombreEspacio) {
-        String consulta = "SELECT id_asiento FROM Asientos WHERE nombre = ?";
-        int idEspacio = -1;
-        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(consulta)) {
-            stmt.setString(1, nombreEspacio);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                idEspacio = rs.getInt("id_asiento");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return idEspacio;
-    }
+
 
 
     public Set<String> obtenerHorariosReservados(int asiento, LocalDate fecha) {
@@ -345,7 +303,7 @@ public class ReservasPanel {
         String horaFinText = horaFin.getText();
         LocalDate fechaReserva = fecha.getValue();
         BigDecimal subTotal = subtotal;
-        int idAsiento = obtenerIdEspacio(espacioText);
+        int idAsiento = controladorReservas.obtenerIdEspacio(espacioText);
 
         if (dniText.isEmpty() || espacioText.isEmpty() || horaInicioText.isEmpty() || horaFinText.isEmpty()) {
             alert.setContentText("Debe completar todos los campos.");

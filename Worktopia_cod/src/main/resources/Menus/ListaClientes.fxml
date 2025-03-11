@@ -36,120 +36,120 @@
 
             </columns>
         </TableView>
-      <VBox fx:id="vboxIconos" layoutX="522.0" layoutY="250.0" prefHeight="357.0" prefWidth="348.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
-         <children>
-            <Button fx:id="btnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="btnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
-               <VBox.margin>
-                  <Insets bottom="-10.0" left="330.0" />
-               </VBox.margin>
-               <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Imagenes/borrar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="281.0" text="Datos Del Cliente" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="-20.0" left="40.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="TextDniGhost" visible="false" />
-            <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Nombre">
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin></Label>
-            <TextField fx:id="TextNombre" prefHeight="35.0" prefWidth="220.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="140.0" />
-               </VBox.margin></TextField>
-            <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Primer Apellido">
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin></Label>
-            <TextField fx:id="TextPrimerApellido" prefHeight="35.0" prefWidth="220.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="140.0" />
-               </VBox.margin></TextField>
-            <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Segundo Apellido">
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin></Label>
-            <TextField fx:id="TextSegundoApellido" prefHeight="35.0" prefWidth="220.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="140.0" />
-               </VBox.margin></TextField>
-            <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Email">
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin></Label>
-            <TextField fx:id="TextEmail" prefHeight="35.0" prefWidth="220.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="140.0" />
-               </VBox.margin></TextField>
-            <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Telefono">
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin></Label>
-            <TextField fx:id="TextTelefono" prefHeight="35.0" prefWidth="220.0">
-               <VBox.margin>
-                  <Insets left="20.0" right="140.0" />
-               </VBox.margin></TextField>
-              <Button id="eliminar" fx:id="BtnModificar" lineSpacing="3.0" mnemonicParsing="false" onAction="#modificarDatos" prefHeight="34.0" prefWidth="50.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Modificar">
-                  <cursor>
-                      <Cursor fx:constant="DEFAULT" />
-                  </cursor>
-               <graphic>
-                      <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                              <Image url="@../Imagenes/editar-perfil.png" />
-                          </image>
-                      </ImageView>
-               </graphic>
-               <VBox.margin>
-                  <Insets bottom="15.0" left="240.0" top="-257.0" />
-               </VBox.margin>
-              </Button>
-              <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarDatos" prefHeight="36.0" prefWidth="48.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Eliminar">
-               <graphic>
-                      <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                              <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
-                          </image>
-                  </ImageView>
-               </graphic>
-               <VBox.margin>
-                  <Insets bottom="15.0" left="240.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="BtnGenerarReserva" mnemonicParsing="false" onAction="#generarReserva" prefHeight="26.0" prefWidth="63.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Reservar">
-               <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Imagenes/calendario1.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <VBox.margin>
-                  <Insets left="240.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-      <Button fx:id="BtnAgregarCliente" layoutX="1154.0" layoutY="148.0" mnemonicParsing="false" onAction="#ventanaRegistro" styleClass="BtnMenu" stylesheets="@../Estilos/EstilosListas.css">
-         <graphic>
-            <ImageView fitHeight="28.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Imagenes/circuloSuma1.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <VBox layoutX="319.0" layoutY="652.0" prefHeight="178.0" prefWidth="164.0" style="-fx-background-color: #F4A261;" />
+        <VBox fx:id="vboxIconos" layoutX="522.0" layoutY="250.0" prefHeight="357.0" prefWidth="348.0" spacing="2.0" styleClass="vboxDatos" stylesheets="@../Estilos/EstiloVboxListas.css" visible="false">
+            <children>
+                <Button fx:id="btnSalir" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#salirVbox" prefHeight="24.0" prefWidth="28.0" styleClass="btnSalir" stylesheets="@../Estilos/EstiloVboxListas.css">
+                    <VBox.margin>
+                        <Insets bottom="-10.0" left="330.0" />
+                    </VBox.margin>
+                    <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagenes/borrar.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="281.0" text="Datos Del Cliente" textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="-20.0" left="40.0" />
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="TextDniGhost" visible="false" />
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Nombre">
+                    <VBox.margin>
+                        <Insets left="20.0" />
+                    </VBox.margin></Label>
+                <TextField fx:id="TextNombre" prefHeight="35.0" prefWidth="220.0">
+                    <VBox.margin>
+                        <Insets left="20.0" right="140.0" />
+                    </VBox.margin></TextField>
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Primer Apellido">
+                    <VBox.margin>
+                        <Insets left="20.0" />
+                    </VBox.margin></Label>
+                <TextField fx:id="TextPrimerApellido" prefHeight="35.0" prefWidth="220.0">
+                    <VBox.margin>
+                        <Insets left="20.0" right="140.0" />
+                    </VBox.margin></TextField>
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Segundo Apellido">
+                    <VBox.margin>
+                        <Insets left="20.0" />
+                    </VBox.margin></Label>
+                <TextField fx:id="TextSegundoApellido" prefHeight="35.0" prefWidth="220.0">
+                    <VBox.margin>
+                        <Insets left="20.0" right="140.0" />
+                    </VBox.margin></TextField>
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Email">
+                    <VBox.margin>
+                        <Insets left="20.0" />
+                    </VBox.margin></Label>
+                <TextField fx:id="TextEmail" prefHeight="35.0" prefWidth="220.0">
+                    <VBox.margin>
+                        <Insets left="20.0" right="140.0" />
+                    </VBox.margin></TextField>
+                <Label styleClass="labels" stylesheets="@../Estilos/EstiloVboxListas.css" text="Telefono">
+                    <VBox.margin>
+                        <Insets left="20.0" />
+                    </VBox.margin></Label>
+                <TextField fx:id="TextTelefono" prefHeight="35.0" prefWidth="220.0">
+                    <VBox.margin>
+                        <Insets left="20.0" right="140.0" />
+                    </VBox.margin></TextField>
+                <Button id="eliminar" fx:id="BtnModificar" lineSpacing="3.0" mnemonicParsing="false" onAction="#modificarDatos" prefHeight="34.0" prefWidth="50.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Modificar">
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                    <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagenes/editar-perfil.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets bottom="15.0" left="240.0" top="-257.0" />
+                    </VBox.margin>
+                </Button>
+                <Button id="modificar" fx:id="BtnEliminar" mnemonicParsing="false" onAction="#eliminarDatos" prefHeight="36.0" prefWidth="48.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Eliminar">
+                    <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagenes/papelera-de-reciclaje(1).png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets bottom="15.0" left="240.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="BtnGenerarReserva" mnemonicParsing="false" onAction="#generarReserva" prefHeight="26.0" prefWidth="63.0" styleClass="Botones" stylesheets="@../Estilos/EstiloVboxListas.css" text="Reservar">
+                    <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagenes/calendario1.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets left="240.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+        <Button fx:id="BtnAgregarCliente" layoutX="1154.0" layoutY="148.0" mnemonicParsing="false" onAction="#ventanaRegistro" styleClass="BtnMenu" stylesheets="@../Estilos/EstilosListas.css">
+            <graphic>
+                <ImageView fitHeight="28.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Imagenes/circuloSuma1.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <VBox layoutX="319.0" layoutY="652.0" prefHeight="178.0" prefWidth="164.0" style="-fx-background-color: #F4A261;" />
         <GridPane alignment="TOP_CENTER" layoutX="318.0" layoutY="670.0" prefHeight="123.0" prefWidth="664.0">
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -211,3 +211,4 @@
     </children>
 
 </AnchorPane>
+

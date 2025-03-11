@@ -1,16 +1,21 @@
 package Controlador;
 
 import ConexionDB.ConectionDB;
+import com.almasb.fxgl.scene3d.Cone;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 public class ControladorReservas {
+
 
     public void modificarReservas(TextField dni, TextField fechaInicio, TextField fechaFin, TextField idAsiento, int idReserva) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -37,13 +42,14 @@ public class ControladorReservas {
                     alert2.show();
                 }
 
-            } catch(SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
         }
 
     }
+
     public void eliminarReservas(TextField dni, int idReserva) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
@@ -91,7 +97,7 @@ public class ControladorReservas {
             stmt.setString(1, dni);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-               nombre = rs.getString("nombre");
+                nombre = rs.getString("nombre");
             }
 
         } catch (SQLException e) {
@@ -100,18 +106,67 @@ public class ControladorReservas {
         return nombre;
     }
 
-    public String obtenerIdReserva(String dni) {
-        String idReserva = "";
-        String query = "SELECT DATE(fecha_hora_inicio) FROM Reservas WHERE dni = ?";
-        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(query)){
-                stmt.setString(1, dni);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    idReserva = rs.getString("fecha_hora_inicio");
-                }
-            } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+    public String obtenerForma(String dni) {
+        String estado = "";
+        String query = "SELECT estado FROM Facturas WHERE dni = ?";
+        try (PreparedStatement ps = ConectionDB.getConn().prepareStatement(query)) {
+            ps.setString(1, dni);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                estado = rs.getString("estado");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return idReserva;
+        return estado;
     }
+    public double facturaPrecioText(TextField nombreEspacio, TextField horaInicio, TextField horaFin) {
+        String consulta = "SELECT tarifa_hora FROM Asientos WHERE nombre = ?";
+
+        String inicioTexto = horaInicio.getText();
+        String finTexto = horaFin.getText();
+
+        double tarifa = 0;
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(consulta)) {
+            stmt.setString(1, nombreEspacio.getText());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                tarifa = rs.getInt("tarifa_hora");
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+
+        try {
+            LocalTime inicio = LocalTime.parse(inicioTexto);
+            LocalTime fin = LocalTime.parse(finTexto);
+
+            double horasPasadas = (double) ChronoUnit.HOURS.between(inicio, fin);
+            return horasPasadas * tarifa;
+
+        } catch (Exception e) {
+            return 0;
+        }
+
+    }
+    public int obtenerIdEspacio(String nombreEspacio) {
+        String consulta = "SELECT id_asiento FROM Asientos WHERE nombre = ?";
+        int idEspacio = -1;
+        try (PreparedStatement stmt = ConectionDB.getConn().prepareStatement(consulta)) {
+            stmt.setString(1, nombreEspacio);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                idEspacio = rs.getInt("id_asiento");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idEspacio;
+    }
+
+
+
 }

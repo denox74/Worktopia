@@ -21,10 +21,14 @@
         width: 50%;
         padding: 20px;
     }
-
     h2 {
         color: #f7a800;
         text-align: center;
+    }
+    .DatosReserva{
+        color: #f7a800;
+        font-size: 14px;
+        text-decoration: underline;
     }
     .info {
         
@@ -44,9 +48,10 @@
     <div class="texto">
         <h2>Confirmación de Reserva</h2>
         <p>Estimado/a <strong>{{CLIENTE}}</strong></p>
-        <p>Su reserva con Numero <strong>{{IDRESERVA}}</strong> ha sido confirmada : </p>
+        <p>Su reserva ha sido confirmada : </p>
     
         <div class="info">
+            <p class="DatosReserva">Datos de la reserva:</p>
             <p><strong>Fecha:</strong> {{FECHA}}</p>
             <p><strong>Hora de Inicio:</strong> {{HORA_INICIO}}</p>
             <p><strong>Hora de Fin:</strong> {{HORA_FIN}}</p>

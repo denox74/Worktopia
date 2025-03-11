@@ -142,6 +142,8 @@ public class ListaClientes {
             }
         });
         TextDniGhost.textProperty().bind(seleccionDni);
+
+
     }
 
     public ListaClientes() {
@@ -206,13 +208,12 @@ public class ListaClientes {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle(titulo);
-
+            stage.setResizable(false);
+            stage.setMaximized(false);
             MenuPrincipalApp.agregarIcono(stage);
-
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

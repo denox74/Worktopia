@@ -6,12 +6,15 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+
 import javafx.scene.image.Image;
 import javafx.stage.StageStyle;
 
 public class MenuPrincipalApp extends Application {
     private static final Image icono = new Image(MenuPrincipalApp.class.getResourceAsStream("/Imagenes/bannerTopiaC.png"));
+
     @Override
     public void start(Stage menu) throws IOException {
         FXMLLoader menuPrincipal = new FXMLLoader(MenuPrincipalApp.class.getResource("/Menus/MenuPrincipal.fxml"));
@@ -26,8 +29,6 @@ public class MenuPrincipalApp extends Application {
             }
         });
         menu.show();
-
-
     }
 
     public static void agregarIcono(Stage ventana) {
@@ -37,7 +38,6 @@ public class MenuPrincipalApp extends Application {
 
     public static void main(String[] args) throws ClassNotFoundException {
         ConectionDB.openConn();
-        ConectionDB.testConnection();
         launch();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             ConectionDB.closeConn();

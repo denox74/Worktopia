@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="830.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
+<AnchorPane prefHeight="830.0" prefWidth="1300.0" styleClass="AnchorPane" stylesheets="@../Estilos/EstilosListas.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modelos.Facturacion">
     <children>
         <ImageView id="portada" fx:id="portadaListaReservas" fitHeight="117.0" fitWidth="119.0" layoutX="589.0" pickOnBounds="true" preserveRatio="true">
             <image>
