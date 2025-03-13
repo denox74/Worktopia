@@ -1,5 +1,8 @@
+/**
+ * Clase ControladorEmail que se encarga de enviar correos electrónicos a los clientes
+ * con la información de la reserva realizada.
+ */
 package Controlador;
-
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,12 +22,11 @@ public class ControladorEmail {
     private static final String correo = "woktopiacoworking@gmail.com";
     private static final String contrasena = "zywzibuvkyhqzmvk";
 
-    private static final ExecutorService executor = Executors.newFixedThreadPool(3); // Para enviar múltiples correos sin bloquear
+    private static final ExecutorService executor = Executors.newFixedThreadPool(3);
     private static final Session session;
     private static Transport transport;
 
     static {
-        // Configuración de propiedades SMTP
         Properties propiedades = new Properties();
         propiedades.put("mail.smtp.host", "smtp.gmail.com");
         propiedades.put("mail.smtp.ssl.trust", "smtp.gmail.com");
@@ -42,7 +44,7 @@ public class ControladorEmail {
         });
 
         try {
-            // Mantener la conexión SMTP abierta para múltiples envíos
+
             transport = session.getTransport("smtp");
             transport.connect("smtp.gmail.com", correo, contrasena);
         } catch (MessagingException e) {
@@ -51,7 +53,7 @@ public class ControladorEmail {
     }
 
     public static void enviarCorreo(String destinatario, String asunto, String mensajeHtml) {
-        executor.submit(() -> { // Se ejecuta en segundo plano sin bloquear la app
+        executor.submit(() -> {
             try {
                 Message email = new MimeMessage(session);
                 email.setFrom(new InternetAddress(correo));
@@ -59,7 +61,7 @@ public class ControladorEmail {
                 email.setSubject(asunto);
                 email.setContent(mensajeHtml, "text/html; charset=utf-8");
 
-                synchronized (transport) { // Evita colisiones si varios hilos envían correos simultáneamente
+                synchronized (transport) {
                     transport.sendMessage(email, email.getAllRecipients());
                 }
 
@@ -83,7 +85,6 @@ public class ControladorEmail {
             return "Error cargando la plantilla";
         }
 
-        // Reemplazar los valores del html
         return contenido.toString()
 
                 .replace("{{CLIENTE}}", cliente)

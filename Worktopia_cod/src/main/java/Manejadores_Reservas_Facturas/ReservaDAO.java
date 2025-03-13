@@ -1,3 +1,7 @@
+/**
+ * Clase que se encarga de realizar las operaciones de la base de datos relacionadas con las reservas.
+ * Se encarga de obtener las reservas, insertar una nueva reserva, obtener la factura pendiente de un cliente y crear una nueva factura.
+ */
 package Manejadores_Reservas_Facturas;
 
 import Clases.Reservas;
@@ -26,7 +30,6 @@ public class ReservaDAO {
                         rs.getTimestamp("fecha_hora_fin"),
                         rs.getBigDecimal("subtotal")
                 );
-                // Calculate the subtotal
                 BigDecimal subtotal = reserva.calcularSubtotal();
                 reserva.setSubtotal(subtotal);
                 reservas.add(reserva);
@@ -78,7 +81,7 @@ public class ReservaDAO {
             ps.setInt(1, nuevoIdFactura);
             ps.setString(2, dni);
             ps.setBigDecimal(3, precioTotal);
-            ps.setBigDecimal(4,precioTotal);
+            ps.setBigDecimal(4, precioTotal);
             ps.executeUpdate();
             return nuevoIdFactura;
         }

@@ -1,5 +1,8 @@
 package Clases;
 
+/**
+ * Clase que guarda la categoria del usuario que ha iniciado sesion.
+ */
 
 public class SesionUsuario {
 

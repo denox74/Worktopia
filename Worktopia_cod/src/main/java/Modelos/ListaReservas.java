@@ -1,3 +1,6 @@
+/**
+ * Clase para listar las reservas
+ */
 package Modelos;
 
 
@@ -19,16 +22,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-
 
 public class ListaReservas {
     private ControladorReservas controladorReservas = new ControladorReservas();
@@ -80,7 +77,9 @@ public class ListaReservas {
     @FXML
     private TableColumn<Clases.Reservas, java.math.BigDecimal> colSubtotal;
 
-
+    /**
+     * Metodo para inicializar la ventana
+     */
     @FXML
     public void initialize() {
         btnSalir.setStyle(("-fx-background-color: transparent;"));
@@ -116,15 +115,19 @@ public class ListaReservas {
         } catch (SQLException |
                  ClassNotFoundException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
 
         }
         inicioSesion();
 
     }
-    public ListaReservas() {}
 
+    public ListaReservas() {
+    }
 
+    /**
+     * Metodo para cargar las reservas de la base de datos
+     */
     private void loadReservasFromDatabase() throws SQLException, ClassNotFoundException {
         List<Reservas> reservas = ConectionDB.getReservas();
         ObservableList<Clases.Reservas> reservasList = FXCollections.observableArrayList(reservas);
@@ -172,8 +175,8 @@ public class ListaReservas {
         String forma = controladorReservas.obtenerForma(TextDni.getText());
         if (forma.equals("Pendiente")) {
             controladorReservas.modificarReservas(TextDni, TextInicio, TextFin, TextAsiento, idReserva);
-        }else{
-            showAlert("Aviso","La reserva esta pagada");
+        } else {
+            showAlert("Aviso", "La reserva esta pagada");
 
         }
         System.out.println("forma" + forma);
@@ -183,26 +186,14 @@ public class ListaReservas {
 
     /**
      * Metodo para eliminar reservas
-     * @param event
-     * @throws SQLException
-     * @throws ClassNotFoundException
-     * @throws IOException
-     * @throws RuntimeException
-     * @throws IllegalArgumentException
-     * @throws NullPointerException
-     * @throws IllegalStateException
-     * @throws UnsupportedOperationException
-     * @throws IndexOutOfBoundsException
-     * @throws ClassCastException
-     *
      */
 
     public void eliminarReservas(ActionEvent event) {
         String forma = controladorReservas.obtenerForma(TextDni.getText());
         if (forma.equals("Pendiente")) {
             controladorReservas.eliminarReservas(TextDni, idReserva);
-        }else {
-            showAlert("Aviso","La reserva esta pagada");
+        } else {
+            showAlert("Aviso", "La reserva esta pagada");
         }
         System.out.println("forma" + forma);
         initialize();

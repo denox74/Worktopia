@@ -1,3 +1,10 @@
+/**
+ * Clase ControladorReservas que se encarga de gestionar las reservas de los clientes
+ * en la base de datos.
+ * Esta clase se encarga de modificar, eliminar, buscar y obtener datos de las reservas
+ * de los clientes.
+ *
+ */
 package Controlador;
 
 import ConexionDB.ConectionDB;

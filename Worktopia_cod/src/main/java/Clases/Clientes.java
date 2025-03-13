@@ -1,5 +1,8 @@
 package Clases;
 
+/**
+ * Clase CLientes.
+ */
 public class Clientes {
 
 
@@ -25,7 +28,6 @@ public class Clientes {
     }
 
 
-
     public String getNombre() {
         return nombre;
     }
@@ -49,9 +51,6 @@ public class Clientes {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-
-
 
 
     public String getDni() {
@@ -81,7 +80,6 @@ public class Clientes {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-
 
 
     @Override

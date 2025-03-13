@@ -1,3 +1,10 @@
+/**
+ * Clase ListaUsuarios que se encarga de mostrar la lista de usuarios en la tabla de la interfaz gráfica
+ * y de realizar las acciones de modificar y eliminar usuarios.
+ * También se encarga de realizar la acción de login de los usuarios.
+ */
+
+
 package Modelos;
 
 import Aplicaciones.MenuPrincipalApp;
@@ -28,7 +35,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 public class ListaUsuarios {
     private double xOffset = 0;
@@ -76,6 +82,10 @@ public class ListaUsuarios {
     @FXML
     private TableColumn<Usuarios, String> colCategoria;
 
+    /**
+     * Método initialize que se encarga de cargar los datos de los usuarios en la tabla de la interfaz gráfica
+     * y de realizar la acción de doble click en la tabla para exportar los datos del usuario seleccionado.
+     */
     @FXML
     public void initialize() {
         btnSalir.setStyle(("-fx-background-color: transparent;"));
@@ -86,6 +96,20 @@ public class ListaUsuarios {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colPassword.setCellValueFactory(new PropertyValueFactory<>("contrasenia"));
         colCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+
+
+        colPassword.setCellFactory(column -> new TableCell<Usuarios, String>() {
+            @Override
+            protected void updateItem(String password, boolean empty) {
+                super.updateItem(password, empty);
+                if (empty || password == null) {
+                    setText(null);
+                } else {
+                    setText("•".repeat(password.length()));
+                }
+            }
+        });
+
 
         tablaUsuarios.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -115,7 +139,9 @@ public class ListaUsuarios {
         }
     }
 
-
+    /**ºº
+     * Método loadUsuariosFromDatabase que se encarga de cargar los datos de los usuarios desde la base de datos.
+     */
     private void loadUsuariosFromDatabase() throws SQLException, ClassNotFoundException {
         List<Usuarios> usuarios = ConectionDB.getUsuarios();
         ObservableList<Usuarios> usuariosList = FXCollections.observableArrayList(usuarios);
@@ -148,11 +174,11 @@ public class ListaUsuarios {
     public ListaUsuarios() {
 
     }
+
     public ListaUsuarios(MenuPrincipal menuPrincipal) {
         this.menuPrincipal = menuPrincipal;
 
     }
-
 
 
     public void modificarUsuarios(ActionEvent event) {
@@ -167,6 +193,10 @@ public class ListaUsuarios {
 
     }
 
+    /**
+     * Método loginUsuarios que se encarga de realizar la acción de login de los usuarios.
+     * Si el usuario y la contraseña son correctos, se muestra un mensaje de login correcto y se abre la ventana del menú principal.
+     */
     public void loginUsuarios(String usuario, String pass) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         String query = "SELECT nombre, contrasenia, categoria FROM Usuarios WHERE nombre = ? AND contrasenia = ?";
@@ -241,6 +271,9 @@ public class ListaUsuarios {
         ((Stage) ListaReservas.getScene().getWindow()).close();
     }
 
+    /**
+     * Método ventanaAgregarUsuarios que se encarga de abrir la ventana de registro de usuarios.
+     */
     public void ventanaAgregarUsuarios(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Menus/RegistroUsuarios.fxml"));

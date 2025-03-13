@@ -1,3 +1,8 @@
+/**
+ * Controlador de la vista de usuarios
+ * En este controlador se encuentran los métodos para modificar y eliminar usuarios
+ * de la base de datos.
+ */
 package Controlador;
 
 import ConexionDB.ConectionDB;

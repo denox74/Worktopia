@@ -1,3 +1,8 @@
+/**
+ * Clase Facturacion
+ * Clase que se encarga de la lógica de la ventana de facturación.
+ * Se encarga de mostrar las facturas, generar facturas en Excel y PDF, y de abonar facturas.
+ */
 package Modelos;
 
 import Aplicaciones.MenuPrincipalApp;
@@ -108,7 +113,13 @@ public class Facturacion {
         }
     }
 
-
+    /**
+     * Método que se ejecuta al iniciar la ventana de facturación.
+     * Se encarga de cargar las facturas en la tabla de facturas.
+     * Además, se encarga de filtrar las facturas por su ID.
+     * También se encarga de abrir la ventana de facturación al hacer doble clic en una factura.
+     * Por último, se encarga de mover la ventana de facturación.
+     */
     @FXML
     public void initialize() {
         llenarComboBoxInicio();
@@ -280,6 +291,7 @@ public class Facturacion {
     public void llenarComboBox(ActionEvent event) {
         rellenarCombo(comboFormaPago, formasPago);
     }
+
     public void llenarComboBoxInicio() {
         rellenarCombo(comboFormaPago, formasPago);
     }
@@ -296,6 +308,13 @@ public class Facturacion {
         }
     }
 
+    /**
+     * Método que se encarga de exportar las facturas a la ventana de facturación.
+     * Se encarga de mostrar la información de la factura seleccionada.
+     *
+     * @param facturas Factura seleccionada
+     * @throws ClassNotFoundException Excepción de clase no encontrada
+     */
 
     public void exportarFacturas(Facturas facturas) throws ClassNotFoundException {
         idFactura = facturas.getId_factura();
@@ -346,6 +365,11 @@ public class Facturacion {
             return valorPorDefecto;
         }
     }
+
+    /**
+     * Método que se encarga cargar las reservas en la factura.
+     *
+     */
 
     public BigDecimal cargarReservasEnFactura(int idFactura) throws SQLException, ClassNotFoundException {
         List<Reservas> reservas = new ArrayList<>();
@@ -401,7 +425,7 @@ public class Facturacion {
         initialize();
     }
 
-    public void eliminarFactura(ActionEvent event){
+    public void eliminarFactura(ActionEvent event) {
         String forma = controladorFacturas.obtenerForma(idFactura).toLowerCase();
         if (forma.equals("pendiente")) {
             controladorFacturas.eliminarFactura(idFactura);
@@ -414,13 +438,22 @@ public class Facturacion {
 
     }
 
-    public void pagarFactura(ActionEvent event){
+    public void pagarFactura(ActionEvent event) {
         controladorFacturas.abonarFactura(TextFechaFactura, TextDescuento, TextTotal, TextSubtotal, comboFormaPago, idFactura);
         initialize();
 
 
     }
 
+    /**
+     *  Método que se encarga de generar la factura en Excel y PDF.
+     *  Se encarga de obtener la información de la factura, cliente y reservas.
+     *  Además, se encarga de calcular el subtotal de las reservas.
+     *  Por último, se encarga de convertir el archivo Excel a PDF.
+     * @throws SQLException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
 
     private void generarFacturaExcel() throws SQLException, IOException, ClassNotFoundException {
         String queryFactura = "SELECT * FROM Facturas WHERE id_factura = ?";

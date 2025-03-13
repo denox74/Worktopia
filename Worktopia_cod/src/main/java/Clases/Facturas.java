@@ -2,6 +2,9 @@ package Clases;
 
 import java.math.BigDecimal;
 
+/**
+ * Clase Facturas.
+ */
 public class Facturas {
     private Integer id_factura;
     private String dni;
@@ -13,7 +16,7 @@ public class Facturas {
     private String forma_pago;
     private BigDecimal subtotal;
 
-    public Facturas(Integer id_factura, String dni, BigDecimal precio_total, BigDecimal descuento, String fecha_hora_emision, String estado, String fecha_hora_pago,String forma_pago, BigDecimal subtotal) {
+    public Facturas(Integer id_factura, String dni, BigDecimal precio_total, BigDecimal descuento, String fecha_hora_emision, String estado, String fecha_hora_pago, String forma_pago, BigDecimal subtotal) {
         this.id_factura = id_factura;
         this.dni = dni;
         this.precio_total = precio_total;
@@ -25,6 +28,10 @@ public class Facturas {
         this.subtotal = subtotal;
 
     }
+
+    /**
+     * Clase Otro formato de construcción de Facturas por conveniencia de uso en otras funciones.
+     */
 
     public Facturas(int idFactura, String fechaHoraEmision, BigDecimal totalConDescuento, String dni, BigDecimal descuento, BigDecimal totalSubtotales, String estado, String fechaHoraPago, String formaPago) {
         this.id_factura = idFactura;
@@ -130,6 +137,10 @@ public class Facturas {
                 ", fecha_pago='" + fecha_hora_pago + '\'' +
                 '}';
     }
+
+    /**
+     * Función para calcular el total con descuento.
+     */
 
     public BigDecimal calcularTotalConDescuento(BigDecimal subtotal, BigDecimal descuento) {
         if (subtotal == null || descuento == null) {

@@ -8,7 +8,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
+/**
+ * Clase Reservas.
+ */
 public class Reservas {
     private int id_reserva;
     private String dni;
@@ -68,6 +70,10 @@ public class Reservas {
         this.subtotal = subtotal;
     }
 
+    /**
+     * Ambs funciones siguientes se usan para calcular el subtotal de la reserva.
+     */
+
     public BigDecimal calcularSubtotal() {
         BigDecimal tarifaHora = getTarifaHoraId(id_asiento);
         LocalDateTime inicio = fecha_hora_inicio.toLocalDateTime();
@@ -107,7 +113,7 @@ public class Reservas {
         return "Reservas{" +
                 "id_reserva=" + id_reserva +
                 ", dni='" + dni + '\'' +
-                ", id_cliente=" + id_factura+
+                ", id_cliente=" + id_factura +
                 ", id_asiento=" + id_asiento +
                 ", fecha_hora_inicio=" + fecha_hora_inicio +
                 ", fecha_hora_fin=" + fecha_hora_fin +

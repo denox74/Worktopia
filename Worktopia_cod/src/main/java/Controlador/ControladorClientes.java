@@ -1,10 +1,16 @@
+/**
+ * Clase ControladorClientes que se encarga de modificar y eliminar los datos de los clientes
+ * de la base de datos.
+ * Esta clase se encarga de modificar y eliminar los datos de los clientes de la base de datos.
+ * Para ello, se encarga de realizar las consultas necesarias a la base de datos para modificar
+ * o eliminar los datos de los clientes.
+ */
+
 package Controlador;
 
 import ConexionDB.ConectionDB;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
+
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

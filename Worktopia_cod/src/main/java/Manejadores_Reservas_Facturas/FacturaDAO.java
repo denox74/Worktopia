@@ -1,5 +1,11 @@
+/**
+ * Clase FacturaDAO que se encarga de realizar las operaciones de la base de datos relacionadas con las facturas.
+ * Actualmente sin uso
+ */
+
 package Manejadores_Reservas_Facturas;
 import java.sql.*;
+
 
 public class FacturaDAO {
     private Connection conexion;
@@ -14,7 +20,7 @@ public class FacturaDAO {
             ps.setString(1, dniCliente);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getInt("id_factura"); // Retorna el ID de la última factura pendiente
+                return rs.getInt("id_factura");
             }
         }
         return -1; // Si no hay factura pendiente, retornamos -1

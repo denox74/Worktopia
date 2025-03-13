@@ -2,6 +2,9 @@ package Clases;
 
 import java.math.BigDecimal;
 
+/**
+ * Clase Asientos.
+ */
 public class Asientos {
 
     private int id_asiento;

@@ -1,22 +1,15 @@
+/**
+ * Clase ControladorFacturas que se encarga de gestionar las facturas de la aplicación.
+ * Se encarga de modificar, eliminar y abonar facturas.
+ * También se encarga de obtener la forma de pago de una factura.
+ */
 package Controlador;
 
 import ConexionDB.ConectionDB;
 import javafx.scene.control.*;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class ControladorFacturas {

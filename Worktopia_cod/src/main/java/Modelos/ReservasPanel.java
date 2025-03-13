@@ -1,5 +1,9 @@
+/**
+ * Clase ReservasPanel que se encarga de gestionar las reservas de los clientes
+ * y de enviar un correo de confirmación de la reserva.
+ * Implementa la interfaz Initializable.
+ */
 package Modelos;
-
 
 import Clases.Reservas;
 import Controlador.ControladorEmail;
@@ -64,6 +68,9 @@ public class ReservasPanel {
     public ReservasPanel() {
     }
 
+    /**
+     * Inserta una reserva en la base de datos y envía un correo de confirmación al cliente.
+     */
     public void insertarReserva(ActionEvent event) {
 
         String emailCliente = controladorReservas.obtenerEmailCliente(dniCliente.getText());
@@ -92,8 +99,10 @@ public class ReservasPanel {
 
     }
 
+    /**
+     * Muestra los datos de la mesa seleccionada en los campos de texto.
+     */
 
-    //Expone los datos del espacio mas el horario
     public void datosTextFieldMesa(ActionEvent event) {
         Button BtnSeleccionHora = (Button) event.getSource();
 
@@ -112,19 +121,18 @@ public class ReservasPanel {
 
 
     }
-
-    // Apertura del vbox con el puntero del raton
+    /**
+     * Muestra la ventana de horarios al hacer clic en un botón de espacio.
+     */
 
     public void ventanaHorarios(MouseEvent event) {
         Button BtnSeleccion = (Button) event.getSource();
 
-        // Si ya está abierta y es el mismo botón, cerrarla
         if (contenedorHorarios.isVisible() && BtnSeleccionado == BtnSeleccion) {
             cierreVentanaHorarios();
             return;
         }
 
-        // Cerrar la anterior si se selecciona otra
         if (BtnSeleccionado != null && BtnSeleccionado != BtnSeleccion) {
             cierreVentanaHorarios();
         }
@@ -136,7 +144,6 @@ public class ReservasPanel {
         int espacioId = controladorReservas.obtenerIdEspacio(BtnSeleccionado.getText());
         actualizarColoresHorarios(espacioId);
 
-        // Posicionar la ventana en la ubicación del ratón
         posicionarVentanaEnRaton(event);
     }
 
@@ -146,23 +153,24 @@ public class ReservasPanel {
         precio.setText("");
     }
 
+    /**
+     * Posiciona la ventana de horarios en la posición del ratón.
+     */
     private void posicionarVentanaEnRaton(MouseEvent event) {
-        // Obtener coordenadas del puntero del ratón
-        double x = event.getScreenX() - 250;
-        double y = event.getScreenY() - 200;
+        double x = event.getScreenX()-600 ;
+        double y = event.getScreenY()-350 ;
 
-        //Ajuste opcional para evitar que aparezca fuera de pantalla
-        double anchoVentana = contenedorHorarios.getWidth();
-        double altoVentana = contenedorHorarios.getHeight();
-
+        //double anchoVentana = contenedorHorarios.getWidth();
+       // double altoVentana = contenedorHorarios.getHeight();
+/*
         if (x + anchoVentana > contenedorHorarios.getScene().getWindow().getWidth()) {
-            x -= anchoVentana; // Si la ventana se sale, muévela a la izquierda
+            x -= anchoVentana;
         }
         if (y + altoVentana > contenedorHorarios.getScene().getWindow().getHeight()) {
-            y -= altoVentana; // Si se sale por abajo, sube la ventana
+            y -= altoVentana;
         }
+*/
 
-        // Posicionar el contenedor en la posición del ratón
         contenedorHorarios.setLayoutX(x);
         contenedorHorarios.setLayoutY(y);
     }
@@ -172,7 +180,11 @@ public class ReservasPanel {
         BtnSeleccionado = null;
     }
 
-
+    /**
+     * Actualiza los colores de los botones de horarios según si están ocupados o no.
+     *
+     * @param idEspacio ID del espacio seleccionado.
+     */
     public void actualizarColoresHorarios(int idEspacio) {
         LocalDate fechaSeleccionada = fecha.getValue();
         if (fechaSeleccionada == null) {
@@ -193,11 +205,9 @@ public class ReservasPanel {
                 String horario = btnHorario.getText();
 
                 if (horariosOcupados.contains(horario)) {
-                    // La hora está dentro del rango de una reserva
                     btnHorario.setStyle("-fx-background-color: #e60415; -fx-text-fill: white;");
                     btnHorario.setDisable(true);
                 } else {
-                    // La fecha está reservada, pero no esta hora específica
                     btnHorario.setStyle("-fx-background-color: #047f07; -fx-text-fill: black;");
                     btnHorario.setDisable(false);
                 }
@@ -205,7 +215,10 @@ public class ReservasPanel {
         }
     }
 
-
+    /**
+     * Inserta los datos de la reserva en la base de datos.
+     * Muestra un mensaje de error si no se han completado todos los campos.
+     */
     public void insertarDatos() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 

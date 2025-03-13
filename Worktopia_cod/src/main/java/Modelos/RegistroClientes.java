@@ -1,3 +1,7 @@
+/**
+ * Clase RegistroClientes que se encarga de gestionar el registro de los clientes en la base de datos.
+ * Implementa los métodos necesarios para la inserción de los datos de los clientes en la base de datos.
+ */
 package Modelos;
 
 import ConexionDB.ConectionDB;

@@ -1,3 +1,7 @@
+/**
+ * Clase ListaClientes que se encarga de mostrar la lista de clientes en la tabla y de gestionar las acciones de los botones
+ * de la interfaz de usuario.
+ */
 package Modelos;
 
 import Aplicaciones.MenuPrincipalApp;
@@ -24,9 +28,7 @@ import javafx.event.ActionEvent;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Optional;
+
 
 public class ListaClientes {
     private ControladorClientes controladorClientes = new ControladorClientes();
@@ -83,6 +85,12 @@ public class ListaClientes {
 
     private static final StringProperty seleccionDni = new SimpleStringProperty();
 
+    /**
+     * Método initialize que se encarga de inicializar la tabla de clientes, de cargar los datos de los clientes en la tabla,
+     * de filtrar los datos de la tabla, de mostrar los datos de un cliente seleccionado en los campos de texto y de gestionar
+     * la sesión del usuario.
+     * Además, se encarga de gestionar la acción de los botones de la interfaz de usuario.
+     */
 
     @FXML
     public void initialize() {
@@ -152,6 +160,10 @@ public class ListaClientes {
     public static StringProperty getSelectSeleccionDni() {
         return seleccionDni;
     }
+
+    /**
+     * Método que se encarga generar una reserva de un cliente seleccionado en la tabla de clientes.
+     */
 
     public void generarReserva(ActionEvent event) {
         try {

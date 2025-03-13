@@ -1,27 +1,22 @@
+/**
+ * Clase RegistroUsuarios que se encarga de agregar un usuario a la base de datos
+ * con los datos que se ingresen en los campos de texto de la interfaz gráfica.
+ * Se encarga de validar que los campos no estén vacíos y que el email sea válido.
+ */
 package Modelos;
 
-import Clases.Usuarios;
 import ConexionDB.ConectionDB;
-import Controlador.ControladorClientes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-import java.io.IOException;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 public class RegistroUsuarios {
@@ -47,7 +42,9 @@ public class RegistroUsuarios {
         btnSalir.setStyle(("-fx-background-color: transparent;"));
 
     }
-    public RegistroUsuarios(){}
+
+    public RegistroUsuarios() {
+    }
 
 
     public static void rellenarCombo(ComboBox<String> comboBox, ObservableList<String> categorias) {
@@ -57,6 +54,7 @@ public class RegistroUsuarios {
     public void llenarComboBox(ActionEvent event) {
         rellenarCombo(enumAgregarCategoria, categorias);
     }
+
     private void limpiarCampos() {
         TextAgregarNombre.clear();
         TextAgregarEmail.clear();
@@ -90,7 +88,7 @@ public class RegistroUsuarios {
                 if (result.isPresent() && result.get() == si) {
                     limpiarCampos();
                 } else {
-                    ((Stage)BtnAgregarUsuario.getScene().getWindow()).close();
+                    ((Stage) BtnAgregarUsuario.getScene().getWindow()).close();
                 }
             } else {
                 alert.setContentText("No se pudo registrar el usuario");
@@ -101,6 +99,7 @@ public class RegistroUsuarios {
             throw new RuntimeException(e);
         }
     }
+
     public void salir(ActionEvent event) {
         ((Stage) btnSalir.getScene().getWindow()).close();
     }

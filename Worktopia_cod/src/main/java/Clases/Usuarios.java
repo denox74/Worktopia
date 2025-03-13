@@ -1,5 +1,8 @@
 package Clases;
 
+/**
+ * Clase Usuarios.
+ */
 public class Usuarios {
     private Integer id_usuario;
     private String nombre;

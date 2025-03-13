@@ -1,3 +1,12 @@
+/**
+ * Worktopia, Aplicación de Coworking
+ * <p>
+ * Creadores de la aplicación:
+ *
+ * @author Juan Pérez
+ * @author María López
+ * @version 1.0
+ */
 package Aplicaciones;
 
 
@@ -10,8 +19,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import javafx.scene.image.Image;
-import javafx.stage.StageStyle;
 
+/**
+ * Clase principal para la aplicación.
+ */
 public class MenuPrincipalApp extends Application {
     private static final Image icono = new Image(MenuPrincipalApp.class.getResourceAsStream("/Imagenes/bannerTopiaC.png"));
 
