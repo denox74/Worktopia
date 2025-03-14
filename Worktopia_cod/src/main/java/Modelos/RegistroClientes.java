@@ -19,7 +19,6 @@ import java.sql.SQLException;
 
 public class RegistroClientes {
 
-    private ListaClientes listaClientes = new ListaClientes();
     @FXML
     private TextField dni;
     @FXML
