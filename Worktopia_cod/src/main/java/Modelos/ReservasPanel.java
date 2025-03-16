@@ -93,8 +93,6 @@ public class ReservasPanel {
             );
             controladorEmail.enviarCorreo(emailCliente, "Confirmación de reserva", mensaje);
         }
-        System.out.println("idreserva" + fecha);
-
         insertarDatos();
 
     }

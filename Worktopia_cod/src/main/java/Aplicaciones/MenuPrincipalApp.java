@@ -3,8 +3,8 @@
  * <p>
  * Creadores de la aplicación:
  *
- * @author Juan Pérez
- * @author María López
+ * @author David Liaño Macías
+ * @author Eliu Manuel Viera Lorenzo
  * @version 1.0
  */
 package Aplicaciones;
