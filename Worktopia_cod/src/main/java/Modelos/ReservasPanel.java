@@ -11,12 +11,15 @@ import Controlador.ControladorReservas;
 import Manejadores_Reservas_Facturas.ReservaDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -49,6 +52,8 @@ public class ReservasPanel {
     private VBox contenedorHorarios;
     @FXML
     private TextField dniCliente;
+    @FXML
+    private StackPane imagenLayout;
 
     private Button BtnSeleccionado;
     private double precioTotal;
@@ -119,6 +124,7 @@ public class ReservasPanel {
 
 
     }
+
     /**
      * Muestra la ventana de horarios al hacer clic en un botón de espacio.
      */
@@ -155,22 +161,23 @@ public class ReservasPanel {
      * Posiciona la ventana de horarios en la posición del ratón.
      */
     private void posicionarVentanaEnRaton(MouseEvent event) {
-        double x = event.getScreenX()-600 ;
-        double y = event.getScreenY()-350 ;
 
-        //double anchoVentana = contenedorHorarios.getWidth();
-       // double altoVentana = contenedorHorarios.getHeight();
-/*
-        if (x + anchoVentana > contenedorHorarios.getScene().getWindow().getWidth()) {
-            x -= anchoVentana;
-        }
-        if (y + altoVentana > contenedorHorarios.getScene().getWindow().getHeight()) {
-            y -= altoVentana;
-        }
-*/
+        // Obtener coordenadas del ratón relativas al layout donde está la imagen
+        double x = event.getSceneX() - imagenLayout.localToScene(0, 0).getX();
+        double y = event.getSceneY() - imagenLayout.localToScene(0, 0).getY();
 
-        contenedorHorarios.setLayoutX(x);
-        contenedorHorarios.setLayoutY(y);
+        // Asegurar que el contenedorHorarios no salga de los límites de la imagen
+        double maxX = 833 - contenedorHorarios.getWidth();
+        double maxY = 604 - contenedorHorarios.getHeight();
+
+        // Limitar coordenadas para que no se salgan del área de la imagen
+        x = Math.max(0, Math.min(x, maxX));
+        y = Math.max(0, Math.min(y, maxY));
+
+        // Ajustar la posición dentro del layout que contiene la imagen
+        contenedorHorarios.setLayoutX(62 + x);
+        contenedorHorarios.setLayoutY(146 + y);
+
     }
 
     public void cierreVentanaHorarios() {
