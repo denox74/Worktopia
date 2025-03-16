@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -25,6 +26,8 @@ public class MenuPrincipal {
     private TextField usuario;
     @FXML
     private PasswordField password;
+    @FXML
+    private Button btnOlvido;
 
     public MenuPrincipal() {
         listaUsuarios = new ListaUsuarios(this);
@@ -37,6 +40,13 @@ public class MenuPrincipal {
         String pass = password.getText();
         listaUsuarios.loginUsuarios(user, pass);
         ((Stage) BtnEntrar.getScene().getWindow()).close();
+    }
+    public void olvido(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Aviso");
+        alert.setHeaderText(null);
+        alert.setContentText("Tiene que ponerse en contacto con el administrador de la aplicacion");
+        alert.showAndWait();
     }
 
     public void nuevaVentana() {

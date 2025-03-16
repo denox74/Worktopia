@@ -15,7 +15,7 @@
             <Image url="@../Imagenes/ImagenPrincipalLogin.png" />
          </image>
       </ImageView>
-        <Button id="BtnEntrar" fx:id="BtnEntrar" alignment="CENTER" layoutX="595.0" layoutY="618.0" onAction="#logeado" prefHeight="39.0" prefWidth="110.0" styleClass="BtnEntrar" stylesheets="@../Estilos/EstilosMenuPrincipal.css" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP" defaultButton="true">
+        <Button id="BtnEntrar" fx:id="BtnEntrar" alignment="CENTER" defaultButton="true" layoutX="595.0" layoutY="618.0" onAction="#logeado" prefHeight="39.0" prefWidth="110.0" styleClass="BtnEntrar" stylesheets="@../Estilos/EstilosMenuPrincipal.css" text="ENTRAR" textAlignment="CENTER" textOverrun="CLIP">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
@@ -45,7 +45,7 @@
       <Line endX="392.0" layoutX="657.0" layoutY="595.0" startX="-401.0" strokeWidth="2.0" />
       <Line endX="-104.0" layoutX="657.0" layoutY="723.0" startX="-400.0" strokeWidth="2.0" />
       <Line endX="-2.0" layoutX="1049.0" layoutY="723.0" startX="-302.0" strokeWidth="2.0" />
-      <Button layoutX="507.0" layoutY="665.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="285.0" styleClass="btnpassword" stylesheets="@../Estilos/EstilosMenuPrincipal.css" text="¿Se te ha olvidado la contraseña?">
+      <Button fx:id="btnOlvido" layoutX="507.0" layoutY="665.0" mnemonicParsing="false" onAction="#olvido" prefHeight="35.0" prefWidth="285.0" styleClass="btnpassword" stylesheets="@../Estilos/EstilosMenuPrincipal.css" text="¿Se te ha olvidado la contraseña?">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
